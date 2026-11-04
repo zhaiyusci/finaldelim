@@ -1,0 +1,98 @@
+[
+  [
+    "qty",
+    "\\qty(\\frac{a+b}{c})^U_D"
+  ],
+  [
+    "bqty",
+    "\\bqty{\\frac{a+b}{c}}^U_D"
+  ],
+  [
+    "abs",
+    "\\abs{\\frac{a+b}{c}}^U_D"
+  ],
+  [
+    "norm",
+    "\\norm{\\frac{a+b}{c}}_F"
+  ],
+  [
+    "nested",
+    "\\qty(\\abs{\\frac{a+b}{c}}+x)^U_D"
+  ],
+  [
+    "eval",
+    "\\eval{\\frac{x^2}{1+x}}_0^1"
+  ],
+  [
+    "comm",
+    "\\comm{\\frac AB}{C}"
+  ],
+  [
+    "bra",
+    "\\bra{\\frac ab}"
+  ],
+  [
+    "ket",
+    "\\ket{\\frac ab}"
+  ],
+  [
+    "braket",
+    "\\braket{\\frac ab}{\\psi}"
+  ],
+  [
+    "matrixel",
+    "\\matrixel{\\phi}{\\frac AB}{\\psi}"
+  ],
+  [
+    "expval",
+    "\\expval{\\frac AB}{\\psi}"
+  ],
+  [
+    "dv",
+    "\\dv{x}(\\frac{x^2}{1+x})"
+  ],
+  [
+    "pdv",
+    "\\pdv{f}{x}+\\pdv[2]{f}{x}"
+  ],
+  [
+    "dd",
+    "\\int\\frac{1}{1+x^2}\\dd{x}"
+  ],
+  [
+    "mqty",
+    "\\mqty(a&b\\\\c&d)^U_D"
+  ],
+  [
+    "star",
+    "\\abs*{\\frac ab}^U_D"
+  ],
+  [
+    "fixed",
+    "\\qty\\Big(\\frac ab)^U_D"
+  ],
+  [
+    "dv-simple",
+    "\\dv{f}{x}"
+  ],
+  [
+    "sin",
+    "\\sin(\\frac ab)"
+  ],
+  [
+    "explicit",
+    "\\left[\\frac ab\\right]^U_D"
+  ],
+  [
+    "break-qty",
+    "\\qty(a+\\\\b)^2"
+  ],
+  [
+    "break-bqty",
+    "\\bqty{a+\\\\b}^2"
+  ],
+  [
+    "break-explicit",
+    "F&=\\left[a+\\\\&b\\right]^2"
+  ]
+]

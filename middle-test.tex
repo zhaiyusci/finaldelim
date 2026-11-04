@@ -20,21 +20,23 @@
  \noindent Maximum:\usebox\actual\par\medskip}
 \newcommand\Case{\left[ a+b+\frac{\sum_{k=1}^n x_k}{1+x^2}
  \middle|c+\left(d\middle|\frac uv\right)
- \middle\Vert e\right]^2_j}
+ \middle\Vert e\right]}
 \begin{document}
-\MiddleCheck{\left(a\middle|b\middle\Vert c\right)^2_j}
+% Native equivalence concerns the contents and fences; scripts now attach
+% to the final closing fence and are covered by script-attachment-test.
+\MiddleCheck{\left(a\middle|b\middle\Vert c\right)}
 \MiddleCheck{\left(a+\middle|+b\middle|=c\right)}
 \MiddleCheck{\left(a=\middle|b\middle|+c\right)}
 \MiddleCheck{\displaystyle\Case}
 \MiddleCheck{\left.\frac xy\middle|\middle.\frac uv\right\}}
 \MiddleCheck{\left(\middle|\middle\Vert\right)}
-\MiddleCheck{{\scriptstyle\left(a\middle|\frac bc\middle|d\right)^2}}
+\MiddleCheck{{\scriptstyle\left(a\middle|\frac bc\middle|d\right)}}
 \MiddleCheck{\left\langle\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|\frac ab\middle|\phi\right\rangle}
 \clearpage
 \FinalDelimSetup{sizing=weighted,q=8,niji=false}
-\noindent PlainStart:\par\noindent$\displaystyle\Case$\par
+\noindent PlainStart:\par\noindent$\displaystyle\Case^2_j$\par
 \FinalDelimSetup{niji}
-\noindent RainbowStart:\par\noindent$\displaystyle\Case$\par
+\noindent RainbowStart:\par\noindent$\displaystyle\Case^2_j$\par
 \noindent EndChecks:\par
 \begin{equation}[niji,spanning=endpoints]
  F&=\left[\once a\middle|b+\\

@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[a4paper,margin=16mm]{geometry}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage{experimental/finaldelim-draw}
+\setlength\parindent{0pt}
+\newcommand\lo{x}
+\newcommand\hi{\frac{\sum_{i=1}^n a_i}{1+x^2}}
+\newcommand\mi{\frac ab}
+\newcommand\longlo{a+b+c+d+e+f+g}
+\newcommand\cell[2]{\begin{minipage}[c][16mm][c]{.325\linewidth}\FinalDelimSetup{#1}$\displaystyle #2$\end{minipage}}
+\newcommand\row[2]{\texttt{#1}\par\smallskip
+\cell{sizing=native,niji=false}{#2}\hfill
+\cell{sizing=weighted,scale=1,niji}{#2}\hfill
+\cell{sizing=weighted,scale=0.9,niji}{#2}\par\medskip}
+\newcommand\widecell[2]{\begin{minipage}[c][17mm][c]{.49\linewidth}\FinalDelimSetup{sizing=weighted,niji,#1}$\displaystyle #2$\end{minipage}}
+\newcommand\wide[2]{\texttt{#1}\par\smallskip\widecell{scale=1}{#2}\hfill\widecell{scale=0.9}{#2}\par\medskip}
+\begin{document}
+\section*{Script attachment: height patterns}
+Latin Modern Math. Real formula contents, with ordinary mathematical spacing.
+The coloured columns use continuous outlines and the default sizing model.
+Here $l=x$, $m=\frac ab$, and $h=\frac{\sum_{i=1}^n a_i}{1+x^2}$.
+\par\bigskip
+\makebox[.325\linewidth][l]{Native \texttt{\string\left/\string\right}}
+\makebox[.325\linewidth][l]{Weighted, scale 1}
+\makebox[.325\linewidth][l]{Weighted, scale 0.9}\par\medskip
+\row{lhl}{\left[\lo+\hi+\lo\right]^U_D}
+\row{hll}{\left[\hi+\lo+\lo\right]^U_D}
+\row{llh}{\left[\lo+\lo+\hi\right]^U_D}
+\row{lhhl}{\left[\lo+\hi+\hi+\lo\right]^U_D}
+\row{hlhl}{\left[\hi+\lo+\hi+\lo\right]^U_D}
+\row{lllhlll}{\left[\lo+\lo+\lo+\hi+\lo+\lo+\lo\right]^U_D}
+\clearpage
+\section*{Long low terms and other attachments}
+\makebox[.49\linewidth][l]{Weighted, scale 1}
+\makebox[.49\linewidth][l]{Weighted, scale 0.9}\par\medskip
+\wide{hml / long low tail}{\left[\hi+\mi+\longlo\right]^U_D}
+\wide{lmh / tall right endpoint}{\left[\longlo+\mi+\hi\right]^U_D}
+\wide{lhl / middle delimiter}{\left[\lo\middle|\hi\middle|\lo\right]^U_D}
+\wide{lhl / nested delimiters}{\left(\lo+\left[\hi\right]+\lo\right)^U_D}
+\wide{lhl / subscript only}{\left\Vert\lo+\hi+\lo\right\Vert_F}
+\wide{lhl / superscript only}{\left\langle\lo+\hi+\lo\right\rangle^2}
+\end{document}

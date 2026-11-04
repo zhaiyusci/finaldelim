@@ -4,6 +4,8 @@
 \usepackage{unicode-math}
 \setmathfont{Latin Modern Math}
 \usepackage{finaldelim}
+\usepackage{experimental/finaldelim-draw}
+\FinalDelimDrawOff
 \usepackage{booktabs,array,listings,fancyhdr,etoolbox}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
 \lstset{basicstyle=\ttfamily\fontsize{8.5}{10.5}\selectfont,
@@ -55,7 +57,8 @@ Compile with \textbf{LuaLaTeX} and load the package:
 \usepackage{finaldelim}
 \end{lstlisting}
 The new sizing policy is enabled by default. The manual uses Latin Modern Math;
-finaldelim also works with other math fonts. It loads \texttt{amsmath} and
+finaldelim also works with other math fonts. Optional continuous-outline rendering
+is described in Section~\ref{sec:outlines}. It loads \texttt{amsmath} and
 \texttt{xcolor} automatically.
 
 \section{Delimiter sizing}
@@ -134,6 +137,50 @@ the delimiters to enclose the full height of the contents.
 The scale applies to weighted and endpoint sizing. It changes the sizing
 target, not the glyph outline; font size steps can leave a glyph unchanged.
 Native sizing and explicitly sized delimiters are unaffected.
+
+\newpage
+\subsection{Continuous delimiter outlines}\label{sec:outlines}
+The sizing model chooses how large a delimiter should be. Continuous-outline
+rendering gives it intermediate sizes between the font's prebuilt glyphs and
+fills assembled delimiters as a single outline, avoiding repeated painting at
+component joins. It uses the current math font's own shapes.
+
+Enable this optional experimental feature after loading finaldelim:
+\begin{lstlisting}
+\usepackage{finaldelim}
+\usepackage{experimental/finaldelim-draw}
+\end{lstlisting}
+Keep \texttt{finaldelim-draw.sty}, \texttt{finaldelim-draw.lua} and
+\texttt{finaldelim-outline-fonts.lua} in an \texttt{experimental/} subdirectory
+beside the document. The renderer loads font outlines automatically.
+
+Then write ordinary \verb|\left|, \verb|\middle| and \verb|\right| commands.
+Niji and line breaks work with the drawn outlines too.
+Superscripts and subscripts after a visible closing delimiter follow its final
+size; the contents retain their full height and depth for surrounding layout.
+
+This four-by-two matrix illustrates the Frobenius norm.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Matrix_norm\#Frobenius_norm}{Matrix norm},
+Frobenius norm; shown here for a four-by-two matrix.}
+Both results below use the same default sizing settings.
+\par\textbf{Native font glyphs}
+\Example[\FinalDelimDrawOff]{outline-norm}
+\textbf{Continuous outlines}
+\Example[\FinalDelimDrawOn]{outline-norm}
+
+\verb|\FinalDelimDrawOff| returns to native glyph rendering;
+\verb|\FinalDelimDrawOn| enables drawing again. These commands respect TeX groups
+and do not change the sizing settings.
+
+Between prebuilt sizes, the renderer interpolates the font's contours.
+For larger assembled symbols it keeps the font's component placement but paints
+one combined path. Slashes, backslashes, single angles and double angles can
+extend beyond the largest prebuilt glyph: their width follows the recent size
+trend, while stroke thickness and terminal details are preserved. Double angles
+retain their inter-stroke spacing. Other symbols without larger variants or
+assembly parts retain their native size limit. Transformed fonts and explicit
+variable-font instances currently retain native rendering. Drawn delimiters are
+PDF paths; text extraction and accessibility tagging for these paths are not yet supported.
 
 \newpage
 \subsection{One or more middle delimiters}

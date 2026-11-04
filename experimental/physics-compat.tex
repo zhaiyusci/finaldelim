@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[a4paper,margin=16mm]{geometry}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\ifdefined\PhysicsAfter
+\usepackage{experimental/finaldelim-draw}\usepackage{physics}
+\else
+\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\fi
+\setlength\parindent{0pt}
+\newcommand\cell[2]{\begin{minipage}[c][17mm][c]{.325\linewidth}\FinalDelimSetup{#1}$\displaystyle #2$\end{minipage}}
+\newcommand\row[2]{\texttt{#1}\par\smallskip\cell{sizing=native,niji=false}{#2}\hfill\cell{sizing=weighted,niji=false}{#2}\hfill\cell{sizing=weighted,niji}{#2}\par\medskip}
+\begin{document}
+\section*{Physics compatibility: inline math, display style}
+\makebox[.325\linewidth][l]{Native sizing}\makebox[.325\linewidth][l]{Weighted + outlines}\makebox[.325\linewidth][l]{Weighted + outlines + niji}\par\bigskip
+\row{qty}{\qty(\frac{a+b}{c})^U_D}
+\row{bqty}{\bqty{\frac{a+b}{c}}^U_D}
+\row{abs}{\abs{\frac{a+b}{c}}^U_D}
+\row{norm}{\norm{\frac{a+b}{c}}_F}
+\row{nested}{\qty(\abs{\frac{a+b}{c}}+x)^U_D}
+\row{eval}{\eval{\frac{x^2}{1+x}}_0^1}
+\clearpage
+\section*{Physics compatibility: inline math, display style}
+\makebox[.325\linewidth][l]{Native sizing}\makebox[.325\linewidth][l]{Weighted + outlines}\makebox[.325\linewidth][l]{Weighted + outlines + niji}\par\bigskip
+\row{comm}{\comm{\frac AB}{C}}
+\row{bra}{\bra{\frac ab}}
+\row{ket}{\ket{\frac ab}}
+\row{braket}{\braket{\frac ab}{\psi}}
+\row{matrixel}{\matrixel{\phi}{\frac AB}{\psi}}
+\row{expval}{\expval{\frac AB}{\psi}}
+\clearpage
+\section*{Physics compatibility: inline math, display style}
+\makebox[.325\linewidth][l]{Native sizing}\makebox[.325\linewidth][l]{Weighted + outlines}\makebox[.325\linewidth][l]{Weighted + outlines + niji}\par\bigskip
+\texttt{dv with parenthesized argument}\par\smallskip\cell{sizing=native,niji=false}{\dv{x}(\frac{x^2}{1+x})}\hfill\cell{sizing=weighted,niji=false}{\dv{x}(\frac{x^2}{1+x})}\hfill\begin{minipage}{.325\linewidth}Niji: compilation error\end{minipage}\par\medskip
+\row{pdv}{\pdv{f}{x}+\pdv[2]{f}{x}}
+\row{dd}{\int\frac{1}{1+x^2}\dd{x}}
+\row{mqty}{\mqty(a&b\\c&d)^U_D}
+\row{star}{\abs*{\frac ab}^U_D}
+\row{fixed}{\qty\Big(\frac ab)^U_D}
+\clearpage\section*{Equation environment with niji}\FinalDelimSetup{sizing=weighted,niji}
+\texttt{qty}
+\begin{equation*}\qty(\frac{a+b}{c})^U_D\end{equation*}
+\texttt{bqty}
+\begin{equation*}\bqty{\frac{a+b}{c}}^U_D\end{equation*}
+\texttt{abs}
+\begin{equation*}\abs{\frac{a+b}{c}}^U_D\end{equation*}
+\texttt{norm}
+\begin{equation*}\norm{\frac{a+b}{c}}_F\end{equation*}
+\texttt{nested}
+\begin{equation*}\qty(\abs{\frac{a+b}{c}}+x)^U_D\end{equation*}
+\texttt{braket}
+\begin{equation*}\braket{\frac ab}{\psi}\end{equation*}
+\texttt{matrixel}
+\begin{equation*}\matrixel{\phi}{\frac AB}{\psi}\end{equation*}
+\end{document}

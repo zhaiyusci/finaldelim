@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\newcommand\bodyexpr{x+x+x+\frac{\sum_{i=1}^n a_i}{1+x^2}+x+x+x}
+\newsavebox\sample
+\newcommand\probe[2]{\typeout{CASE #1}\sbox\sample{$\displaystyle #2$}\noindent #1:\quad\usebox\sample\par\bigskip}
+\begin{document}
+\probe{explicit}{\left[\bodyexpr\right]^U_D}
+\probe{qty}{\qty[\bodyexpr]^U_D}
+\probe{bqty}{\bqty{\bodyexpr}^U_D}
+\probe{pqty}{\pqty{\bodyexpr}^U_D}
+\probe{abs}{\abs{\bodyexpr}^U_D}
+\probe{norm}{\norm{\bodyexpr}^U_D}
+\end{document}

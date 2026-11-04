@@ -14,6 +14,9 @@ The inherited distribution manifest lists:
 - `manual-examples/*.tex` -- live source-and-result examples used by the manual;
 - `manual-examples/classic-split-highlight.txt` -- highlighted copy of the classic example for the manual;
 - `finaldelim.pdf` -- compiled user manual;
+- `experimental/finaldelim-draw.sty`, `experimental/finaldelim-draw.lua`, and
+  `experimental/finaldelim-outline-fonts.lua` -- optional outline renderer, also
+  required to compile the continuous-outline examples in the manual;
 - `quickstart.tex` -- native equation, align and inline examples;
 - `numbered_example.tex` -- complete example using the replacement options;
 - `luatex_example.tex` -- multi-pair LuaLaTeX example with numbering and debug;

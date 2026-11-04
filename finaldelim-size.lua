@@ -162,6 +162,25 @@ local function boxed_noad(box, subtype, attr)
  n.nucleus = node.new('sub_box'); n.nucleus.head = box
  return n
 end
+local function attachment(box,last)
+ if last.delim.small_char==0 and last.delim.large_char==0 then return end
+ return {h=box.height-box.shift,d=box.depth+box.shift}
+end
+local function attach_scripts(box,owner,style,anchor)
+ if not anchor or (not owner.sup and not owner.sub) then return box end
+ -- TeX lays out scripts against a zero-width nucleus with the final right
+ -- fence's extent. Actual content keeps its own dimensions and color resets.
+ local base=node.new('hlist');base.height,base.depth=anchor.h,anchor.d
+ local n=boxed_noad(base,0,owner.attr)
+ n.sup,n.sub=owner.sup,owner.sub
+ owner.sup,owner.sub=nil,nil
+ local scripts=node.mlist_to_hlist(n,style,false)
+ local tail=node.tail(box.list);tail.next,scripts.prev=scripts,tail
+ local result=node.hpack(box.list);box.list=nil;node.free(box)
+ local _,ending,rows=dimensions(result)
+ if rows>0 then result.height,result.depth=ending.h,ending.d end
+ return result
+end
 -- Use real fence noads throughout conversion: in particular, middle's native
 -- spacing/class behaviour must not be approximated by an ordinary/relation atom.
 local function new_fence_marker(value)
@@ -207,6 +226,7 @@ local function fence_boxes(head,replacements,measurement)
     head=node.remove(head,n);node.flush_node(n)
    else
     head=node.remove(head,n)
+    n.next,n.prev=nil,nil
    end
   end
   n=nextnode
@@ -251,6 +271,7 @@ local function process_middles(head,style)
    if n.id==fence then index=index+1;delimiters[index]=M.render_delimiter(delimiters[index],n,h,d,style) end
   end
  end
+ local anchor=attachment(delimiters[count],node.tail(head))
  -- Convert the actual contents once, preserving native math spacing, then
  -- substitute only the already selected fence boxes before packing the row.
  head=wrap_fences(head,false)
@@ -262,23 +283,29 @@ local function process_middles(head,style)
  M.measured=M.measured+1
  texio.write_nl('log',string.format('WEIGHTED middles %d: fences=%d %.3fpt / %.3fpt',
   M.measured,count,h/65536,d/65536))
- return result
+ return result,anchor
 end
 local process
 local function children(head,style)
+ local only,anchor=0,nil
  for n in node.traverse(head) do
   if n.id == node.id("style") then style = n.style end
+  if n.id~=node.id('whatsit') and n.id~=node.id('style') then only=only+1 end
   if n.id == noad and n.nucleus and n.nucleus.id == sub then
-   local b = process(n.nucleus.head,style)
+   local b,a = process(n.nucleus.head,style)
+   local scripted=n.sup or n.sub
    if b then
     n.nucleus.head = nil; node.free(n.nucleus)
-    n.nucleus = node.new('sub_box'); n.nucleus.head = b
+    n.nucleus = node.new('sub_box'); n.nucleus.head = attach_scripts(b,n,style,a)
+    if not scripted then anchor=a end
    end
   end
  end
+ -- Transparent grouping/color wrappers preserve the closing-fence anchor.
+ if only==1 then return anchor end
 end
 process = function(head,style)
- children(head,style)
+ local anchor=children(head,style)
  node.slide(head)
  local first,last = head,node.tail(head)
  if not first then return end
@@ -297,10 +324,11 @@ process = function(head,style)
   if hasmiddle then return process_middles(head,style) end
  end
  local a,b,rows,h,d = measure(paired and first.next or head, paired and last or nil,style)
- if rows == 0 and not paired then return end
+ if rows == 0 and not paired and not anchor then return end
  if paired then
   h,d=scaled_extent(h,d,style)
   local lbox,rbox = delimiters(first,last,h,d,style)
+  anchor=attachment(rbox,last)
   local l,r = boxed_noad(lbox,6,first.attr),boxed_noad(rbox,7,last.attr)
   local inner,ending = first.next,last.prev
   l.next,inner.prev,ending.next,r.prev = inner,l,r,ending
@@ -316,7 +344,7 @@ process = function(head,style)
  -- Only the enclosing math atom's attachment metrics use its endpoint cell.
  -- The physical partitioner later repacks actual children into real row boxes.
  if rows>0 then box.height,box.depth = ending.h,ending.d end
- return box
+ return box,anchor
 end
 luatexbase.add_to_callback('pre_mlist_to_hlist_filter',function(head,style)
  local active=M.enabled

@@ -4,7 +4,8 @@
 \pagestyle{empty}
 \newsavebox\orig\newsavebox\drawn
 \newcount\calls
-\newcommand\Tall{\phantom{\vrule width1pt height43pt depth37pt}}
+% Above every tested font's prebuilt range: this checks assembly invariance.
+\newcommand\Tall{\phantom{\vrule width1pt height83pt depth77pt}}
 \newcommand\OutlineCheck[1]{%
  \FinalDelimSetup{q=0,scale=1,niji=false}\FinalDelimDrawOff
  \sbox\orig{$\displaystyle\left(\Tall a+b\middle\Vert c\right)^2_j$}%
