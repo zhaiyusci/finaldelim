@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{unicode-math}
+\setmainfont{XITS}
+\setmathfont{Latin Modern Math}
+
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{physics}
+\usepackage[version=4]{mhchem}
+\usepackage{finaldelim}
+
+\begin{document}
+	\begin{equation}
+		\begin{matchedsplit}[rainbow]
+			&\operatorname{Tr}_{\mathrm{nuc},\mathrm{ret}}e^{-\beta\hat H_{\mathrm{proj}}}\\
+			&=\lim_{N_{\mathrm{bead}}\to\infty}
+			\left|\frac{N_{\mathrm{bead}}\mathbf M}{2\pi\beta\hbar^2}\right|^{N_{\mathrm{bead}}/2}
+			\int\dd{\{\mathbf R^{[j]}\}}\,e^{-\beta U_{\mathrm{spr}}}\\
+			&\quad\times\Tr_{\mathrm{elec},\mathrm{ret}}\left[
+			\prod_{j=1}^{N_{\mathrm{bead}}}
+			e^{-\left(\frac{\beta}{N_{\mathrm{bead}}}\right)
+				\left(\symbf\Lambda_{\mathrm{ret}}^{[j]}+\mathbf K_{\mathrm{geom}}^{[j]}\right)}
+			\mathbf C_{\mathrm{pol}}^{[j,j+1]}\right].
+		\end{matchedsplit}
+	\end{equation}
+
+	\begin{equation}
+		\begin{matchedsplit}
+			&\operatorname{Tr}_{\mathrm{nuc},\mathrm{ret}}e^{-\beta\hat H_{\mathrm{proj}}}\\
+			&=\lim_{N_{\mathrm{bead}}\to\infty}
+			\left|\frac{N_{\mathrm{bead}}\mathbf M}{2\pi\beta\hbar^2}\right|^{N_{\mathrm{bead}}/2}
+			\int\dd{\{\mathbf R^{[j]}\}}\,e^{-\beta U_{\mathrm{spr}}}\\
+			&\quad\times\Tr_{\mathrm{elec},\mathrm{ret}}\left[
+			\prod_{j=1}^{N_{\mathrm{bead}}}
+			e^{-\left(\frac{\beta}{N_{\mathrm{bead}}}\right)
+				\left(\symbf\Lambda_{\mathrm{ret}}^{[j]}+\mathbf K_{\mathrm{geom}}^{[j]}\right)}
+			\mathbf C_{\mathrm{pol}}^{[j,j+1]}\right].
+		\end{matchedsplit}
+	\end{equation}
+
+	\begin{equation}
+		\begin{split}
+			&\operatorname{Tr}_{\mathrm{nuc},\mathrm{ret}}e^{-\beta\hat H_{\mathrm{proj}}}\\
+			&=\lim_{N_{\mathrm{bead}}\to\infty}
+			\left|\frac{N_{\mathrm{bead}}\mathbf M}{2\pi\beta\hbar^2}\right|^{N_{\mathrm{bead}}/2}
+			\int\dd{\{\mathbf R^{[j]}\}}\,e^{-\beta U_{\mathrm{spr}}}\\
+			&\quad\times\Tr_{\mathrm{elec},\mathrm{ret}}\left[
+			\prod_{j=1}^{N_{\mathrm{bead}}}
+			e^{-\left(\frac{\beta}{N_{\mathrm{bead}}}\right)
+				\left(\symbf\Lambda_{\mathrm{ret}}^{[j]}+\mathbf K_{\mathrm{geom}}^{[j]}\right)}
+			\mathbf C_{\mathrm{pol}}^{[j,j+1]}\right].
+		\end{split}
+	\end{equation}
+\end{document}

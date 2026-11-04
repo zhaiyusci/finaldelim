@@ -1,0 +1,69 @@
+\documentclass{article}
+\ifdefined\GroupUnicode
+ \usepackage{unicode-math}\setmainfont{XITS}\setmathfont{XITS Math}
+\fi
+\usepackage[rainbow,overridesplit,overridealign,overridealignat]{finaldelim}
+\newsavebox{\plain}
+\newsavebox{\painted}
+\newcommand\checkgroups[1]{%
+ \sbox{\plain}{$\begin{matchedsplit}[rainbow=false]x&=#1\end{matchedsplit}$}%
+ \sbox{\painted}{$\begin{matchedsplit}x&=#1\end{matchedsplit}$}%
+ \ifdim\wd\plain=\wd\painted\else\errmessage{Group color changed width}\fi
+ \ifdim\ht\plain=\ht\painted\else\errmessage{Group color changed height}\fi
+ \ifdim\dp\plain=\dp\painted\else\errmessage{Group color changed depth}\fi
+ \usebox{\painted}\par}
+\begin{document}
+\ExplSyntaxOn
+\seq_new:N \g__rainbow_test_colors_seq
+\group_begin:
+\cs_set_eq:NN \rainbow_test_left:nn \__ms_native_left:nn
+\cs_set_protected:Npn \__ms_native_left:nn #1#2
+ {\seq_gput_right:Nn \g__rainbow_test_colors_seq {#1}
+  \rainbow_test_left:nn {#1}{#2}}
+\hbox_set:Nn \l_tmpa_box
+ {$\begin{matchedsplit}F&=\left[e^{-\left(\frac{a}{b}\right)\left(A+B\right)}\right]\end{matchedsplit}$}
+\tl_set:Nx \l_tmpa_tl {\seq_use:Nn \g__rainbow_test_colors_seq {,}}
+\tl_if_eq:NnF \l_tmpa_tl {msblue,msorange,msorange}
+ {\errmessage{Exponent~pairs~did~not~inherit~the~outer~depth}}
+\seq_gclear:N \g__rainbow_test_colors_seq
+\hbox_set:Nn \l_tmpa_box
+ {$\begin{matchedsplit}[rainbow=false]F&=e^{\left(a\right)}\end{matchedsplit}$}
+\seq_if_empty:NF \g__rainbow_test_colors_seq
+ {\errmessage{Grouped~coloring~ignored~rainbow=false}}
+\group_end:
+\ExplSyntaxOff
+\newsavebox{\nativebox}
+\newcommand\checknative[1]{%
+ \sbox{\nativebox}{$\begin{aligned}F&=#1\end{aligned}$}%
+ \sbox{\plain}{$\begin{matchedsplit}[rainbow=false]F&=#1\end{matchedsplit}$}%
+ \sbox{\painted}{$\begin{matchedsplit}F&=#1\end{matchedsplit}$}%
+ \ifdim\wd\nativebox=\wd\plain\else\errmessage{Native plain spacing mismatch}\fi
+ \ifdim\wd\nativebox=\wd\painted\else\errmessage{Native rainbow spacing mismatch}\fi
+ \ifdim\ht\nativebox=\ht\painted\else\errmessage{Native height mismatch}\fi
+ \ifdim\dp\nativebox=\dp\painted\else\errmessage{Native depth mismatch}\fi}
+\checknative{\lim_{n\to\infty}\left|\frac{a}{b}\right|^{n/2}}
+\checknative{\operatorname{Tr}_{x}\left[\prod_{j=1}^{n}e^{-\left(\frac{a}{b}\right)}C_j\right]}
+\checknative{a\left(b\right)c+\left[d\right]\left(e\right)}
+\checknative{\sin\left(x\right)+\left(x\right)_i^j+\left(y\right)'_k}
+\checknative{\left\{\frac{x}{y}\middle|z\right\}+\left.\frac{a}{b}\right|_0^1}
+\checkgroups{\left[e^{-\left(\frac{a}{b}\right)\left(A+B\right)}\right]}
+\checkgroups{\left|\frac{a}{b}\right|^{n/2}}
+\checkgroups{\left(\frac{a}{b}\right)_i^j+\left[x\right]'_k}
+\checkgroups{\left(\frac{a}{b}\\&+c\right)^{n}_{m}}
+\checkgroups{\left[\sin\left(x\right)\\&+\left(y\right)\right]}
+\checkgroups{x_{\left(i+\left[j\right]\right)}^{\left(k\right)}}
+\checkgroups{\frac{\left(a\middle|b\right)}{\left[c+\frac{\left(d\right)}{e}\right]}}
+\checkgroups{{a+\left(b\right)c=\left[d\right]+e}}
+\checkgroups{{\text{two words}\quad\left(a\right)\text{ more words }}}
+\checkgroups{{\left(a^{\left[b\right]}\right)_{\left(c\right)}}}
+\checkgroups{{\left(a\right)'_i+\left(b\right)''+\left(c\right)'^{2}}}
+\checkgroups{{\left(a\right)^2_i+\left(b\right)_j^3}}
+\checkgroups{{\begin{matrix}\left(a\right)&b\\c&d\end{matrix}}}
+\checkgroups{{\left.\color{magenta}a\middle|b\right)}}
+\begin{equation}\begin{split}
+ F&=\left[e^{-\left(\frac{a}{b}\right)\left(A+B\right)}\\
+ &+x_{\left(i\right)}\right]
+\end{split}\end{equation}
+\begin{alignat*}[rainbow]{1}F&=e^{\left(a\right)}\end{alignat*}
+\typeout{RAINBOW GROUPS PASSED}
+\end{document}

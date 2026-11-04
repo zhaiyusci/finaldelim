@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage{amsmath}
+\let\originalalign\align
+\let\originalendalign\endalign
+\let\originalsplit\split
+\let\originalendsplit\endsplit
+\usepackage{finaldelim}
+\ifx\originalsplit\split\else\errmessage{Default split changed}\fi
+\ifx\originalendsplit\endsplit\else\errmessage{Default endsplit changed}\fi
+\ifx\originalalign\align\else\errmessage{Default align changed}\fi
+\ifx\originalendalign\endalign\else\errmessage{Default endalign changed}\fi
+\begin{document}
+\begin{equation}\begin{split}a &= b\\ &= c\end{split}\end{equation}
+\end{document}

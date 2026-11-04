@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[paperwidth=240mm,paperheight=115mm,margin=12mm]{geometry}
+\usepackage{unicode-math,xcolor,array}
+\setmathfont{XITS Math}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newbox\squarebody
+\newdimen\axis\newdimen\radius
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\radius+\axis\relax depth\dimexpr\radius-\axis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\radius+\axis\relax depth\dimexpr\radius-\axis\relax}\right]}}
+\newcommand\Trial[1]{\directlua{
+local r=math.max(tex.box.squarebody.height-tex.dimen.axis,tex.box.squarebody.depth+tex.dimen.axis)/65536
+local W=tex.box.squarebody.width/65536
+local lambda=W/2
+local integral=r^(#1)*lambda*(1-math.exp(-W/lambda))
+local norm=lambda*(1-math.exp(-W/lambda))
+local result=(integral/norm)^(1/(#1))
+assert(math.abs(result-r)<1e-10)
+tex.dimen.radius=math.floor(result*65536+.5)
+}\centering\strut $q=#1$\par\bigskip
+$\displaystyle\LeftSized\copy\squarebody\RightSized$\par\bigskip
+{\small $R=10.00$ pt}\par}
+\begin{document}
+\axis=\Umathaxis\displaystyle
+\setbox\squarebody=\hbox{\vrule width20pt height\dimexpr10pt+\axis\relax depth\dimexpr10pt-\axis\relax}
+{\Large\bfseries One square: native delimiters versus integral means}\par\medskip
+A single solid square, $20\,\mathrm{pt}\times20\,\mathrm{pt}$, centered on the math axis.
+No gaps or other content.\par\bigskip
+\begin{tabular}{@{}p{36mm}p{36mm}p{36mm}p{36mm}p{36mm}@{}}
+\centering\strut Native\par\bigskip
+$\displaystyle\left[\copy\squarebody\right]$\par\bigskip {\small\texttt{\string\left...\string\right}}\par
+&\Trial{1}&\Trial{2}&\Trial{8}&\Trial{16}
+\end{tabular}\par\bigskip
+$\lambda=W/2$, $p=3$. Both side estimates equal $10$ pt for every $q$.\par\smallskip
+The same native font and delimiter parameters are used throughout.
+\end{document}

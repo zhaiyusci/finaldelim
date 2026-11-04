@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[overridesplit]{finaldelim}
+\begin{document}
+\section*{Split takeover}
+\begin{equation}\label{eq:one}
+\begin{split}
+F &= \left( a+\left[\frac{x}{y}+b \\
+ &\quad +c\right]+d \\
+ &\quad +\frac{p}{q}\right)
+\end{split}
+\end{equation}
+\begin{align}
+\begin{split}
+G &= \left\{ \frac{a}{b} \middle| x \\
+ &\quad +y\right\}
+\end{split}\label{eq:two}\\
+z &= 1
+\end{align}
+\begin{gather}
+\begin{split}
+H &= \left[\frac{x}{y}\\ &+z\right]
+\end{split}\label{eq:four}
+\end{gather}
+\[\begin{split}u &= \left(a\\ &+b\right)\end{split}\]
+\begin{equation*}\begin{split}v &= a\\ &= b\end{split}\end{equation*}
+\[\begin{matchedsplit}w &= \left(a\\ &+b\right)\end{matchedsplit}\]
+\end{document}

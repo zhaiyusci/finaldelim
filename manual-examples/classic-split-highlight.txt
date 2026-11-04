@@ -1,0 +1,16 @@
+\begin{equation}
+ (*@\textcolor{red!70!black}{\bfseries\ttfamily \textbackslash begin\{split\}}@*)
+ &D_{\mathrm{KL}}(\mathcal N_0
+     \Vert\mathcal N_1)\\
+ &=\frac12\left[
+   (*@\textcolor{red!70!black}{\bfseries\ttfamily \textbackslash vphantom\{\textbackslash ln\textbackslash frac\{\textbackslash det\textbackslash Sigma\_1\}}@*)
+                        (*@\textcolor{red!70!black}{\bfseries\ttfamily \{\textbackslash det\textbackslash Sigma\_0\}\}}@*)
+   \operatorname{tr}(
+     \Sigma_1^{-1}\Sigma_0)-k(*@\textcolor{red!70!black}{\bfseries\ttfamily \textbackslash right.}@*)\\
+ &\quad+(\mu_1-\mu_0)^{\mathsf T}
+   \Sigma_1^{-1}(\mu_1-\mu_0)\\
+ &\quad(*@\textcolor{red!70!black}{\bfseries\ttfamily \textbackslash left.}@*)+\ln\frac{\det\Sigma_1}
+                  {\det\Sigma_0}
+   \right].
+ (*@\textcolor{red!70!black}{\bfseries\ttfamily \textbackslash end\{split\}}@*)
+\end{equation}

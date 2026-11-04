@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage[rainbow,overridesplit,overridealign]{finaldelim}
+\begin{document}
+\begin{align}
+f &= \left( a+\left[\frac{x}{y}\middle|b \\
+ &+c\right]+d\right)
+\end{align}
+\begin{align}[rainbow=false]
+f &= \left(a\\ &+b\right)
+\end{align}
+\begin{matchedalign}[rainbow,colors={red,blue}]
+f &= \left(\left[\left\{a\\ &+b\right\}\right]\right)
+\end{matchedalign}
+\end{document}

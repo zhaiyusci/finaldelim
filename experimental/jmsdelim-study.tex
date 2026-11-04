@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[a4paper,margin=20mm]{geometry}
+\usepackage{amsmath}
+\usepackage{iftex}
+\ifPDFTeX\else\usepackage{unicode-math}\setmathfont{XITS Math}\fi
+\usepackage{jmsdelim}
+\newcommand\Probe{none}
+\ExplSyntaxOn
+\cs_new_eq:NN\jmsprobe_original:\__jmsdelim_setup_sizes:
+\cs_set_protected:Npn\__jmsdelim_setup_sizes:{\jmsprobe_original:
+ \iow_term:x{JMS-PROBE~\Probe~:~level=\int_use:N\g__jmsdelim_size}}
+\ExplSyntaxOff
+\newcommand\Tall{\frac{\displaystyle\sum_{k=1}^{n}x_k}{1+\frac pq}}
+\newcommand\Body{a+b+\Tall+(c+d)^2}
+\newcommand\SeedTall{\DelimMin{2}\Tall}
+\newcommand\Example[3]{\renewcommand\Probe{#1}\par\medskip\noindent\textbf{#2}\[#3\]}
+\begin{document}
+\section*{jmsdelim 0.2.0: actual package output}
+LuaLaTeX / XITS Math. No matchedsplit code or experimental resizing is loaded.
+\Example{native}{1. Native automatic sizing}{F=\left[\Body\right]^{n+1}_j}
+\Example{unseeded}{2. jmsdelim, no size hint}{F=\DelimBrk{\Body}^{n+1}_j}
+\Example{seed1}{3. jmsdelim, explicit leaf hint: level 1}{F=\DelimBrk{a+b+\DelimMin{1}\Tall+(c+d)^2}^{n+1}_j}
+\Example{seed2}{4. jmsdelim, reusable leaf macro: level 2}{F=\DelimBrk{a+b+\SeedTall+(c+d)^2}^{n+1}_j}
+\noindent Level 0 is ordinary size; levels 1--4 select big, Big, bigg, Bigg.
+The leaf hint is an author choice, not a size measured from the fraction.
+\newpage
+\section*{Propagation, nesting and scripts}
+\Example{nested0}{1. Nesting without hints: no automatic growth}{\DelimBrk{a+\DelimPrn{b+\DelimPrn{c+d}}}}
+\Example{nested2}{2. A leaf minimum propagates to every enclosing pair}{\DelimBrk{a+\DelimPrn{b+\DelimPrn{\DelimMin{2}c+d}}}}
+\Example{outer3}{3. Outer level 3 must be requested explicitly}{\DelimBrk{\DelimMin{3}a+\DelimPrn{b+\DelimPrn{\DelimMin{2}c+d}}}}
+\Example{leak}{4. A script hint propagates outward unless protected}{\DelimBrk{x_{\DelimPrn{\DelimMin{4}i+j}}+y}}
+\Example{protect}{5. DelimProtect isolates the script hint}{\DelimBrk{x_{\DelimProtect{\DelimPrn{\DelimMin{4}i+j}}}+y}}
+\noindent The displayed size in a script is capped by the package's
+style-dependent size commands. The propagated numeric level is not capped.
+\newpage
+\section*{Does horizontal distance affect size?}
+\Example{left}{1. Tall leaf near the left bracket}{\DelimBrk{\SeedTall+a+b+c+d+e+f}}
+\Example{center}{2. Same tall leaf in the middle}{\DelimBrk{a+b+c+\SeedTall+d+e+f}}
+\Example{right}{3. Same tall leaf near the right bracket}{\DelimBrk{a+b+c+d+e+f+\SeedTall}}
+\noindent All three select level 2. Neither horizontal distance nor measured
+box height enters the size-selection rule.
+\par\medskip
+\ifdefined\DelimSetup
+\typeout{JMS-SETUP defined}
+\else
+\typeout{JMS-SETUP undefined}
+\noindent Implementation note: this installed release documents
+\texttt{\string\DelimSetup}, but does not define that command.
+\fi
+\end{document}

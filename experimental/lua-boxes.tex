@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage[paperwidth=180mm,paperheight=180mm,margin=16mm]{geometry}
+\usepackage{amsmath,unicode-math,xcolor}
+\setmathfont{XITS Math}
+\usepackage{experimental/flat-core}
+\pagestyle{empty}
+\begin{document}
+\noindent\textbf{LuaLaTeX: actual row boxes}\par\medskip
+\noindent\textcolor{blue}{Blue: each separate row hbox.}\par
+\noindent\textcolor{green!50!black}{Green: enclosing formula box.}
+\par\bigskip
+\noindent\textbf{1. Same example as the XeTeX preview}
+\[
+ \begingroup\fboxsep=3pt\fboxrule=.3pt
+ \fcolorbox{green!50!black}{white}{$\displaystyle
+ \FlatShowBoxes\begin{flatmatchedsplit}
+  \left(a+b\\+c\right)^2_i
+ \end{flatmatchedsplit}$}\endgroup
+\]
+\noindent Without outlines:
+\[
+ \begin{flatmatchedsplit}\left(a+b\\+c\right)^2_i\end{flatmatchedsplit}
+\]
+\noindent\textbf{2. A fraction and scripts on a spanning pair}
+\[
+ \begingroup\fboxsep=3pt\fboxrule=.3pt
+ \fcolorbox{green!50!black}{white}{$\displaystyle
+ \FlatShowBoxes\begin{flatmatchedsplit}
+  f&=\left(a+\frac bc\\&+d\right)^2_i+z
+ \end{flatmatchedsplit}$}\endgroup
+\]
+\noindent These are physically separate horizontal lists inside a vertical
+box. Each row has its own height and depth. The prototype inserts at least
+3pt between adjacent row boxes, with a minimum baseline distance of 15pt.
+This spacing policy has not yet been matched to amsmath.
+\end{document}

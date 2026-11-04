@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[a4paper,margin=18mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage{finaldelim}
+\directlua{weighted=dofile('experimental/weighted-size.lua')}
+\newcount\calls
+\newcommand\once{\global\advance\calls by1}
+\newcommand\Sample{\begin{matchedalign}[rainbow]
+ \once F&=\left[a+b+\\
+ &\frac{\displaystyle\sum_{k=1}^n x_k}{1+t^2}+\\
+ &(c+d)^2\right]^{n+1}_j.
+\end{matchedalign}}
+\begin{document}
+\section*{Weighted sizing, rainbow and physical line splitting}
+Single-line pairs: $\lambda=20$ pt, $q=8$, maximum over positions. Spanning pairs: compare endpoint and full-content sizing below. Source runs once per display.
+\subsection*{Native sizing with rainbow}
+\Sample
+\directlua{weighted.enabled=true}
+\subsection*{Endpoint sizing with rainbow}
+\Sample
+\directlua{weighted.configure{spanning_scope='full'}}
+\subsection*{Full-content weighted sizing with rainbow}
+\Sample
+\directlua{weighted.configure{spanning_scope='endpoints'}}
+\newpage
+\section*{Endpoint mode: alignment and debugging}
+\subsection*{Nested pairs and two alignment groups}
+\begin{matchedalignat}[rainbow]{2}
+ \once A&=\left[\frac ab+\left(x+ &G&=u+v\\
+ &\frac{\sum_{k=1}^n u_k}{1+t^2}+ &&+\left(\frac rs\right)^2\\
+ &y\right)^2+\frac cd\right]^m_i &&=w.
+\end{matchedalignat}
+\subsection*{Debug: actual row boxes and alignment points}
+\begin{matchedalign}[rainbow,debug=all]
+ \once B&=\left[a+\left(\frac xy+\\
+ &\frac{1}{1+t^2}+\\
+ &z\right)^2+b\right]_k.
+\end{matchedalign}
+\subsection*{Rainbow disabled}
+\begin{matchedalign*}
+ \once C&=\left[a+b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+t^2}+\\
+ &c\right]^2.
+\end{matchedalign*}
+\directlua{assert(weighted.measured==8)}
+\ifnum\calls=6\else\errmessage{Source was replayed}\fi
+\end{document}

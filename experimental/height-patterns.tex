@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[paperwidth=297mm,paperheight=230mm,margin=10mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage{xcolor,array}
+\pagestyle{empty}
+\newbox\highbox\newbox\lowbox
+\newdimen\mathaxis\newdimen\targetradius
+\newdimen\slotwidth\newdimen\slotgap
+\slotwidth=36pt\slotgap=4pt
+\newcommand\Slot[1]{\hbox to\slotwidth{\hss\if h#1\copy\highbox\else\copy\lowbox\fi\hss}}
+\newcommand\Slots[4]{\Slot{#1}\kern\slotgap\Slot{#2}\kern\slotgap\Slot{#3}\kern\slotgap\Slot{#4}}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Cell[3]{\begingroup\targetradius=#2sp\relax
+\centering\hbox to\linewidth{\hss$\displaystyle {\color{blue}\LeftSized}\Slots#1{\color{blue}\RightSized}$\hss}\par
+\vspace{2pt}{\scriptsize $R=#3$\,pt}\par\endgroup}
+\begin{document}
+\noindent{\Large\bfseries Delimiter sizing: six height arrangements}\par\smallskip
+\noindent XITS Math / LuaLaTeX. Four equal-width slots (36\,pt), three equal gaps (4\,pt).
+Each row contains the same two tall and two low boxes; only their order changes.\par\medskip
+\setbox\highbox=\hbox{$\displaystyle\frac{\displaystyle\sum_{k=1}^{n}x_k}{1+\frac pq}$}
+\setbox\lowbox=\hbox{$\displaystyle a+b$}
+\mathaxis=\Umathaxis\displaystyle
+\directlua{dofile('experimental/height-patterns.lua')}
+\par\medskip\small
+\noindent $r_i=\max(h_i-a,d_i+a)$ is the radius about the math axis $a$;
+$H=\max_i r_i$, $L=\min_i r_i$, $E=\max(r_1,r_4)$.\par
+\noindent Distance rule: $R=\max_i\{L+(r_i-L)\exp(-\delta_i/\lambda)\}$,
+with $\delta_i$ the gap from slot $i$ to the nearer content boundary and
+$\lambda=36+4=40$\,pt. Distances here are $0,40,40,0$\,pt.
+This is an experimental rule, not a validated perceptual model.\par
+\noindent Blue delimiters remain centered on the math axis. $R$ is the sizing input;
+TeX applies its usual delimiter selection rules, so the rendered height need not be $2R$.
+\end{document}

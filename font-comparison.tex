@@ -1,0 +1,56 @@
+% Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\setmathfont{Latin Modern Math}[version=lm]
+\usepackage[niji]{finaldelim}
+\setlength\parindent{0pt}
+\setlength\parskip{8pt}
+\newcommand\Tall{\frac{\displaystyle\sum_{k=1}^n x_k}{1+p/q}}
+\newcommand\Single{\begin{equation*}
+ F=\left[\Tall+\frac{x^2+y^2}{z}+a+b\right]^2_j
+\end{equation*}}
+\newcommand\Broken{\begin{equation*}
+ F&=\left[a+b+\\
+ &\Tall+\\
+ &(c+d)^2\right]^{n+1}_j
+\end{equation*}}
+\newcommand\FirstPanel[2]{\begin{minipage}[t]{.475\linewidth}
+\mathversion{#1}\textbf{\large #2}\par
+\textbf{Inline slash and nested fraction}\par
+$p/q\quad 1+p/q\quad\displaystyle\frac{x}{1+p/q}$\par\medskip
+$\displaystyle\frac{x}{1+\frac{p}{q}}\qquad\frac{x}{1+t^2}$\par\medskip
+\textbf{Inline nesting (niji)}\par
+$\left[a+\left(b+c\right)\right]^2_j$\par\medskip
+\textbf{Native delimiter sizing}\par
+\FinalDelimSetup{sizing=native}\Single
+\medskip\textbf{Weighted delimiter sizing}\par
+\FinalDelimSetup{sizing=weighted}\Single
+\end{minipage}}
+\newcommand\SecondPanel[2]{\begin{minipage}[t]{.475\linewidth}
+\mathversion{#1}\textbf{\large #2}\par
+\textbf{Native delimiter sizing}\par
+\FinalDelimSetup{sizing=native}\Broken
+\medskip\textbf{First/last rows (default)}\par
+\FinalDelimSetup{sizing=weighted,spanning=endpoints}\Broken
+\medskip\textbf{Full-content weighted sizing}\par
+\FinalDelimSetup{spanning=full}\Broken
+\end{minipage}}
+\begin{document}
+{\LARGE\bfseries Math font comparison}\par
+Identical source at 11pt; native font metrics and spacing.
+No horizontal scaling or manual kerns. Weighted settings:
+$\lambda=20\,\mathrm{pt}$, $q=8$, maximum over positions, scale 1.
+\par\bigskip\noindent
+\FirstPanel{normal}{XITS Math}\hfill\FirstPanel{lm}{Latin Modern Math}
+\vfill
+The slash and nested fractions are retained here specifically for comparison.
+Changing the font also changes the available delimiter variants and assemblies.
+\newpage
+{\LARGE\bfseries Explicit row breaks}\par
+The same three rows, with identical source and sizing options in each column.
+The middle row is taller than the first and last rows.
+\par\bigskip\noindent
+\SecondPanel{normal}{XITS Math}\hfill\SecondPanel{lm}{Latin Modern Math}
+\end{document}

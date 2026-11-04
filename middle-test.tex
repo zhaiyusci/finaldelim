@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[margin=18mm]{geometry}
+\ifdefined\TraditionalMath\else
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\fi
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newsavebox{\baseline}\newsavebox{\actual}
+\newcount\calls
+\newcommand\once{\global\advance\calls by1}
+\newcommand\MiddleCheck[1]{%
+ \FinalDelimSetup{sizing=native,niji=false}%
+ \sbox\baseline{$#1$}%
+ \FinalDelimSetup{sizing=weighted,q=0,scale=1}%
+ \sbox\actual{$#1$}%
+ \ifdim\wd\baseline=\wd\actual\else\errmessage{Middle width changed at q=0}\fi
+ \ifdim\ht\baseline=\ht\actual\else\errmessage{Middle height changed at q=0}\fi
+ \ifdim\dp\baseline=\dp\actual\else\errmessage{Middle depth changed at q=0}\fi
+ \noindent Native:\usebox\baseline\par
+ \noindent Maximum:\usebox\actual\par\medskip}
+\newcommand\Case{\left[ a+b+\frac{\sum_{k=1}^n x_k}{1+x^2}
+ \middle|c+\left(d\middle|\frac uv\right)
+ \middle\Vert e\right]^2_j}
+\begin{document}
+\MiddleCheck{\left(a\middle|b\middle\Vert c\right)^2_j}
+\MiddleCheck{\left(a+\middle|+b\middle|=c\right)}
+\MiddleCheck{\left(a=\middle|b\middle|+c\right)}
+\MiddleCheck{\displaystyle\Case}
+\MiddleCheck{\left.\frac xy\middle|\middle.\frac uv\right\}}
+\MiddleCheck{\left(\middle|\middle\Vert\right)}
+\MiddleCheck{{\scriptstyle\left(a\middle|\frac bc\middle|d\right)^2}}
+\MiddleCheck{\left\langle\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|\frac ab\middle|\phi\right\rangle}
+\clearpage
+\FinalDelimSetup{sizing=weighted,q=8,niji=false}
+\noindent PlainStart:\par\noindent$\displaystyle\Case$\par
+\FinalDelimSetup{niji}
+\noindent RainbowStart:\par\noindent$\displaystyle\Case$\par
+\noindent EndChecks:\par
+\begin{equation}[niji,spanning=endpoints]
+ F&=\left[\once a\middle|b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}\middle|c+\\
+ &d\middle\Vert e\right]^2_j\label{eq:middle-one}
+\end{equation}
+\begin{align}[niji,spanning=full]
+ G&=\left[\once a+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}\middle|b+\\
+ &c\middle|d\right]^2\label{eq:middle-row}
+\end{align}
+\ifnum\calls=2\else\errmessage{Middle source replayed}\fi
+\end{document}

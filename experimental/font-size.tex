@@ -1,0 +1,647 @@
+\documentclass{article}
+\usepackage[paperwidth=760mm,paperheight=400mm,margin=10mm]{geometry}
+\usepackage{unicode-math,array,xcolor}
+\setmathfont{XITS Math}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newbox\naturalbody\newdimen\mathaxis\newdimen\decaylength\newdimen\targetradius
+\newcount\sourceexecutions
+\newcommand\High{\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}}
+\newcommand\Medium{\frac{x^2+y^2}{z}}
+\newcommand\Mark[1]{\directlua{grid.mark(#1)}}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Cell[4]{\begingroup\targetradius=#1sp\centering
+\hbox to\linewidth{\hss$\displaystyle {\color{blue}\LeftSized}\copy\naturalbody{\color{blue}\RightSized}$\hss}\par\smallskip
+{\scriptsize $R_L=#2,\quad R_R=#3,\quad R=#4$ pt}\par\endgroup}
+\begin{document}
+\directlua{grid=dofile('experimental/font-size.lua')}
+{\Large\bfseries 1. hml: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 2. lmh: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 3. mhl: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 4. hlm: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 5. lhl: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 6. hllh: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1s8",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1s10",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1s12",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1s16",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1s20",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 7. hml (long low blocks): fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 8. lhl (long low blocks): fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6s8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6s10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6s12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6s16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6s20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 9. hllh (long low blocks): fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6s8",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6s10",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6s12",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6s16",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6s20",4)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 10. Wide high term, low tail: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wides8",2)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wides10",2)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wides12",2)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wides16",2)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wides20",2)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 11. Single square control: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("squares8",1)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("squares10",1)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("squares12",1)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("squares16",1)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("squares20",1)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 12. Resolvent expansion: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvents8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvents10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvents12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvents16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvents20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 13. Integral with boundary terms: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integrals8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integrals10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integrals12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integrals16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integrals20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 14. Nested fractions and a long polynomial: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nesteds8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nesteds10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nesteds12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nesteds16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nesteds20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\newpage
+{\Large\bfseries 15. Matrix-valued terms: fixed physical decay length}\par\medskip
+\directlua{grid.caption()} Actual font sizes; no scaling of finished formulas.\par\medskip
+\begin{tabular}{@{}p{350mm}p{350mm}@{}}\centering Native \texttt{\string\left...\string\right}&\centering Configured model\tabularnewline[8pt]
+\multicolumn{2}{@{}l}{\textbf{8 pt}}\\[4pt]
+\begingroup\fontsize{8}{9.6}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrixs8",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{8}{9.6}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{10 pt}}\\[4pt]
+\begingroup\fontsize{10}{12.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrixs10",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{10}{12.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{12 pt}}\\[4pt]
+\begingroup\fontsize{12}{14.399999999999999}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrixs12",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{12}{14.399999999999999}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{16 pt}}\\[4pt]
+\begingroup\fontsize{16}{19.2}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrixs16",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{16}{19.2}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\multicolumn{2}{@{}l}{\textbf{20 pt}}\\[4pt]
+\begingroup\fontsize{20}{24.0}\selectfont
+
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\mathaxis=\Umathaxis\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrixs20",3)}
+\centering\hbox to\linewidth{\hss$\displaystyle\left[\copy\naturalbody\right]$\hss}\par\endgroup &
+\begingroup\fontsize{20}{24.0}\selectfont\directlua{grid.cell()}\endgroup\\[12pt]
+\end{tabular}\par\medskip
+Each size is typeset once and reused for the native and model pair. $R_L,R_R,R$ are physical radii in pt.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius.
+\ifnum\sourceexecutions=75\else\errmessage{Repeated source execution}\fi\directlua{grid.close()}\end{document}

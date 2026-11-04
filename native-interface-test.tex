@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{XITS Math}
+\usepackage[niji]{finaldelim}
+\newcount\runs
+\begin{document}
+Inline $\left[a+\left(\frac bc\right)\right]^2_j$ and ordinary $(x)$.
+Scripts $x^{\left(a+\left[b\right]\right)}+y_{\left(c\right)}$.
+\begin{equation}\global\advance\runs by1
+ F&=\left[a+b+\\&\frac{\sum_{k=1}^n x_k}{1+\frac pq}+\\&c\right]^2\label{eq:one}
+\end{equation}
+\begin{equation}[spanning=full,lambda=20pt,q=8,scale=1,niji=false]
+ F&=\left[a+b+\\&\frac{\sum_{k=1}^n x_k}{1+\frac pq}+\\&c\right]^2\label{eq:two}
+\end{equation}
+\[F&=\left[a+b\\&+c\right]\]
+\begin{equation*}F&=x &G&=y\\&=z&&=w\end{equation*}
+\begin{equation}\begin{pmatrix}a&b\\c&d\end{pmatrix}\label{eq:matrix}\end{equation}
+\begin{align}A&=\left[x+\\&y\right]\label{eq:row}\end{align}
+\begin{equation}\begin{matchedsplit}x&=a\\&+b\end{matchedsplit}\end{equation}
+\FinalDelimSetup{niji=false,sizing=native}
+Plain inline $\left[a+\left(b\right)\right]^2$.
+\ifnum\runs=1\else\errmessage{Source replayed}\fi
+\end{document}

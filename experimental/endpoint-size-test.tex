@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage{finaldelim}
+\directlua{endpoint = dofile('experimental/endpoint-size.lua')}
+\begin{document}
+Reference:
+\[\left[+(c+d)^2\right]^{n+1}_j\]
+Optimized:
+\directlua{endpoint.enabled=true}
+\begin{matchedalign*}
+ F&=\left[a+b\\
+ &+\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}\\
+ &+(c+d)^2\right]^{n+1}_j
+\end{matchedalign*}
+EndCheck.
+\directlua{assert(endpoint.measured==1)}
+\newpage
+Tall endpoints and nested spanning pairs:
+\begin{matchedalign*}[rainbow,debug=all]
+ A&=\left[\frac{a}{b}+\left(x+\\
+ &\frac{\sum_{k=1}^n u_k}{1+\frac pq}+\\
+ &y\right)^2+\frac{c}{d}\right]^{m}_i
+\end{matchedalign*}
+\directlua{assert(endpoint.measured==3)}
+\end{document}

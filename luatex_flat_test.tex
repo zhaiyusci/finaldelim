@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{amsmath}
+\ifdefined\UnicodeProbe\usepackage{unicode-math}\setmathfont{XITS Math}\fi
+\usepackage[backend=flat]{finaldelim}
+\newsavebox{\referencebox}\newsavebox{\actualbox}
+\newcommand\SameDimensions{%
+ \ifdim\wd\referencebox=\wd\actualbox\else\errmessage{Width changed}\fi
+ \ifdim\ht\referencebox=\ht\actualbox\else\errmessage{Height changed}\fi
+ \ifdim\dp\referencebox=\dp\actualbox\else\errmessage{Depth changed}\fi}
+\newcounter{evaluations}
+\begin{document}
+% The row heights differ; compare native amsmath spacing at two jot settings.
+\newcommand\SpacingCheck{%
+ \sbox{\referencebox}{$\begin{aligned}a&=b\\c&=\frac{\sum_{k=1}^{n}x_k}{1+\frac pq}\\d&=z_i^2\end{aligned}$}%
+ \sbox{\actualbox}{$\begin{matchedaligned}a&=b\\c&=\frac{\sum_{k=1}^{n}x_k}{1+\frac pq}\\d&=z_i^2\end{matchedaligned}$}%
+ \SameDimensions\noindent\usebox{\referencebox}\qquad\usebox{\actualbox}\par}
+\SpacingCheck
+{\jot=9pt\SpacingCheck}
+\sbox{\referencebox}{$\begin{aligned}&\operatorname{Tr}e^{-H}\\&=x\end{aligned}$}
+\sbox{\actualbox}{$\begin{matchedaligned}&\operatorname{Tr}e^{-H}\\&=x\end{matchedaligned}$}\SameDimensions
+% No change in physical geometry from color/debug, including scripts on
+% delimiter pairs that cross cells and rows.
+\sbox{\referencebox}{$\begin{matchedaligned}[c][rainbow=false]
+ f&=\left[\left(a+\frac bc\\&+d\right)^2_i\\&+e\right]^{n+1}_j
+ \end{matchedaligned}$}
+\sbox{\actualbox}{$\begin{matchedaligned}[c][rainbow,debug=all]
+ f&=\left[\left(a+\frac bc\\&+d\right)^2_i\\&+e\right]^{n+1}_j
+ \end{matchedaligned}$}\SameDimensions
+\noindent\usebox{\referencebox}\qquad\usebox{\actualbox}\par
+\begin{matchedalignat}{3}
+ \stepcounter{evaluations}a&=b &\quad c&=d &\quad e&=f\label{lf:one}\\*[2pt]
+ g&=h &i&=j &k&=l\notag\\
+ m&=n &o&=p &q&=r\tag{X}\label{lf:custom}\\
+ \intertext{Native metadata and spacing.}
+ s&=t &u&=v &w&=z\displaybreak[0]\\
+ a&=b &c&=d &e&=f\label{lf:last}\\
+\end{matchedalignat}
+\ifnum\value{evaluations}=1\else\errmessage{Source evaluated more than once}\fi
+\begin{matchedalignat*}[rainbow]{2}
+ x&=\left(a &\quad y&=\left[b\\
+  &+c\right]\right)^2_i & &+d
+\end{matchedalignat*}
+\typeout{LUA FLAT ASSERTIONS PASSED}
+\end{document}

@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath}
+\ifdefined\UnicodeProbe
+ \usepackage{unicode-math}\setmathfont{XITS Math}
+\fi
+\usepackage{experimental/flat-core}
+\pagestyle{empty}
+\begin{document}
+\FlatCompare{a+\frac bc+d^2}{a+\frac bc\\+d^2}
+\FlatCompare{\operatorname{Tr}\left(a+\frac bc+d\right)^2_i+z}
+ {\operatorname{Tr}\left(a+\frac bc\\+d\right)^2_i+z}
+\FlatCompare{\left[\left(a+b+c\right)^2+d\right]^{n+1}_j}
+ {\left[\left(a+b\\+c\right)^2\\+d\right]^{n+1}_j}
+\FlatCompare{\left\{\frac{a}{b}\middle|c+d\right\}_k}
+ {\left\{\frac{a}{b}\\\middle|c+d\right\}_k}
+\FlatCompare{f=\left(a+b+c\right)^2+\sqrt{d}}
+ {f&=\left(a+b\\&+c\right)^2+\sqrt{d}}
+\FlatCompare{\left.\frac{d}{dx}f(x)+g(x)\right|_{x=0}^{x=1}}
+ {\left.\frac{d}{dx}f(x)\\+g(x)\right|_{x=0}^{x=1}}
+\FlatCompare{\sum_{j=1}^n a_j+\int_0^1 f(x)\,dx}
+ {\sum_{j=1}^n a_j\\+\int_0^1 f(x)\,dx}
+\FlatCompare{\left(\sqrt{\frac{a+b}{c}}+\frac{x^{i+1}}{y_j}\right)^{p^2}_{q_i}}
+ {\left(\sqrt{\frac{a+b}{c}}\\+\frac{x^{i+1}}{y_j}\right)^{p^2}_{q_i}}
+\FlatCompare{a=bc=de=f}{a&=b\\c&=d\\e&=f}
+\FlatCompare{\left(a+b\right)^2\left(c+d\right)_i}
+ {\left(a\\+b\right)^2\left(c\\+d\right)_i}
+\noindent EndComparisons:\par
+\newcounter{once}
+\[
+ \begin{flatmatchedsplit}
+  \stepcounter{once}\left(a+b\\+c\right)^2
+ \end{flatmatchedsplit}
+\]
+\ifnum\value{once}=1\else\errmessage{Formula evaluated more than once}\fi
+\typeout{FLAT SINGLE EVALUATION PASS}
+\end{document}

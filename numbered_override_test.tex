@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage[overridesplit,overridealign]{finaldelim}
+\begin{document}
+\section*{Automatic delimiters with per-row numbering}
+\begin{align}
+F &= \left( a+\left[\frac{x}{y}+b \label{row:first}\\
+  &\quad +c\right]+d \label{row:second}\\
+  &\quad +\frac{p}{q}\right)\label{row:third}
+\end{align}
+\begin{align}
+G &= \left\{\frac{a}{b} \middle| x \label{row:fourth}\\*[3pt]
+  &\quad +y \notag\\
+  &\quad +z\right\}\label{row:fifth}
+\end{align}
+\begin{align}
+H &= \left(\frac{a}{b}\tag{A}\label{row:custom}\\
+  &+x\tag*{B}\label{row:bare}\\
+  &+y\nonumber\\
+  &+z\right)\label{row:sixth}
+\end{align}
+\begin{align*}
+u &= \left(\frac{x}{y}\\ &+1\right)
+\end{align*}
+\begin{align}
+\begin{split}v &= a+b\\ &= c+d\end{split}\label{row:seventh}\\
+w &= \left(\begin{matrix}a&b\\c&d\end{matrix}\\ &+z\right)\notag
+\end{align}
+References: \eqref{row:first}, \eqref{row:second}, \eqref{row:third},
+\eqref{row:fourth}, \eqref{row:fifth}, \eqref{row:custom},
+\ref{row:bare}, \eqref{row:sixth}, \eqref{row:seventh}.
+% Other amsmath environments must retain their native ending behavior.
+\begin{alignat}{2} a&=b &\quad c&=d \end{alignat}
+\begin{alignat*}{2} a&=b &\quad c&=d \end{alignat*}
+\begin{xalignat}{2} a&=b & c&=d \end{xalignat}
+\begin{xalignat*}{2} a&=b & c&=d \end{xalignat*}
+\begin{xxalignat}{2} a&=b & c&=d \end{xxalignat}
+\begin{flalign} a&=b && \end{flalign}
+\begin{flalign*} a&=b && \end{flalign*}
+\end{document}

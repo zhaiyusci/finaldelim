@@ -1,0 +1,48 @@
+\documentclass{article}
+% These assertions inspect the legacy measurement implementation.
+\usepackage[backend=legacy]{finaldelim}
+\ExplSyntaxOn
+\prop_new:N \g__test_heights_prop
+\cs_new_eq:NN \__test_close:n \__ms_close:n
+\cs_set_protected:Npn \__ms_close:n #1
+ {\__test_close:n {#1}
+  \prop_gput:NVx \g__test_heights_prop \l__ms_key_tl
+   {\dim_eval:n {\box_ht:c {l__ms_delim_\l__ms_key_tl _box}
+                 +\box_dp:c {l__ms_delim_\l__ms_key_tl _box}}}}
+\cs_new_protected:Npn \test_assert:nn #1#2
+ {\dim_compare:nNnF {#1} = {#2}
+   {\errmessage{Measurement~mismatch:~#1~versus~#2}}}
+\box_new:N \l__test_expected_box
+\ExplSyntaxOff
+\begin{document}
+\[\begin{matchedsplit}
+f &= \left(a \\ * [3pt] &+b\right)+\left[\frac{x}{y}\\ &+c\right]
+\end{matchedsplit}\]
+\ExplSyntaxOn
+\hbox_set:Nn \l__test_expected_box {$\displaystyle a+b$}
+\test_assert:nn {\prop_item:Nn \g__test_heights_prop {1}}
+ {\box_ht:N \l__test_expected_box+\box_dp:N \l__test_expected_box}
+\hbox_set:Nn \l__test_expected_box {$\displaystyle\frac{x}{y}+c$}
+\test_assert:nn {\prop_item:Nn \g__test_heights_prop {2}}
+ {\box_ht:N \l__test_expected_box+\box_dp:N \l__test_expected_box}
+\dim_compare:nNnF {\prop_item:Nn \g__test_heights_prop {1}} <
+ {\prop_item:Nn \g__test_heights_prop {2}} {\errmessage{Pairs~not~independent}}
+\ExplSyntaxOff
+\[\begin{matchedsplit}
+f &= \left( a+\left[\frac{x}{y}\\ &+b\right]\\ &+c\right)
+\end{matchedsplit}\]
+\ExplSyntaxOn
+\hbox_set:Nn \l__test_expected_box {$\displaystyle a+\left[\frac{x}{y}+b\right]+c$}
+\test_assert:nn {\prop_item:Nn \g__test_heights_prop {1}}
+ {\box_ht:N \l__test_expected_box+\box_dp:N \l__test_expected_box}
+\tl_set:Nn \l__ms_input_tl {x_{i+j}}
+\tl_clear:N \l__ms_render_tl
+\__ms_scan:
+\hbox_set:Nn \l__test_expected_box {$\displaystyle x_{i+j}$}
+\box_new:N \l__test_actual_box
+\hbox_set:Nn \l__test_actual_box {$\displaystyle\tl_use:N \l__ms_render_tl$}
+\test_assert:nn {\box_wd:N \l__test_expected_box}{\box_wd:N \l__test_actual_box}
+\test_assert:nn {\box_dp:N \l__test_expected_box}{\box_dp:N \l__test_actual_box}
+\iow_term:n {MATCHEDSPLIT~ASSERTIONS~PASSED}
+\ExplSyntaxOff
+\end{document}

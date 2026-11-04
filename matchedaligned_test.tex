@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[tbtags,leqno]{amsmath}
+\usepackage{finaldelim}
+\ExplSyntaxOn
+\box_new:N \l__ma_actual_box
+\box_new:N \l__ma_expected_box
+\cs_new_protected:Npn \ma_test:n #1
+ {
+  \hbox_set:Nn \l__ma_actual_box {$\begin{matchedaligned}[#1]a&=b&x&=y\\c&=d&u&=v\end{matchedaligned}$}
+  \hbox_set:Nn \l__ma_expected_box {$\begin{aligned}[#1]a&=b&x&=y\\c&=d&u&=v\end{aligned}$}
+  \clist_map_inline:nn {wd,ht,dp}
+   {\dim_compare:nNnF {\use:c {box_##1:N}\l__ma_actual_box} =
+      {\use:c {box_##1:N}\l__ma_expected_box}
+      {\errmessage{matchedaligned~#1~##1~mismatch}}}
+ }
+\ExplSyntaxOff
+\begin{document}
+\ExplSyntaxOn
+\ma_test:n {t}\ma_test:n {c}\ma_test:n {b}
+\hbox_set:Nn \l__ma_actual_box {$\begin{matchedaligned}a&=b\\&=c\end{matchedaligned}$}
+\hbox_set:Nn \l__ma_expected_box {$\begin{aligned}[c]a&=b\\&=c\end{aligned}$}
+\dim_compare:nNnF {\box_ht:N \l__ma_actual_box} = {\box_ht:N \l__ma_expected_box}
+ {\errmessage{Default~must~remain~centered~under~tbtags}}
+\iow_term:n {MATCHEDALIGNED~PLACEMENT~PASSED}
+\ExplSyntaxOff
+\begin{equation}\label{aligned:one}
+\left\{\begin{matchedaligned}[t][rainbow,colors={blue,red}]
+ F&=\left(a+\left[\frac{x}{y}\\ &+b\right]\\ &+\frac{p}{q}\right)
+\end{matchedaligned}\right.\qquad x>0
+\end{equation}
+\begin{equation}\label{aligned:two}
+\begin{matchedaligned}[b][rainbow=false]a&=\left(x\\&+y\right)\end{matchedaligned}
++\begin{matchedaligned}b&=c\\d&=e\end{matchedaligned}
+\end{equation}
+\end{document}

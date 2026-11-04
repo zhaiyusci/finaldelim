@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage[overridesplit,overridealign]{finaldelim}
+\allowdisplaybreaks
+\begin{document}
+\section*{Audit regression cases}
+\begin{align}
+f &= \left\langle\frac{a}{b}\label{audit:first}\\
+\intertext{The same pair continues after an explanatory paragraph.}
+ &+c\displaybreak[0]\\
+ &+d\right\rangle\label{audit:last}
+\end{align}
+\begin{gather}
+\begin{align}
+g &= \left(\frac{x}{y}\\ &+1\right)
+\end{align}
+\end{gather}
+\begin{matchedalign}
+h &= \left[\begin{matrix} a & \begin{matrix}b&c\\d&e\end{matrix}\\ f&g\end{matrix}\\
+ &+z\right]
+\end{matchedalign}
+\begin{equation}
+\begin{split}k &= \left(\frac{a}{b}\label{audit:split}\\ &+c\right)\end{split}
+\end{equation}
+\end{document}

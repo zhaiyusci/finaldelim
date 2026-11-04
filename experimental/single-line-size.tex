@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[a4paper,margin=18mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage{xcolor}
+\pagestyle{empty}
+\newbox\leftcontent
+\newbox\rightcontent
+\newbox\fullcontent
+\newdimen\mathaxis
+\newdimen\targetradius
+\newcommand\LeftContent{a+b}
+\newcommand\RightContent{(c+d)^2}
+\newcommand\Body{\LeftContent+\frac{\displaystyle\sum_{k=1}^{n}x_k}{1+\frac pq}+\RightContent}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Comparison[3]{\par\medskip\noindent\textbf{#1}\hfill Target radius: #3\,pt\par
+ \targetradius=#2sp\relax
+ \[ F=\mathinner{{\color{blue}\LeftSized}\copy\fullcontent{\color{blue}\RightSized}} \]
+}
+\begin{document}
+\section*{Single-line delimiter sizing}
+Identical content throughout: low endpoints and a tall middle fraction.
+Sizes are blended as distances from the math axis, keeping both delimiters
+centered on that axis. Native font size selection is retained.
+\setbox\leftcontent=\hbox{$\displaystyle\LeftContent$}
+\setbox\rightcontent=\hbox{$\displaystyle\RightContent$}
+\setbox\fullcontent=\hbox{$\displaystyle\Body$}
+\mathaxis=\Umathaxis\displaystyle
+\directlua{dofile('experimental/single-line-size.lua')}
+\medskip\noindent
+Here $E$ is the larger endpoint radius; $H$ is the full-content radius.
+The target radius is a sizing input: the font offers discrete delimiter sizes,
+so different inputs can produce the same visible size.
+\end{document}

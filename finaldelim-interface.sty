@@ -1,0 +1,89 @@
+% Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
+\ProvidesExplFile{finaldelim-interface.sty}{2026-11-04}{0.1.0-dev}{Native math interfaces}
+\directlua{finaldelim_sizing=require('finaldelim-size')}
+\cs_new_protected:Npn\__fd_math_settings:
+ {\cs_set:Npx\fdSizingQ{\fp_to_decimal:N\l__fd_q_fp}
+  \cs_set:Npx\fdSizingScale{\fp_to_decimal:N\l__fd_scale_fp}}
+\__fd_math_settings:
+\everymath\expandafter{\the\everymath\__fd_math_settings:}
+\everydisplay\expandafter{\the\everydisplay\__fd_math_settings:}
+% Ordinary inline math uses the same native color wrappers as parsed displays.
+\cs_new_eq:NN\__fd_tex_left\left
+\cs_new_eq:NN\__fd_tex_middle\middle
+\cs_new_eq:NN\__fd_tex_right\right
+\int_new:N\l__fd_color_depth_int
+\cs_set_protected:Npn\__ms_native_left:nn #1#2
+ {\mathinner\bgroup\group_begin:
+  \tl_set:Nn\l__ms_group_color_tl{#1}
+  \colorlet{ms@group@content}{.}
+  \color{#1}\__fd_tex_left#2\color{ms@group@content}}
+% A primitive middle closes one math group and opens the next. Carry both
+% xcolor representations and the nesting depth across that boundary.
+\cs_set_protected:Npn\__ms_native_middle:n #1
+ {\use:x{\exp_not:N\__fd_native_middle:nnnn
+   {\exp_not:n{#1}}{\exp_not:o{\current@color}}
+   {\exp_not:o{\XC@current@color}}{\int_use:N\l__fd_color_depth_int}}}
+\cs_new_protected:Npn\__fd_native_middle:nnnn #1#2#3#4
+ {\color{\l__ms_group_color_tl}\__fd_tex_middle#1
+  \cs_set:Npn\current@color{#2}
+  \cs_set:Npn\XC@current@color{#3}
+  \XC@let@cN{\@backslashchar color@.}\XC@current@color
+  \int_set:Nn\l__fd_color_depth_int{#4}\set@color}
+\cs_set_protected:Npn\__ms_native_right:n #1
+ {\color{\l__ms_group_color_tl}\__fd_tex_right#1\group_end:\egroup}
+\cs_set_protected:Npn\left #1
+ {\bool_if:NTF\g__ms_rainbow_bool
+   {\exp_args:Nx\__ms_native_left:nn
+     {\clist_item:Nn\g__ms_colors_clist
+       {\int_mod:nn{\l__fd_color_depth_int}{\clist_count:N\g__ms_colors_clist}+1}}{#1}
+    \int_incr:N\l__fd_color_depth_int}
+   {\__fd_tex_left#1}}
+\cs_set_protected:Npn\middle #1
+ {\bool_if:NTF\g__ms_rainbow_bool{\__ms_native_middle:n{#1}}{\__fd_tex_middle#1}}
+\cs_set_protected:Npn\right #1
+ {\bool_if:NTF\g__ms_rainbow_bool{\__ms_native_right:n{#1}}{\__fd_tex_right#1}}
+% Parsed displays already have their own local rainbow pass; avoid recoloring.
+\cs_new_eq:NN\__fd_prepare:n\__mslua_prepare:n
+\cs_set_protected:Npn\__mslua_prepare:n #1
+ {\cs_set_eq:NN\left\__fd_tex_left
+  \cs_set_eq:NN\middle\__fd_tex_middle
+  \cs_set_eq:NN\right\__fd_tex_right
+  \__fd_prepare:n{#1}}
+\NewDocumentCommand\FinalDelimSetup{m}
+ {\keys_set:nn{matchedsplit/package}{#1}\__fd_math_settings:}
+% Preserve amsmath's outer display and tag handling; infer inner column pairs.
+\NewCommandCopy\fdNativeEquation\equation
+\NewCommandCopy\fdNativeEndEquation\endequation
+\exp_args:Ncc\NewCommandCopy{fdNativeEquationStar}{equation*}
+\exp_args:Ncc\NewCommandCopy{fdNativeEndEquationStar}{endequation*}
+
+\tl_new:N\l__fd_equation_meta_tl
+\cs_new_protected:Npn\__fd_equation:nn #1#2
+ {\group_begin:\__ms_options:n{#2}\__mslua_select:
+  \bool_if:NTF\l__mslua_flat_bool
+   {\tl_clear:N\l__fd_equation_meta_tl
+    \cs_set_eq:NN\__fd_original_metadata_arg:w\__mslua_metadata_arg:w
+    \cs_set_protected:Npn\__mslua_metadata_arg:w ##1##2\q_stop
+     {\tl_if_in:NnTF\l__mslua_command_tl{\tag}
+       {\__fd_equation_metadata:nn{##1}{##2}}
+       {\tl_if_in:NnTF\l__mslua_command_tl{\label}
+         {\__fd_equation_metadata:nn{##1}{##2}}
+         {\__fd_original_metadata_arg:w ##1##2\q_stop}}}
+    \__mslua_prepare:n{#1}
+    \tl_use:N\l__fd_equation_meta_tl
+    \begin{aligned}\tl_use:N\l__mslua_layout_tl\end{aligned}
+    \__mslua_release:}
+   {\__ms_typeset:nnn{#1}{c}{#2}}
+  \group_end:}
+\cs_new_protected:Npn\__fd_equation_metadata:nn #1#2
+ {\tl_set:Nn\l__mslua_input_tl{#2}
+  \tl_remove_once:Nn\l__mslua_input_tl{\q_mark}
+  \tl_put_right:NV\l__fd_equation_meta_tl\l__mslua_command_tl
+  \tl_put_right:Nn\l__fd_equation_meta_tl{{#1}}}
+\RenewDocumentEnvironment{equation}{O{} +b}
+ {\fdNativeEquation\__fd_equation:nn{#2}{#1}\fdNativeEndEquation}{}
+\RenewDocumentEnvironment{equation*}{O{} +b}
+ {\fdNativeEquationStar\__fd_equation:nn{#2}{#1}\fdNativeEndEquationStar}{}
+\cs_set_protected:Npn\[ #1\]
+ {\begin{equation*}#1\end{equation*}}
+\endinput

@@ -1,0 +1,261 @@
+\documentclass{article}
+\usepackage[paperwidth=760mm,paperheight=300mm,margin=10mm]{geometry}
+\usepackage{unicode-math,array,xcolor}
+\setmathfont{XITS Math}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newbox\naturalbody\newdimen\mathaxis\newdimen\decaylength\newdimen\targetradius
+\newcount\sourceexecutions
+\newcommand\High{\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}}
+\newcommand\Medium{\frac{x^2+y^2}{z}}
+\newcommand\Mark[1]{\directlua{grid.mark(#1)}}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Cell[4]{\begingroup\targetradius=#1sp\centering
+\hbox to\linewidth{\hss$\displaystyle {\color{blue}\LeftSized}\copy\naturalbody{\color{blue}\RightSized}$\hss}\par\smallskip
+{\scriptsize $R_L=#2,\quad R_R=#3,\quad R=#4$ pt}\par\endgroup}
+\newcommand\Row[2]{\multicolumn{4}{@{}l}{$q=#1$}\\[2pt]
+\directlua{grid.cell(10,#2)}&\directlua{grid.cell(20,#2)}&\directlua{grid.cell(40,#2)}&\directlua{grid.cell(80,#2)}\\[7pt]}
+\begin{document}
+\mathaxis=\Umathaxis\displaystyle
+\directlua{grid=dofile('experimental/absolute-decay.lua')}
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("hml1",3)}
+{\Large\bfseries 1. hml}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}\High\Mark{0}$}
+\directlua{grid.save("lmh1",3)}
+{\Large\bfseries 2. lmh}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\Medium\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("mhl1",3)}
+{\Large\bfseries 3. mhl}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}\Medium\Mark{0}$}
+\directlua{grid.save("hlm1",3)}
+{\Large\bfseries 4. hlm}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b\Mark{0}$}
+\directlua{grid.save("lhl1",3)}
+{\Large\bfseries 5. lhl}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b\Mark{0}+\Mark{3}a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh1",4)}
+{\Large\bfseries 6. hllh}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}\Medium\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("hml6",3)}
+{\Large\bfseries 7. hml (long low blocks)}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{2}\High\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}$}
+\directlua{grid.save("lhl6",3)}
+{\Large\bfseries 8. lhl (long low blocks)}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\High\Mark{0}+\Mark{2}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{3}a+b+a+b+a+b+a+b+a+b+a+b\Mark{0}+\Mark{4}\High\Mark{0}$}
+\directlua{grid.save("hllh6",4)}
+{\Large\bfseries 9. hllh (long low blocks)}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{\displaystyle\sum_{k=1}^{n}(x_k+y_k+z_k)}{1+\frac pq}\Mark{0}+\Mark{2}a+b+c+d\Mark{0}$}
+\directlua{grid.save("wide",2)}
+{\Large\bfseries 10. Wide high term, low tail}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\vcenter{\hbox{\vrule width20pt height20pt}}\Mark{0}$}
+\directlua{grid.save("square",1)}
+{\Large\bfseries 11. Single square control}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\frac{1}{z-E_0}\Mark{0}+\Mark{2}\frac{\langle0|V|0\rangle}{(z-E_0)^2}\Mark{0}+\Mark{3}\sum_{n\ne0}\frac{|\langle n|V|0\rangle|^2}{(z-E_0)^2(z-E_n)}\Mark{0}$}
+\directlua{grid.save("resolvent",3)}
+{\Large\bfseries 12. Resolvent expansion}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\int_0^\infty\frac{x^2}{e^x-1}\,\mathrm{d}x\Mark{0}+\Mark{2}\frac{f(0)}2\Mark{0}+\Mark{3}\frac{f^{\prime}(0)}{12}\Mark{0}$}
+\directlua{grid.save("integral",3)}
+{\Large\bfseries 13. Integral with boundary terms}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}a+bx+cx^2+dx^3\Mark{0}+\Mark{2}\frac{1}{1+\frac{u}{1+v^2}}\Mark{0}+\Mark{3}\frac{\alpha}{\beta}\Mark{0}$}
+\directlua{grid.save("nested",3)}
+{\Large\bfseries 14. Nested fractions and a long polynomial}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\newpage
+\global\setbox\naturalbody=\hbox{$\displaystyle\global\advance\sourceexecutions by1 \Mark{1}\begin{pmatrix}a&b\\c&d\end{pmatrix}\Mark{0}+\Mark{2}\frac{1}{\det A}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\Mark{0}+\Mark{3}\varepsilon I\Mark{0}$}
+\directlua{grid.save("matrix",3)}
+{\Large\bfseries 15. Matrix-valued terms}\par\smallskip
+Native reference: $\displaystyle\left[\copy\naturalbody\right]$\par\medskip
+\begin{tabular}{@{}p{180mm}p{180mm}p{180mm}p{180mm}@{}}
+\centering $\lambda=10\,\mathrm{pt}$&\centering $\lambda=20\,\mathrm{pt}$&\centering $\lambda=40\,\mathrm{pt}$&\centering $\lambda=80\,\mathrm{pt}$\tabularnewline[5pt]
+\Row{1}{1}
+\Row{2}{2}
+\Row{4}{4}
+\Row{8}{8}
+\Row{16}{16}
+\Row{\infty}{0}
+\end{tabular}\par\smallskip
+Fixed decay lengths (1, 2, 4, 8 em at 10pt), independent of formula width. Natural 10pt XITS Math; source typeset once, reused in every cell. Side estimates combined with $p=3$.\par
+Each marked term has constant radius over its width; gaps and separators use the lowest term radius. Input radii shown; native delimiter sizes are discrete.
+\ifnum\sourceexecutions=15\else\errmessage{Repeated source execution}\fi
+\directlua{grid.close()}\end{document}

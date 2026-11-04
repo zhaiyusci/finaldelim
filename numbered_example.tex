@@ -1,0 +1,28 @@
+% Copyright (C) 2026 Yu Zhai <me@zhaiyusci.net>
+% This work may be distributed and/or modified under the LaTeX Project
+% Public License, version 1.3c or (at your option) any later version.
+% https://www.latex-project.org/lppl.txt
+% LPPL maintenance status: maintained.
+% Current Maintainer: Yu Zhai <me@zhaiyusci.net>.
+% The distributed Work is listed in MANIFEST.md.
+%
+\documentclass{article}
+\usepackage[overridesplit,overridealign]{finaldelim}
+\begin{document}
+\section*{Automatic brackets, numbered rows}
+\begin{align}
+F &= \left( a+\left[\frac{x}{y}+b \label{eq:first}\\
+  &\quad +c\right]+d \label{eq:second}\\
+  &\quad +\frac{p}{q}\right)\label{eq:third}
+\end{align}
+Each row has its own number: \eqref{eq:first}, \eqref{eq:second},
+\eqref{eq:third}. Both delimiter pairs match across rows.
+
+\section*{One number for the entire split}
+\begin{equation}
+\begin{split}
+G &= \left(\frac{a}{b}\\
+  &\quad +c\right)
+\end{split}
+\end{equation}
+\end{document}

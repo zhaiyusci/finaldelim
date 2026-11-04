@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath,unicode-math}
+\setmathfont{XITS Math}
+\usepackage{experimental/xe-output}
+\pagestyle{empty}
+\newcommand\XeCompare[2]{\par\bigskip\noindent Native:\par\noindent
+ $\displaystyle#1$\par\medskip\noindent Split:\par
+ \[\begin{xeflatmatchedsplit}#2\end{xeflatmatchedsplit}\]}
+\begin{document}
+\XeCompare{\operatorname{Tr}\left(a+\frac bc+d\right)^2_i+z}
+ {\operatorname{Tr}\left(a+\frac bc\\+d\right)^2_i+z}
+\XeCompare{\left[\left(a+b+c\right)^2+d\right]^{n+1}_j}
+ {\left[\left(a+b\\+c\right)^2\\+d\right]^{n+1}_j}
+\XeCompare{f=\left(a+b+c\right)^2_i+\sqrt d}
+ {f&=\left(a+b\\&+c\right)^2_i+\sqrt d}
+\XeCompare{\left\{\frac ab\middle|c+d\right\}_k}
+ {\left\{\frac ab\\\middle|c+d\right\}_k}
+\XeCompare{\left.\frac d{dx}f(x)+g(x)\right|_{x=0}^{x=1}}
+ {\left.\frac d{dx}f(x)\\+g(x)\right|_{x=0}^{x=1}}
+\noindent EndComparisons:\par
+After: $x^2+y_i$.
+\end{document}

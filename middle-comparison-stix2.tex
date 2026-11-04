@@ -1,0 +1,67 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{unicode-math}\setmathfont{STIX Two Math}
+\usepackage{finaldelim}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: middle delimiters}\fancyhead[R]{LuaLaTeX / STIX Two Math}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}\setlength\parskip{6pt}
+\newcommand\BraKet{\left\langle\psi\middle|
+ \frac{\hat H^2}{E_0^2+\hat H^2}\middle|\phi\right\rangle}
+\newcommand\Conditional{\mathbb E\left[
+ \frac{\sum_{i=1}^n X_i}{n}\middle|\mathcal F\right]}
+\newcommand\Nested{\left[\left\langle\psi\middle|
+ \frac{\hat H^2}{E_0^2+\hat H^2}\middle|\phi\right\rangle
+ \middle|\mathcal F\right]^2_j}
+\newcommand\Compare[1]{%
+ \textbf{Native LuaLaTeX}\par
+ \FinalDelimSetup{sizing=native,niji=false}\[#1\]
+ \textbf{Weighted sizing with niji}\par
+ \FinalDelimSetup{sizing=weighted,q=8,scale=1,lambda=20pt,niji}\[#1\]
+ \FinalDelimSetup{niji=false}}
+\begin{document}
+{\Large\bfseries Native and weighted middle delimiters}\par
+Identical formula, font and size in each pair. Default weighted parameters:
+20pt decay length, profile power 8, maximum over delimiter positions.
+\section*{One middle: conditional expectation}
+\Compare{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathcal F\right]}
+\section*{Two middles: a matrix element}
+\Compare{\left\langle\psi\middle|\frac{\hat H^2}{E_0^2+\hat H^2}\middle|\phi\right\rangle}
+\section*{Nested groups and attached scripts}
+\Compare{\left[\left\langle\psi\middle|\frac{\hat H^2}{E_0^2+\hat H^2}\middle|\phi\right\rangle\middle|\mathcal F\right]^2_j}
+\newpage
+{\Large\bfseries The middle position participates in sizing}\par
+The following are layout stress tests, keeping a tall fraction among low terms.
+\section*{Separator far from the tall term}
+\Compare{\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\middle|i\right]}
+\section*{Separator next to the tall term}
+\Compare{\left[a+b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h+i\right]}
+\section*{Several separators}
+\Compare{\left[a\middle|b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|e+f+g+h+i\right]}
+\newpage
+{\Large\bfseries Explicit breaks and multiple middles}\par
+\textbf{Native sizing; physical row splitting}\par
+\begin{equation}[sizing=native]
+ F&=\left[a\middle|b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}\middle|c+\\
+ &d\middle\Vert e\right]^2_j
+\end{equation}
+\textbf{Delimiter-bearing rows (endpoints policy), with niji}\par
+\begin{equation}[spanning=endpoints,niji]
+ F&=\left[a\middle|b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}\middle|c+\\
+ &d\middle\Vert e\right]^2_j
+\end{equation}
+A middle delimiter on the tall row makes that row part of the endpoint envelope.\par
+\textbf{Full-content distance weighting, with niji}\par
+\begin{equation}[spanning=full,niji]
+ F&=\left[a\middle|b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}\middle|c+\\
+ &d\middle\Vert e\right]^2_j
+\end{equation}
+\textbf{Per-row numbering}\par
+\begin{align}[spanning=full,niji]
+ G&=\left\langle\psi\middle|\\
+ &\frac{\hat H^2}{E_0^2+\hat H^2}\middle|\\
+ &\phi\right\rangle
+\end{align}
+\end{document}

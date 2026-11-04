@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage[rainbow]{finaldelim}
+\directlua{endpoint = dofile('experimental/endpoint-size.lua')}
+\newcount\sourceevaluations
+\newcommand\once{\global\advance\sourceevaluations by 1 }
+\newcommand\sample{\begin{matchedalignat}{2}
+ \once F&=\left[a+b &\qquad G&=u+v\\
+ &+\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq} & &+\left(\frac rs\right)^2\\[3pt]
+ &+\left(c+d\right)^2\right]^{n+1}_j & &=w.
+\end{matchedalignat}}
+\begin{document}
+\section*{Endpoint delimiter sizing: experimental comparison}
+\noindent Same source, XITS Math, LuaLaTeX. Only the sizing policy changes.
+\subsection*{1. Native: all enclosed content determines the size}
+\sample
+\subsection*{2. Optimized: first and last endpoint cells determine the size}
+\directlua{endpoint.enabled = true}
+\sample
+\directlua{endpoint.enabled = false}
+\noindent The middle fraction and the other alignment group are excluded from
+endpoint sizing. Single-row pairs retain native sizing. The final single-line layout uses endpoint attachment metrics for scripts.
+Actual middle-row boxes retain their dimensions before physical partitioning.
+\ifnum\sourceevaluations=2\else\errmessage{Source evaluated more than once per formula}\fi
+\directlua{assert(endpoint.measured == 1, "Expected only the spanning pair to be resized")}
+\end{document}

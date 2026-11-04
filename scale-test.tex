@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{STIX Two Math}
+\usepackage[scale=0.9]{finaldelim}
+\newsavebox\nativeone\newsavebox\nativetwo
+\newcount\calls
+\begin{document}
+\ExplSyntaxOn
+\fp_compare:nNnF{\l__fd_scale_fp}={0.9}{\errmessage{Package scale lost}}
+\ExplSyntaxOff
+\FinalDelimSetup{scale=1}
+\begin{equation*}[scale=0.9,spanning=endpoints,niji]
+ F&=\left[\global\advance\calls by1 a+\\&\frac{1}{1+x^2}\middle| b\right]
+\end{equation*}
+\ExplSyntaxOn
+\fp_compare:nNnF{\l__fd_scale_fp}={1}{\errmessage{Environment scale leaked}}
+\ExplSyntaxOff
+\begin{equation*}[scale=1,spanning=endpoints,niji]
+ F&=\left[a+\\&\frac{1}{1+x^2}\middle| b\right]
+\end{equation*}
+\FinalDelimSetup{sizing=native,scale=1}
+\sbox\nativeone{$\left[\frac1x\middle|a\right]^2$}
+\FinalDelimSetup{scale=0.9}
+\sbox\nativetwo{$\left[\frac1x\middle|a\right]^2$}
+\ifdim\wd\nativeone=\wd\nativetwo\else\errmessage{Native width changed}\fi
+\ifdim\ht\nativeone=\ht\nativetwo\else\errmessage{Native height changed}\fi
+\ifdim\dp\nativeone=\dp\nativetwo\else\errmessage{Native depth changed}\fi
+\ifnum\calls=1\else\errmessage{Source replayed}\fi
+\typeout{SCALE SCOPE AND NATIVE ASSERTIONS PASSED}
+\end{document}

@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage{finaldelim}
+\begin{document}
+\begin{equation*}
+ F&=\left[a\middle|b+\\
+ &\frac{\sum_{k=1}^n x_k}{1+x^2}+\\
+ &c\right]
+\end{equation*}
+\begin{equation*}
+ F&=\left[a\middle|b+\\
+ &\frac{\displaystyle\sum_{k=1}^n\frac{x_k}{1+x_k^2}}{\displaystyle\sum_{k=1}^n y_k}+\\
+ &c\right]
+\end{equation*}
+\begin{equation*}
+ F&=\left[a+b+\\
+ &\frac{\displaystyle\sum_{k=1}^n\frac{x_k}{1+x_k^2}}{\displaystyle\sum_{k=1}^n y_k}\middle|\\
+ &c\right]
+\end{equation*}
+\end{document}

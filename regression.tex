@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{finaldelim}
+\usepackage{amssymb}
+\begin{document}
+\section*{Matchedsplit 0.5 regression examples}
+Nested pairs across three rows:
+\[
+\begin{matchedsplit}
+F &= \left( a+\left[\frac{x}{y}+b \\
+  &\quad +c\right]+d \\
+  &\quad +\frac{p}{q}\right)
+\end{matchedsplit}
+\]
+Three levels, grouped arguments, subscripts and explicit row spacing:
+\[
+\begin{matchedsplit}
+G &= \left\{ \frac{\frac{a}{b}}{\frac{c}{d}} + \left[ x_i^2+\left( u \\*[4pt]
+  &\quad +v\right)+w\right] \\[2pt]
+  &\quad +z\right\}
+\end{matchedsplit}
+\]
+Middle delimiters and invisible delimiters:
+\[
+\begin{matchedsplit}
+S &= \left\{ x\in\mathbb{R} \middle| \frac{x}{2}>0 \\
+  &\quad \middle| x<10 \right\} + \left.\frac{f(x)}{g(x)} \\
+  &\quad +h(x)\right|_{x=0}
+\end{matchedsplit}
+\]
+Independent pairs (the first pair should remain small):
+\[
+\begin{matchedsplit}
+H &= \left(a+b\right)+\left[\frac{\frac{x}{y}}{\frac{u}{v}} \\
+  &\quad +1\right]
+\end{matchedsplit}
+\]
+Opaque groups retain their native math syntax:
+%\begin{equation}
+\begin{matchedalign}
+	Q &= \left( \frac{\displaystyle\int dx}{\displaystyle\int x d x}+\frac{a+b}{c+d} + {\left[\frac{x}{y}\right]} \\
+	&\middle|\quad + {\begin{matrix} a&b\\c&d\end{matrix}} + \text{two words} \\
+	&\quad +kx+b \\
+	& \quad + by + o \right)
+\end{matchedalign}
+%\end{equation}
+
+No delimiters and environment reuse:
+\[\begin{matchedsplit}x &= a+b\\ y &= c+d\end{matchedsplit}\]
+
+
+\begin{multline}
+	p(x) = +3x^6 + 14x^5y + 590x^4y^2 + 19x^3y^3\\
+	+3x^6 + 14x^5y + 590x^4y^2 + 19x^3y^3\\
+	+3x^6 + 19x^3y^3\\
+	+3x^6 + 14x^5y + 590x^4y^2 + 19x^3y^3\\
+	- 12x^2y^4 - 12xy^5 + 2y^6 - a^3b^3
+\end{multline}
+
+\[\left\{\begin{matchedaligned}[c][rainbow,colors={blue,red}]F &= \left(a+\frac{x}{y}\\&+b\right)\end{matchedaligned}\right.\qquad x>0\]
+
+\end{document}

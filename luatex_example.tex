@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage[colorlinks]{hyperref}
+\usepackage[rainbow]{finaldelim}
+\lvdset{hlist={color={0 0 1 RG} width=0.3} vlist={show=false}
+ rule={color={0.8 0 0 RG} width=0.4} glue={show=false} kern={show=false}
+ penalty={show=false} glyph={show=false}}
+\begin{document}
+\section*{Native alignat layout with physically partitioned cells}
+Two right/left column pairs, a spanning delimiter pair and per-row numbers:
+\begin{matchedalignat}{2}
+ F&=\left[a+b &\qquad G&=u+v\label{flat:first}\\
+  &+\frac{\displaystyle\sum_{k=1}^n x_k}{1+t^2}
+      & &+\left(\frac rs\right)^2\label{flat:tall}\\[3pt]
+  &+\left(c+d\right)^2\right]^{n+1}_j & &=w.\label{flat:last}
+\end{matchedalignat}
+The two column pairs are a layout choice made by the author; the package
+does not guarantee the mathematical semantics.
+\par\medskip
+\noindent References: \eqref{flat:first}, \eqref{flat:tall}, \eqref{flat:last}.
+\begin{matchedalignat}{2}
+ a&=b &\qquad c&=d\notag\\
+ e&=f & g&=h\tag{A}\label{flat:custom}\\
+ \intertext{Native intertext and an unnumbered row above.}
+ i&=j & k&=l\label{flat:next}
+\end{matchedalignat}
+\section*{Debug: standard visual-debug settings and alignment markers}
+Blue outlines use \texttt{lua-visual-debug}; red marks locate column boundaries.
+\begin{matchedalignat}[debug=all]{2}
+ P&=a+b &\qquad Q&=x\\
+  &+\frac{\sum_{k=1}^n u_k}{1+t^2} & &+y_i^2\\
+  &+c & &=z
+\end{matchedalignat}
+\end{document}

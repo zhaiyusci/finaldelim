@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{unicode-math}\setmathfont{XITS Math}
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newcommand\RenderCase[1]{%
+ \begin{matchedalignat*}[#1]{2}
+ f&=\left(a+(t) &\qquad g&=u\\
+  &+\frac{\left[b\right]}{c}\right)^2_i & &=v
+ \end{matchedalignat*}}
+\begin{document}
+\noindent Plain:\RenderCase{rainbow=false}
+\noindent Rainbow:\RenderCase{rainbow}
+\noindent Debug:\RenderCase{rainbow,debug=all}
+\noindent EndComparisons:
+\end{document}

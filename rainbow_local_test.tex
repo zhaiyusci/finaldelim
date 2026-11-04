@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage{finaldelim}
+\begin{document}
+\section*{Rainbow delimiters: local options}
+\begin{matchedalign}[rainbow]
+f &= \left\{\frac{a}{b}+\left[ x+\left(y\middle|z \\
+ &+1\right)\right]\right\}
+\end{matchedalign}
+\begin{matchedalign}
+f &= \left(a+\left[b\\ &+c\right]\right)
+\end{matchedalign}
+{\color{purple}
+\begin{matchedalign*}[rainbow,colors={blue,orange}]
+f &= \left(a+\left[b\\ &+c\right]\right)
+\end{matchedalign*}}
+\[\begin{matchedsplit}[rainbow]f&=\left(a+\left[b\\&+c\right]\right)\end{matchedsplit}\]
+\end{document}

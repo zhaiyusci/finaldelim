@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[paperwidth=180mm,paperheight=180mm,margin=16mm]{geometry}
+\usepackage{amsmath,unicode-math,xcolor}
+\setmathfont{XITS Math}
+\usepackage{experimental/flat-core}
+\pagestyle{empty}
+\newcommand\UnequalFormula{%
+ \begin{flatmatchedsplit}
+  F&=a+b\\
+   &+\frac{\displaystyle\sum_{k=1}^{n}x_k}{\displaystyle 1+\frac{p}{q}}\\
+   &+z_i^2
+ \end{flatmatchedsplit}}
+\begin{document}
+\noindent\textbf{LuaLaTeX: three rows with different heights}\par\medskip
+\noindent\textcolor{blue}{Blue: actual row boxes.}\par
+\noindent\textcolor{green!50!black}{Green: enclosing formula box.}
+\par\noindent\textcolor{red!80!black}{Red dashed line: \texttt{\&} column boundary; crosses: row baselines.}
+\[
+ \begingroup\fboxsep=3pt\fboxrule=.3pt
+ \fcolorbox{green!50!black}{white}{$\displaystyle\FlatShowBoxes\FlatShowAlignment\UnequalFormula$}
+ \endgroup
+\]
+\noindent\textbf{The same output without outlines}
+\[\UnequalFormula\]
+\noindent Row 1 contains ordinary letters. Row 2 contains a sum with limits
+inside a nested fraction. Row 3 contains a superscript and a subscript.
+\par\medskip
+\noindent The prototype uses each row's own height and depth. The baseline
+distance is the larger of 15pt and the previous row's depth plus the next
+row's height plus 3pt. It is not a uniform baseline grid.
+\end{document}

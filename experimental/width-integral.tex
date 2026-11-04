@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[paperwidth=390mm,paperheight=300mm,margin=10mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage{xcolor,array}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newbox\naturalbody\newbox\referencebody
+\newdimen\mathaxis\newdimen\targetradius\newdimen\decaylength
+\newcommand\High{\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}}
+\newcommand\Medium{\frac{x^2+y^2}{z}}
+\newcommand\Low{a+b}
+\newcommand\Mark[1]{\directlua{naturalmean.mark(#1)}}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Cell[2]{\begingroup\targetradius=#1sp\relax
+\centering\hbox to\linewidth{\hss$\displaystyle {\color{blue}\LeftSized}\copy\naturalbody{\color{blue}\RightSized}$\hss}\par
+\vspace{2pt}{\scriptsize $R=#2$\,pt}\par\endgroup}
+
+
+\newcommand\Prepare[2]{\directlua{naturalmean.source('#1',#2)}
+\global\setbox\naturalbody=\hbox{$\displaystyle\Body$}
+\setbox\referencebody=\hbox{$\displaystyle\Unmarked$}
+\ifdim\wd\naturalbody=\wd\referencebody\else\errmessage{Markers changed width}\fi
+\ifdim\ht\naturalbody=\ht\referencebody\else\errmessage{Markers changed height}\fi
+\ifdim\dp\naturalbody=\dp\referencebody\else\errmessage{Markers changed depth}\fi
+\directlua{naturalmean.measure('#1',#2)}}
+\newcommand\Show[4]{\Prepare{#1}{#2}\directlua{naturalmean.render('#1',#2,#3,#4)}}
+\newcommand\Heading[1]{\normalsize{\Large\bfseries #1}\par\smallskip
+Natural math spacing, 10pt XITS Math. A low block repeats $a+b$.
+Both brackets use one size; only the sizing policy changes.\par\medskip}
+\newcommand\Footer{\par\medskip\small
+Integral: $R_s=(\int_0^W r(x)^q e^{-d_s(x)/\lambda}\,dx/\int_0^W e^{-d_s(x)/\lambda}\,dx)^{1/q}$.
+Both sides combined using $p=3$; $\lambda=W/2$.\par
+Each marked term contributes a constant radius over its natural width. Gaps and separators use the lowest term radius $L$.
+The first row uses the earlier distance-decayed maximum.\par
+$R$ is the input radius, not the measured glyph radius. Native font size steps can mask differences.}
+\newcommand\CompareRow[3]{\multicolumn{2}{@{}l}{\textbf{#2}}\\[2pt]
+\Show{#1}{1}{0.5}{#3}&\Show{#1}{6}{0.5}{#3}\\[7pt]}
+\newcommand\ComparePage[1]{\Heading{#1: width-integrated profile, fixed $\lambda=W/2$}
+\begin{tabular}{@{}p{176mm}p{176mm}@{}}
+\centering Short: 2 terms per low block&\centering Long: 12 terms per low block\tabularnewline[6pt]
+\CompareRow{#1}{Previous model (max), $p=3$}{0}
+\CompareRow{#1}{Integral, $q=2$}{2}
+\CompareRow{#1}{Integral, $q=4$}{4}
+\CompareRow{#1}{Integral, $q=8$}{8}
+\CompareRow{#1}{Integral, $q=16$}{16}
+\end{tabular}\Footer}
+\newcommand\CrossRow[3]{\multicolumn{2}{@{}l}{\textbf{#2}}\\[2pt]
+\Show{#1}{6}{#3}{2}&\Show{#1}{6}{#3}{3}\\[12pt]}
+\newcommand\CrossPage[1]{\Heading{#1: crossing decay length with RMS / cubic mean}
+Long low blocks (12 terms each).\par\medskip
+\begin{tabular}{@{}p{176mm}p{176mm}@{}}
+\centering RMS, $p=2$&\centering Cubic mean, $p=3$\tabularnewline[6pt]
+\CrossRow{#1}{$\lambda=W/4$}{0.25}
+\CrossRow{#1}{$\lambda=W/2$}{0.5}
+\CrossRow{#1}{$\lambda=W$}{1}
+\end{tabular}\Footer}
+\begin{document}
+\mathaxis=\Umathaxis\displaystyle
+\directlua{naturalmean=dofile('experimental/width-integral.lua')}
+\ComparePage{hml}\newpage\ComparePage{lmh}\newpage
+\ComparePage{lhl}\newpage\ComparePage{hllh}
+\directlua{naturalmean.check()}
+\end{document}

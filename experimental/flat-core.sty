@@ -1,0 +1,53 @@
+% Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
+% Isolated experimental backend. No changes to the public package API.
+\NeedsTeXFormat{LaTeX2e}[2020-10-01]
+\ProvidesExplPackage{experimental/flat-core}{2026-11-04}{0.0.1}{Physical math partition experiment}
+\RequirePackage{iftex}
+\RequireLuaTeX
+\RequirePackage{amsmath}
+\directlua{msflat = dofile('experimental/flat-core.lua')}
+\box_new:N \l__msflat_source_box
+\box_new:N \l__msflat_output_box
+\box_new:N \l__msflat_reference_box
+\box_new:N \l__msflat_rejoined_box
+\tl_new:N \l__msflat_body_tl
+\bool_new:N \l__msflat_debug_bool
+\bool_new:N \l__msflat_alignment_bool
+\NewDocumentCommand\FlatShowBoxes{}{\bool_set_true:N\l__msflat_debug_bool}
+\NewDocumentCommand\FlatShowAlignment{}{\bool_set_true:N\l__msflat_alignment_bool}
+\cs_new_protected:Npn \__msflat_cut:n #1 {\directlua{msflat.marker(#1)}}
+\cs_new_protected:Npn \__msflat_prepare:n #1
+ {
+  \cs_if_exist:NT \tag_if_active:T
+   {\tag_if_active:T {\msg_fatal:nn {msflat}{tagging}}}
+  \tl_set:Nn \l__msflat_body_tl {#1}
+  \tl_replace_all:Nnn \l__msflat_body_tl {&} {\__msflat_cut:n{1}}
+  \tl_replace_all:Nnn \l__msflat_body_tl {\\} {\__msflat_cut:n{2}}
+  \hbox_set:Nn \l__msflat_source_box
+   {$\m@th\displaystyle\l__msflat_body_tl$}
+ }
+\msg_new:nnn {msflat}{tagging}
+ {The~experimental~flat~backend~does~not~yet~support~active~PDF~tagging.}
+\NewDocumentEnvironment{flatmatchedsplit}{+b}
+ {
+  \__msflat_prepare:n {#1}
+  \directlua{msflat.render(\number\l__msflat_source_box,\number\l__msflat_output_box)}
+  \bool_if:NT\l__msflat_debug_bool
+   {\directlua{msflat.outline_rows(\number\l__msflat_output_box)}}
+  \bool_if:NT\l__msflat_alignment_bool
+   {\directlua{msflat.show_alignment(\number\l__msflat_output_box)}}
+  \vcenter{\box_use_drop:N\l__msflat_output_box}
+ }{}
+% Test interface: independent native source and source containing explicit cuts.
+\NewDocumentCommand\FlatCompare{m m}
+ {
+  \par\noindent Native:\par
+  \hbox_set:Nn \l__msflat_reference_box {$\m@th\displaystyle#1$}
+  \noindent\box_use:N\l__msflat_reference_box\par
+  \__msflat_prepare:n {#2}
+  \directlua{msflat.render(\number\l__msflat_source_box,\number\l__msflat_output_box,
+    \number\l__msflat_reference_box,\number\l__msflat_rejoined_box)}
+  \noindent Rejoined:\par\noindent\box_use_drop:N\l__msflat_rejoined_box\par
+  \noindent Split:\par\noindent\box_use_drop:N\l__msflat_output_box\par\bigskip
+ }
+\endinput

@@ -1,0 +1,12 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage{finaldelim}
+\directlua{dofile('middle-profile-test.lua')}
+\begin{document}
+\directlua{finaldelim_sizing.test_case='far'}
+\[\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\middle|i\right]\]
+\directlua{finaldelim_sizing.test_case='near'}
+\[\left[a+b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h+i\right]\]
+\directlua{finaldelim_sizing.test_case='many'}
+\[\left[a\middle|b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|e+f+g+h+i\right]\]
+\end{document}

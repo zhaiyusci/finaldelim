@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[rainbow,colors={red,blue},overridesplit,overridealign]{finaldelim}
+\newsavebox{\plainbox}\newsavebox{\colorboxmeasure}
+\begin{document}
+\sbox{\plainbox}{$\begin{matchedsplit}[rainbow=false]f&=\left(\frac{x}{y}\\&+z\right)\end{matchedsplit}$}
+\sbox{\colorboxmeasure}{$\begin{matchedsplit}f&=\left(\frac{x}{y}\\&+z\right)\end{matchedsplit}$}
+\ifdim\wd\plainbox=\wd\colorboxmeasure\else\errmessage{Color changed width}\fi
+\ifdim\ht\plainbox=\ht\colorboxmeasure\else\errmessage{Color changed height}\fi
+\ifdim\dp\plainbox=\dp\colorboxmeasure\else\errmessage{Color changed depth}\fi
+\ExplSyntaxOn
+\group_begin:
+\__ms_options:n {rainbow=false,colors={green}}
+\bool_if:NT \l__ms_rainbow_bool {\errmessage{Local false ignored}}
+\__ms_options:n {}
+\bool_if:NF \l__ms_rainbow_bool {\errmessage{Package default lost}}
+\__ms_prepare:n {\left(\left[\left\{x\right\}\right]\right)+\left(y\right)}
+\clist_map_inline:nn {1/1,2/2,3/1,4/1}
+ {\seq_set_split:Nnn \l_tmpa_seq {/}{#1}
+  \tl_set:Nx \l_tmpa_tl {\prop_item:Ne \l__ms_color_prop {\seq_item:Nn \l_tmpa_seq {1}}}
+  \tl_set:Nx \l_tmpb_tl {\seq_item:Nn \l_tmpa_seq {2}}
+  \tl_if_eq:NNF \l_tmpa_tl \l_tmpb_tl {\errmessage{Incorrect depth palette mapping}}}
+\group_end:
+\ExplSyntaxOff
+\begin{equation}\begin{split}[rainbow=false]f&=\left(a\\&+b\right)\end{split}\end{equation}
+\begin{align*}[colors={green,magenta}]
+f&=\left(\left[a\\&+b\right]\right)
+\end{align*}
+\typeout{RAINBOW ASSERTIONS PASSED}
+\end{document}

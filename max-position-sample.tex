@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{unicode-math}\setmathfont{STIX Two Math}
+% Experimental copy: only the final combination changes to an exact maximum.
+\directlua{package.loaded['finaldelim-size']=dofile('experimental/max-position-sample.lua')}
+\usepackage{finaldelim}
+\def\fdSizingP{3}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: cubic mean versus maximum}\fancyhead[R]{STIX Two Math}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\Compare[2]{%
+ \section*{#1}
+ \textbf{Native}\par
+ \FinalDelimSetup{sizing=native,niji=false}\[#2\]
+ \textbf{Cubic mean of position estimates}\par
+ \directlua{finaldelim_sizing.sample_max=false}
+ \FinalDelimSetup{sizing=weighted,q=8,lambda=20pt,niji}\[#2\]
+ \textbf{Maximum of position estimates}\par
+ \directlua{finaldelim_sizing.sample_max=true}\[#2\]
+ \FinalDelimSetup{niji=false}\vspace{6mm}}
+\begin{document}
+{\Large\bfseries Shared delimiter size: mean or maximum?}\par\medskip
+The weighted rows both use $\lambda=20\,\mathrm{pt}$ and $q=8$.
+Only the final combination changes: $(\sum_j R_j^3/N)^{1/3}$ versus $\max_j R_j$.
+\Compare{1. Middle beside the tall fraction}{\left[a+b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h+i\right]}
+\Compare{2. Middle far from the tall fraction}{\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\middle|i\right]}
+\newpage
+\Compare{3. Several middles}{\left[a\middle|b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|e+f+g+h+i\right]}
+\Compare{4. Conditional expectation}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathcal F\right]}
+\newpage
+\Compare{5. Only outer delimiters: tall term at one end}{\left[\frac{\sum_{i=1}^n x_i}{1+x^2}+a+b+c+d+e+f+g+h+i\right]}
+\Compare{6. Only outer delimiters: tall term in the centre}{\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\right]}
+\end{document}

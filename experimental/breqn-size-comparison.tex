@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage[paperwidth=180mm,paperheight=230mm,margin=18mm]{geometry}
+\usepackage{amsmath}
+\usepackage{breqn}
+\pagestyle{empty}
+\begin{document}
+\noindent\textbf{breqn: tall fraction on the middle row}
+\par\medskip
+\noindent Computer Modern, LuaLaTeX. The principal formula from our example,
+with the same two explicit line breaks.
+\par\bigskip
+\noindent\textbf{1. Automatic delimiter size: \texttt{\string\left[ ... \string\right]}}
+\begin{dmath*}
+ F=\left[a+b\\
+ +\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}\\
+ +\left(c+d\right)^2\right]^{n+1}_j
+\end{dmath*}
+\bigskip
+\noindent\textbf{2. Fixed outer delimiter size: \texttt{\string\Bigl[ ... \string\Bigr]}}
+\begin{dmath*}
+ F=\Bigl[a+b\\
+ +\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}\\
+ +\left(c+d\right)^2\Bigr]^{n+1}_j
+\end{dmath*}
+\end{document}

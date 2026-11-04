@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{XITS Math}
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newcommand\Sample{$a+\left[b+\left(\frac cd\right)\right]^2_j+f\left(x\right)+x^{\left(a+\left[b\right]\right)}+\left\{x\middle|x>0\right\}$}
+\begin{document}
+\FinalDelimSetup{sizing=native,niji=false}
+\ifdefined\WeightedProbe\FinalDelimSetup{sizing=weighted}\fi
+\noindent Plain:\par\noindent\Sample\par
+\FinalDelimSetup{niji}
+\noindent Rainbow:\par\noindent\Sample\par
+\noindent EndComparisons:\par
+\begin{equation}[niji=false]x&=a\\&=b\tag{T}\label{eq:tag}\end{equation}
+\begin{align}x&=a\notag\\y&=b\label{eq:auto}\end{align}
+\begin{equation}x=\begin{cases}a&x>0\\b&x<0\end{cases}\end{equation}
+\end{document}

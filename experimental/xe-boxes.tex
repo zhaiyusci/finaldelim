@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage[paperwidth=180mm,paperheight=160mm,margin=16mm]{geometry}
+\usepackage{amsmath,unicode-math,xcolor}
+\setmathfont{XITS Math}
+\usepackage{experimental/xe-output}
+\pagestyle{empty}
+\begin{document}
+\noindent\textbf{1. Native single-line box}\par\medskip
+\noindent\begingroup\fboxsep=0pt\fboxrule=.3pt
+\fbox{$\displaystyle\left(a+b+c\right)^2_i$}\endgroup
+\par\bigskip
+\noindent\textbf{2. XeTeX output-translation prototype}\par\medskip
+\noindent\textcolor{red}{Red: original single-line box dimensions.}\par
+\noindent\textcolor{blue}{Blue: revised outer box dimensions.}\par
+\noindent Black: the actual formula content, emitted once.
+\[
+ \XeFlatShowBoxes
+ \begin{xeflatmatchedsplit}
+  \left(a+b\\+c\right)^2_i
+ \end{xeflatmatchedsplit}
+\]
+\noindent The content list is still a single horizontal list. Only its outer
+width and depth are changed. Output transformations move the second range
+down and left. There are \textbf{no separate TeX row boxes} in this prototype.
+\par\bigskip
+\noindent The log contains the full box trees before and after the dimension
+change, under \texttt{MSXE BEFORE} and \texttt{MSXE AFTER}.
+\end{document}

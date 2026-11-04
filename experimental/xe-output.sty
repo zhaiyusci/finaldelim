@@ -1,0 +1,129 @@
+% Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
+% Research backend: translate disjoint output ranges, without PDF clipping.
+\NeedsTeXFormat{LaTeX2e}[2020-10-01]
+\ProvidesExplPackage{experimental/xe-output}{2026-11-04}{0.0.1}{XeTeX output partition experiment}
+\RequirePackage{iftex}
+\RequireXeTeX
+\RequirePackage{amsmath}
+\RequirePackage{zref-savepos}
+\int_new:N \g__msxe_id_int
+\int_new:N \l__msxe_index_int
+\int_new:N \l__msxe_row_int
+\int_new:N \l__msxe_col_int
+\int_new:N \l__msxe_cols_int
+\tl_new:N \l__msxe_body_tl
+\seq_new:N \l__msxe_cells_seq
+\prop_new:N \l__msxe_widths_prop
+\prop_new:N \l__msxe_offsets_prop
+\box_new:N \l__msxe_box
+\box_new:N \l__msxe_debug_box
+\bool_new:N \l__msxe_debug_bool
+\NewDocumentCommand\XeFlatShowBoxes{}{\bool_set_true:N\l__msxe_debug_bool}
+\cs_new_protected:Npn\__msxe_outline:n #1
+ {\group_begin:\color{#1}\fboxsep=0pt\fboxrule=.3pt
+  \fbox{\vrule width0pt height\box_ht:N\l__msxe_box depth\box_dp:N\l__msxe_box
+   \kern\box_wd:N\l__msxe_box}\group_end:}
+\dim_new:N \l__msxe_width_dim
+\dim_new:N \l__msxe_step_dim
+\dim_new:N \l__msxe_x_dim
+\dim_new:N \l__msxe_cell_dim
+\msg_new:nnn{msxe}{tagging}{The~XeTeX~output~experiment~does~not~support~active~PDF~tagging.}
+\cs_new_protected:Npn\msxeSetStep #1#2{\cs_gset:cpn{msxeStep#1}{#2}}
+\cs_new:Npn \__msxe_pos:n #1
+ {\zposx{msxe-\int_use:N\g__msxe_id_int-\int_eval:n{#1}}sp}
+\cs_new_protected:Npn \__msxe_scan:
+ {
+  \peek_meaning_remove:NTF \q_stop {}
+   {\peek_catcode:NTF \c_group_begin_token
+     {\__msxe_group:n}{\__msxe_token:N}}
+ }
+\cs_new_protected:Npn \__msxe_group:n #1
+ {\tl_put_right:Nn\l__msxe_body_tl{{#1}}\__msxe_scan:}
+\cs_new_protected:Npn \__msxe_token:N #1
+ {
+  \token_if_eq_meaning:NNTF #1 \\
+   {\int_incr:N\l__msxe_row_int\int_set:Nn\l__msxe_col_int{1}\__msxe_newcell:}
+   {\token_if_eq_charcode:NNTF #1 &
+     {\int_incr:N\l__msxe_col_int\__msxe_newcell:}
+     {\tl_put_right:Nn\l__msxe_body_tl{#1}}}
+  \__msxe_scan:
+ }
+\cs_new_protected:Npn \__msxe_newcell:
+ {
+  \int_incr:N\l__msxe_index_int
+  \int_set:Nn\l__msxe_cols_int{\int_max:nn{\l__msxe_cols_int}{\l__msxe_col_int}}
+  \seq_put_right:Nx\l__msxe_cells_seq
+   {{\int_use:N\l__msxe_index_int}{\int_use:N\l__msxe_row_int}{\int_use:N\l__msxe_col_int}}
+  \tl_put_right:Nx\l__msxe_body_tl{\exp_not:N\__msxe_mark:n{\int_use:N\l__msxe_index_int}}
+ }
+\cs_new_protected:Npn \__msxe_measure:nnn #1#2#3
+ {
+  \dim_set:Nn\l__msxe_cell_dim{\__msxe_pos:n{#1+1}-\__msxe_pos:n{#1}}
+  \prop_get:NnNTF\l__msxe_widths_prop{#3}\l_tmpa_tl
+   {\dim_set:Nn\l__msxe_cell_dim{\dim_max:nn{\l_tmpa_tl}{\l__msxe_cell_dim}}}{}
+  \prop_put:Nnx\l__msxe_widths_prop{#3}{\dim_use:N\l__msxe_cell_dim}
+ }
+\cs_new_protected:Npn \__msxe_offset:nnn #1#2#3
+ {
+  \dim_zero:N\l__msxe_x_dim
+  \int_step_inline:nn{#3-1}
+   {\prop_get:NnN\l__msxe_widths_prop{##1}\l_tmpa_tl
+    \dim_add:Nn\l__msxe_x_dim{\l_tmpa_tl}
+    \int_if_even:nT{##1}{\dim_add:Nn\l__msxe_x_dim{2em}}}
+  \int_if_odd:nT{#3}
+   {\prop_get:NnN\l__msxe_widths_prop{#3}\l_tmpa_tl
+    \dim_add:Nn\l__msxe_x_dim{\l_tmpa_tl-\__msxe_pos:n{#1+1}+\__msxe_pos:n{#1}}}
+  \dim_add:Nn\l__msxe_x_dim{\__msxe_pos:n{0}-\__msxe_pos:n{#1}}
+  \prop_put:Nnx\l__msxe_offsets_prop{#1}
+   {\dim_to_decimal_in_bp:n{\l__msxe_x_dim}~\dim_to_decimal_in_bp:n{\int_eval:n{1-#2}\l__msxe_step_dim}}
+ }
+\cs_new_protected:Npn \__msxe_mark:n #1
+ {
+  \int_compare:nNnT{#1}>{0}{\special{pdf:etrans}}
+  \exp_args:Nx\zsavepos{msxe-\int_use:N\g__msxe_id_int-#1}
+  \prop_get:NnN\l__msxe_offsets_prop{#1}\l_tmpa_tl
+  \special{pdf:btrans~matrix~1~0~0~1~\l_tmpa_tl}
+ }
+\cs_new_protected:Npn \__msxe_render:n #1
+ {
+  \cs_if_exist:NT\tag_if_active:T{\tag_if_active:T{\msg_fatal:nn{msxe}{tagging}}}
+  \int_gincr:N\g__msxe_id_int
+  \int_set:Nn\l__msxe_index_int{-1}
+  \int_set:Nn\l__msxe_row_int{1}\int_set:Nn\l__msxe_col_int{1}\int_set:Nn\l__msxe_cols_int{1}
+  \tl_clear:N\l__msxe_body_tl\seq_clear:N\l__msxe_cells_seq
+  \prop_clear:N\l__msxe_widths_prop\prop_clear:N\l__msxe_offsets_prop
+  \__msxe_newcell:\__msxe_scan: #1\q_stop
+  \cs_if_exist:cTF{msxeStep\int_use:N\g__msxe_id_int}
+   {\dim_set:Nn\l__msxe_step_dim{\use:c{msxeStep\int_use:N\g__msxe_id_int}}}
+   {\dim_set:Nn\l__msxe_step_dim{30pt}}
+  \seq_map_inline:Nn\l__msxe_cells_seq{\__msxe_measure:nnn ##1}
+  \seq_map_inline:Nn\l__msxe_cells_seq{\__msxe_offset:nnn ##1}
+  \dim_zero:N\l__msxe_width_dim
+  \int_step_inline:nn{\l__msxe_cols_int}
+   {\prop_get:NnN\l__msxe_widths_prop{##1}\l_tmpa_tl
+    \dim_add:Nn\l__msxe_width_dim{\l_tmpa_tl}
+    \int_compare:nNnT{##1}<{\l__msxe_cols_int}
+     {\int_if_even:nT{##1}{\dim_add:Nn\l__msxe_width_dim{2em}}}}
+  \hbox_set:Nn\l__msxe_box
+   {$\m@th\displaystyle\l__msxe_body_tl$
+    \special{pdf:etrans}
+    \exp_args:Nx\zsavepos{msxe-\int_use:N\g__msxe_id_int-\int_eval:n{\l__msxe_index_int+1}}}
+  \iow_now:Nx\@auxout
+   {\token_to_str:N\msxeSetStep{\int_use:N\g__msxe_id_int}
+    {\dim_eval:n{\box_ht:N\l__msxe_box+\box_dp:N\l__msxe_box+3pt}}}
+  \bool_if:NT\l__msxe_debug_bool
+   {\iow_log:n{MSXE~BEFORE:~native~single-line~box,~with~output~specials}
+    \box_log:N\l__msxe_box
+    \hbox_set:Nn\l__msxe_debug_box{\__msxe_outline:n{red}}}
+  \box_set_wd:Nn\l__msxe_box{\l__msxe_width_dim}
+  \box_set_dp:Nn\l__msxe_box{\box_dp:N\l__msxe_box+\int_eval:n{\l__msxe_row_int-1}\l__msxe_step_dim}
+  \bool_if:NT\l__msxe_debug_bool
+   {\iow_log:n{MSXE~AFTER:~same~contents,~changed~outer~width~and~depth}
+    \box_log:N\l__msxe_box}
+  \vcenter{\hbox{
+   \bool_if:NT\l__msxe_debug_bool
+    {\rlap{\box_use_drop:N\l__msxe_debug_box}\rlap{\__msxe_outline:n{blue}}}
+   \box_use_drop:N\l__msxe_box}}
+ }
+\NewDocumentEnvironment{xeflatmatchedsplit}{+b}{\__msxe_render:n{#1}}{}
+\endinput

@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage[niji]{finaldelim}
+\begin{document}
+Inline nesting: $\left[a+\left(b+c\right)\right]^2$.
+\begin{equation}
+ F &= \left[a+b+\\
+   & \frac{x}{y}+c\right]^2
+\end{equation}
+\begin{align}
+ G &= \left[u+v+\\
+   & w\right]^2
+\end{align}
+\begin{equation}[spanning=full,niji=false]
+ H &= \left[a+\\
+   & \frac{\sum_{j=1}^{n}x_j}{1+t^2}+\\
+   & b\right]
+\end{equation}
+\end{document}

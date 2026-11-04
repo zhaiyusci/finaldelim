@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage[niji]{finaldelim}
+\ExplSyntaxOn
+\bool_if:NF \g__ms_rainbow_bool {\errmessage{Package~niji~failed}}
+\keys_set:nn {matchedsplit/package} {niji=false}
+\bool_if:NT \g__ms_rainbow_bool {\errmessage{Package~niji=false~failed}}
+\keys_set:nn {matchedsplit/package} {rainbow=true}
+\bool_if:NF \g__ms_rainbow_bool {\errmessage{Shared~package~state~failed}}
+\ExplSyntaxOff
+\begin{document}
+\begin{matchedalign*}[niji]
+ F&=\left[a+\left(b+\\&c\right)+d\right].
+\end{matchedalign*}
+\begin{matchedalign*}[niji=false]
+ F&=\left[a+\left(b+\\&c\right)+d\right].
+\end{matchedalign*}
+\begin{matchedalign*}[rainbow=false,niji]
+ F&=\left[a+\left(b+\\&c\right)+d\right].
+\end{matchedalign*}
+\end{document}

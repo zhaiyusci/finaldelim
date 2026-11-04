@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage[paperwidth=400mm,paperheight=230mm,margin=10mm]{geometry}
+\usepackage{unicode-math}
+\setmathfont{XITS Math}
+\usepackage{xcolor,array}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newbox\naturalbody\newbox\referencebody
+\newdimen\mathaxis\newdimen\targetradius\newdimen\decaylength
+\newcommand\High{\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq}}
+\newcommand\Medium{\frac{x^2+y^2}{z}}
+\newcommand\Low{a+b}
+\newcommand\Mark[1]{\directlua{naturalmean.mark(#1)}}
+\newcommand\LeftSized{\mathopen{\nulldelimiterspace=0pt\left[\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right.}}
+\newcommand\RightSized{\mathclose{\nulldelimiterspace=0pt\left.\vphantom{\vrule width0pt height\dimexpr\targetradius+\mathaxis\relax depth\dimexpr\targetradius-\mathaxis\relax}\right]}}
+\newcommand\Cell[2]{\begingroup\targetradius=#1sp\relax
+\centering\hbox to\linewidth{\hss$\displaystyle {\color{blue}\LeftSized}\copy\naturalbody{\color{blue}\RightSized}$\hss}\par
+\vspace{2pt}{\scriptsize $R=#2$\,pt}\par\endgroup}
+\newcommand\Row[1]{\directlua{naturalmean.source('#1')}
+\global\setbox\naturalbody=\hbox{$\displaystyle\Body$}
+\setbox\referencebody=\hbox{$\displaystyle\Unmarked$}
+\ifdim\wd\naturalbody=\wd\referencebody\else\errmessage{Markers changed width}\fi
+\ifdim\ht\naturalbody=\ht\referencebody\else\errmessage{Markers changed height}\fi
+\ifdim\dp\naturalbody=\dp\referencebody\else\errmessage{Markers changed depth}\fi
+\directlua{naturalmean.row('#1')}}
+\newcommand\Heading[1]{\normalsize \noindent{\Large\bfseries #1}\par\smallskip
+Natural math spacing throughout: complete terms joined by $+$, with no fixed-width slots or padding inside formulas.
+XITS Math / LuaLaTeX. Decay length $\lambda=4\,\mathrm{em}=40$\,pt.\par\medskip}
+\newcommand\Explanation{\par\medskip\small
+$R_s=\max_i\{L+(r_i-L)e^{-\delta_{i,s}/\lambda}\}$,
+$r_i=\max(h_i-a,d_i+a)$, $L=\min_i r_i$.
+Distances $\delta_{i,s}$ are measured from the naturally typeset term box to the corresponding content boundary.\par
+Columns: native $H=\max_i r_i$; side maximum; geometric mean; arithmetic mean; root mean square
+$\sqrt{(R_L^2+R_R^2)/2}$. Both delimiters use the same final size.
+Sizing inputs are shown below formulas; actual font sizes are discrete.
+This is an experimental heuristic, not a validated model.}
+\begin{document}
+\mathaxis=\Umathaxis\displaystyle\decaylength=4em
+\directlua{naturalmean=dofile('experimental/natural-means.lua')}
+\Heading{Natural spacing: h/m/l with root mean square sizing}
+\directlua{naturalmean.header()}
+\Row{hml}\Row{hlm}\Row{mhl}\Row{mlh}\Row{lhm}\Row{lmh}
+\end{tabular}\Explanation
+\newpage
+\Heading{Natural spacing: revisiting the h/l arrangements}
+\directlua{naturalmean.header()}
+\Row{hhll}\Row{hlhl}\Row{hllh}\Row{lhhl}\Row{lhlh}\Row{llhh}
+\end{tabular}\Explanation
+\directlua{naturalmean.check()}
+\end{document}

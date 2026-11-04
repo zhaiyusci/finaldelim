@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=18mm]{geometry}
+\usepackage{unicode-math}\setmathfont{STIX Two Math}
+% Production sizing: fixed maximum, optional radius scale.
+
+\usepackage{finaldelim}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: maximum with optional scale}\fancyhead[R]{STIX Two Math}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\Compare[2]{%
+ \section*{#1}
+ \textbf{Native}\par
+ \FinalDelimSetup{sizing=native,niji=false}\[#2\]
+ \textbf{Maximum, scale = 1}\par
+
+ \FinalDelimSetup{sizing=weighted,q=8,scale=1,lambda=20pt,niji}\[#2\]
+ \textbf{Maximum, scale = 0.9}\par
+ \FinalDelimSetup{scale=0.9}\[#2\]
+ \FinalDelimSetup{niji=false}\vspace{6mm}}
+\begin{document}
+{\Large\bfseries Shared delimiter size: maximum and scale}\par\medskip
+The weighted rows both use $\lambda=20\,\mathrm{pt}$ and $q=8$.
+Both use $R=s\max_j R_j$. Only $s$ changes from 1 to 0.9.
+\Compare{1. Middle beside the tall fraction}{\left[a+b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h+i\right]}
+\Compare{2. Middle far from the tall fraction}{\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\middle|i\right]}
+\newpage
+\Compare{3. Several middles}{\left[a\middle|b+c+d\middle|\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|e+f+g+h+i\right]}
+\Compare{4. Conditional expectation}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathcal F\right]}
+\newpage
+\Compare{5. Only outer delimiters: tall term at one end}{\left[\frac{\sum_{i=1}^n x_i}{1+x^2}+a+b+c+d+e+f+g+h+i\right]}
+\Compare{6. Only outer delimiters: tall term in the centre}{\left[a+b+c+d+\frac{\sum_{i=1}^n x_i}{1+x^2}+e+f+g+h\right]}
+\end{document}
