@@ -1,0 +1,91 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=17mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{experimental/finaldelim-draw}
+\usepackage{fancyhdr}\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: continuous outlines}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\One[2]{\hbox to .155\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
+\newcommand\Pair[3]{\hbox to .155\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width3pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right#3$\hfil}}
+\newcommand\Six[1]{\hbox{\Pair{#1}{(}{)}\Pair{#1}{[}{]}\Pair{#1}{\lbrace}{\rbrace}\Pair{#1}{\langle}{\rangle}\Pair{#1}{|}{|}\Pair{#1}{\Vert}{\Vert}}}
+\newcommand\AtlasRow[1]{\par\medskip\textbf{#1 pt target}\quad Native glyphs / continuous outlines\par\smallskip
+ \FinalDelimDrawOff\Six{#1}\vskip5pt\FinalDelimDrawOn\Six{#1}}
+\newcommand\Atlas[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries #1}\par\medskip
+ Each pair uses the same target height. Within the prebuilt range, contours are
+ interpolated; assembled delimiters retain the native part positions and are filled once.
+ \par\medskip
+ \begingroup\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+ \FinalDelimSetup{q=0,scale=1,niji=false}
+ \AtlasRow{12}\AtlasRow{20}\AtlasRow{32}\AtlasRow{64}
+ \endgroup}
+\newcommand\Compare[2]{\par\medskip\textbf{#1}\par\smallskip
+ Native glyph rendering\FinalDelimDrawOff\[#2\]
+ Continuous outline rendering\FinalDelimDrawOn\[#2\]}
+\newcommand\Examples[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries Formulas, scripts, colors and line breaks}\par\medskip
+ Both renderers use max position estimates, 20pt decay, q=8 and scale=0.9.
+ \FinalDelimSetup{q=8,scale=0.9,niji}
+ \Compare{Conditional expectation}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathsf F\right]^2_j}
+ \Compare{Nested delimiters and a tall matrix}{\left[\left(\begin{matrix}a&b\\c&d\\e&f\\g&h\end{matrix}\right)\middle\Vert\begin{matrix}x_1\\x_2\\x_3\\x_4\end{matrix}\right]^2_j}
+ \Compare{Multiple middle delimiters}{\left[\frac{1}{1+x^2}\middle|x\middle\Vert\sum_{i=1}^n x_i\right]^2_j}
+ \textbf{Explicit breaks with continuous outlines}\par
+ \begin{align}[spanning=full,niji]
+ F&=\left\{a+b+\frac{1}{1+x^2}\middle|\\
+ &\frac{\sum_{i=1}^n x_i}{1+x^2}+c+d\right\}^2_j\label{draw:rows:#1}
+ \end{align}
+}
+
+\newcommand\CrossFont[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries #1}\par\medskip
+ One common outline method; loaded from the current math font at runtime.
+ \par\medskip\begingroup\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+ \FinalDelimSetup{q=0,scale=1,niji=false}
+ \AtlasRow{20}\AtlasRow{64}\endgroup
+ \FinalDelimSetup{q=8,scale=0.9,niji}
+ \Compare{Formula at default sizing}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathsf F\right]^2_j}
+}
+
+\newcommand\SweepPage[1]{\setmathfont{#1}\fancyhead[R]{#1}
+{\Large\bfseries Intermediate heights}\par\medskip
+Native above, continuous below; both sides of all six delimiter families.
+\par\medskip
+\begingroup\FinalDelimSetup{q=0,scale=1,niji=false}
+\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\AtlasRow{11.5}\AtlasRow{12.5}\AtlasRow{13.5}\AtlasRow{14.5}\AtlasRow{15.5}\AtlasRow{16.5}
+\endgroup}
+\newcommand\Suite[1]{\clearpage\Atlas{#1}\clearpage\SweepPage{#1}\clearpage\Examples{#1}}
+\begin{document}
+\fancyhead[R]{Test collection}
+{\Huge\bfseries Delimiter rendering tests}\par\bigskip
+Eight math fonts, one rendering method.\par\bigskip
+Each font has three pages: target heights (12, 20, 32, 64 pt), intermediate
+heights (11.5--16.5 pt), and complete formulas. Both sides of parentheses,
+square brackets, braces, angles, single bars and double bars are tested.
+Formulas cover scripts, multiple middle delimiters, nested niji colors and
+explicit line breaks with individual equation numbers.\par\bigskip
+\begin{tabular}{lr}
+Font & Pages\\\hline
+Latin Modern Math & 2--4\\
+STIX Two Math & 5--7\\
+TeX Gyre Pagella Math & 8--10\\
+TeX Gyre Termes Math & 11--13\\
+XITS Math & 14--16\\
+Libertinus Math & 17--19\\
+Fira Math & 20--22\\
+GFS Neohellenic Math & 23--25
+\end{tabular}\par\bigskip
+``Native'' denotes native font glyph rendering with the same finaldelim sizing
+request, not unmodified LaTeX size selection. Continuous rendering interpolates
+prebuilt outlines; beyond that range it retains native assembly placement and
+fills the component contours together.\par\medskip
+Formula examples use q=8, decay length 20pt and scale=0.9. Controlled height
+samples use q=0, scale=1, delimiterfactor=1000 and delimitershortfall=0pt.
+\Suite{Latin Modern Math}
+\Suite{STIX Two Math}
+\Suite{TeX Gyre Pagella Math}
+\Suite{TeX Gyre Termes Math}
+\Suite{XITS Math}
+\Suite{Libertinus Math}
+\Suite{Fira Math}
+\Suite{GFS Neohellenic Math}
+\end{document}

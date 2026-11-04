@@ -1,0 +1,740 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=16mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{experimental/finaldelim-draw}
+\usepackage{fancyhdr}\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: complete delimiter inventory}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\Glyph[2]{$\displaystyle\left\Udelimiter 0 0 "#1\relax\phantom{\vrule width1pt height\dimexpr#2pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#2pt/2-\Umathaxis\displaystyle\relax}\right.$}
+\newcommand\Cell[2]{\hbox to .16\textwidth{\hfil\FinalDelimDrawOff\Glyph{#1}{#2}\hskip4pt\FinalDelimDrawOn\Glyph{#1}{#2}\hfil}}
+\newcommand\Missing{\hbox to .16\textwidth{\hfil\textit{missing}\hfil}}
+\newcommand\Name[2]{\hbox to .16\textwidth{\hfil\vbox{\hbox{\scriptsize\ttfamily #1}\hbox{\scriptsize #2}}\hfil}}
+\begin{document}
+\FinalDelimSetup{q=0,scale=1,niji=false}\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\setmathfont{Latin Modern Math}
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / missing}\Name{rmoustache}{U+23B1 / missing}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / A}\Name{rBrack}{U+27E7 / A}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / missing}\Name{Rbrbrak}{U+27ED / missing}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / missing}\Name{lBrace}{U+2983 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{14}\Cell{27EF}{14}\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{32}\Cell{27EF}{32}\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{64}\Cell{27EF}{64}\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / missing}\Name{lParen}{U+2985 / missing}\Name{rParen}{U+2986 / missing}\Name{llparenthesis}{U+2987 / missing}\Name{rrparenthesis}{U+2988 / missing}\Name{llangle}{U+2989 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / missing}\Name{lbrackubar}{U+298B / missing}\Name{rbrackubar}{U+298C / missing}\Name{lbrackultick}{U+298D / missing}\Name{rbracklrtick}{U+298E / missing}\Name{lbracklltick}{U+298F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / missing}\Name{langledot}{U+2991 / missing}\Name{rangledot}{U+2992 / missing}\Name{lparenless}{U+2993 / missing}\Name{rparengtr}{U+2994 / missing}\Name{Lparengtr}{U+2995 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Latin Modern Math}
+{\Large\bfseries Latin Modern Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / missing}\Name{lblkbrbrak}{U+2997 / missing}\Name{rblkbrbrak}{U+2998 / missing}\Name{lvzigzag}{U+29D8 / missing}\Name{rvzigzag}{U+29D9 / missing}\Name{Lvzigzag}{U+29DA / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / missing}\Name{lcurvyangle}{U+29FC / missing}\Name{rcurvyangle}{U+29FD / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{STIX Two Math}
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / A}\Name{rmoustache}{U+23B1 / A}\Name{lbrbrak}{U+2772 / V}\Name{rbrbrak}{U+2773 / V}\Name{lbag}{U+27C5 / S}\Name{rbag}{U+27C6 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{23B0}{14}\Cell{23B1}{14}\Cell{2772}{14}\Cell{2773}{14}\Cell{27C5}{14}\Cell{27C6}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{23B0}{32}\Cell{23B1}{32}\Cell{2772}{32}\Cell{2773}{32}\Cell{27C5}{32}\Cell{27C6}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{23B0}{64}\Cell{23B1}{64}\Cell{2772}{64}\Cell{2773}{64}\Cell{27C5}{64}\Cell{27C6}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / V}\Name{rBrack}{U+27E7 / V}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / S}\Name{Rbrbrak}{U+27ED / S}\Name{lgroup}{U+27EE / S}\Name{rgroup}{U+27EF / S}\Name{Vvert}{U+2980 / S}\Name{lBrace}{U+2983 / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27EC}{14}\Cell{27ED}{14}\Cell{27EE}{14}\Cell{27EF}{14}\Cell{2980}{14}\Cell{2983}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27EC}{32}\Cell{27ED}{32}\Cell{27EE}{32}\Cell{27EF}{32}\Cell{2980}{32}\Cell{2983}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27EC}{64}\Cell{27ED}{64}\Cell{27EE}{64}\Cell{27EF}{64}\Cell{2980}{64}\Cell{2983}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / V}\Name{lParen}{U+2985 / V}\Name{rParen}{U+2986 / V}\Name{llparenthesis}{U+2987 / S}\Name{rrparenthesis}{U+2988 / S}\Name{llangle}{U+2989 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2984}{14}\Cell{2985}{14}\Cell{2986}{14}\Cell{2987}{14}\Cell{2988}{14}\Cell{2989}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2984}{32}\Cell{2985}{32}\Cell{2986}{32}\Cell{2987}{32}\Cell{2988}{32}\Cell{2989}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2984}{64}\Cell{2985}{64}\Cell{2986}{64}\Cell{2987}{64}\Cell{2988}{64}\Cell{2989}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / S}\Name{lbrackubar}{U+298B / S}\Name{rbrackubar}{U+298C / S}\Name{lbrackultick}{U+298D / S}\Name{rbracklrtick}{U+298E / S}\Name{lbracklltick}{U+298F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{298A}{14}\Cell{298B}{14}\Cell{298C}{14}\Cell{298D}{14}\Cell{298E}{14}\Cell{298F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{298A}{32}\Cell{298B}{32}\Cell{298C}{32}\Cell{298D}{32}\Cell{298E}{32}\Cell{298F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{298A}{64}\Cell{298B}{64}\Cell{298C}{64}\Cell{298D}{64}\Cell{298E}{64}\Cell{298F}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / S}\Name{langledot}{U+2991 / S}\Name{rangledot}{U+2992 / S}\Name{lparenless}{U+2993 / S}\Name{rparengtr}{U+2994 / S}\Name{Lparengtr}{U+2995 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2990}{14}\Cell{2991}{14}\Cell{2992}{14}\Cell{2993}{14}\Cell{2994}{14}\Cell{2995}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2990}{32}\Cell{2991}{32}\Cell{2992}{32}\Cell{2993}{32}\Cell{2994}{32}\Cell{2995}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2990}{64}\Cell{2991}{64}\Cell{2992}{64}\Cell{2993}{64}\Cell{2994}{64}\Cell{2995}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{STIX Two Math}
+{\Large\bfseries STIX Two Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / S}\Name{lblkbrbrak}{U+2997 / S}\Name{rblkbrbrak}{U+2998 / S}\Name{lvzigzag}{U+29D8 / S}\Name{rvzigzag}{U+29D9 / S}\Name{Lvzigzag}{U+29DA / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2996}{14}\Cell{2997}{14}\Cell{2998}{14}\Cell{29D8}{14}\Cell{29D9}{14}\Cell{29DA}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2996}{32}\Cell{2997}{32}\Cell{2998}{32}\Cell{29D8}{32}\Cell{29D9}{32}\Cell{29DA}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2996}{64}\Cell{2997}{64}\Cell{2998}{64}\Cell{29D8}{64}\Cell{29D9}{64}\Cell{29DA}{64}}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / S}\Name{lcurvyangle}{U+29FC / S}\Name{rcurvyangle}{U+29FD / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{29DB}{14}\Cell{29FC}{14}\Cell{29FD}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{29DB}{32}\Cell{29FC}{32}\Cell{29FD}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{29DB}{64}\Cell{29FC}{64}\Cell{29FD}{64}}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{TeX Gyre Pagella Math}
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / missing}\Name{rmoustache}{U+23B1 / missing}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / A}\Name{rBrack}{U+27E7 / A}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / missing}\Name{Rbrbrak}{U+27ED / missing}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / missing}\Name{lBrace}{U+2983 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{14}\Cell{27EF}{14}\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{32}\Cell{27EF}{32}\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{64}\Cell{27EF}{64}\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / missing}\Name{lParen}{U+2985 / missing}\Name{rParen}{U+2986 / missing}\Name{llparenthesis}{U+2987 / missing}\Name{rrparenthesis}{U+2988 / missing}\Name{llangle}{U+2989 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / missing}\Name{lbrackubar}{U+298B / missing}\Name{rbrackubar}{U+298C / missing}\Name{lbrackultick}{U+298D / missing}\Name{rbracklrtick}{U+298E / missing}\Name{lbracklltick}{U+298F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / missing}\Name{langledot}{U+2991 / missing}\Name{rangledot}{U+2992 / missing}\Name{lparenless}{U+2993 / missing}\Name{rparengtr}{U+2994 / missing}\Name{Lparengtr}{U+2995 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Pagella Math}
+{\Large\bfseries TeX Gyre Pagella Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / missing}\Name{lblkbrbrak}{U+2997 / missing}\Name{rblkbrbrak}{U+2998 / missing}\Name{lvzigzag}{U+29D8 / missing}\Name{rvzigzag}{U+29D9 / missing}\Name{Lvzigzag}{U+29DA / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / missing}\Name{lcurvyangle}{U+29FC / missing}\Name{rcurvyangle}{U+29FD / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{TeX Gyre Termes Math}
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / missing}\Name{rmoustache}{U+23B1 / missing}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / A}\Name{rBrack}{U+27E7 / A}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / missing}\Name{Rbrbrak}{U+27ED / missing}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / missing}\Name{lBrace}{U+2983 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{14}\Cell{27EF}{14}\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{32}\Cell{27EF}{32}\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{64}\Cell{27EF}{64}\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / missing}\Name{lParen}{U+2985 / missing}\Name{rParen}{U+2986 / missing}\Name{llparenthesis}{U+2987 / missing}\Name{rrparenthesis}{U+2988 / missing}\Name{llangle}{U+2989 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / missing}\Name{lbrackubar}{U+298B / missing}\Name{rbrackubar}{U+298C / missing}\Name{lbrackultick}{U+298D / missing}\Name{rbracklrtick}{U+298E / missing}\Name{lbracklltick}{U+298F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / missing}\Name{langledot}{U+2991 / missing}\Name{rangledot}{U+2992 / missing}\Name{lparenless}{U+2993 / missing}\Name{rparengtr}{U+2994 / missing}\Name{Lparengtr}{U+2995 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{TeX Gyre Termes Math}
+{\Large\bfseries TeX Gyre Termes Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / missing}\Name{lblkbrbrak}{U+2997 / missing}\Name{rblkbrbrak}{U+2998 / missing}\Name{lvzigzag}{U+29D8 / missing}\Name{rvzigzag}{U+29D9 / missing}\Name{Lvzigzag}{U+29DA / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / missing}\Name{lcurvyangle}{U+29FC / missing}\Name{rcurvyangle}{U+29FD / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{XITS Math}
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / A}\Name{rmoustache}{U+23B1 / A}\Name{lbrbrak}{U+2772 / V}\Name{rbrbrak}{U+2773 / V}\Name{lbag}{U+27C5 / S}\Name{rbag}{U+27C6 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{23B0}{14}\Cell{23B1}{14}\Cell{2772}{14}\Cell{2773}{14}\Cell{27C5}{14}\Cell{27C6}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{23B0}{32}\Cell{23B1}{32}\Cell{2772}{32}\Cell{2773}{32}\Cell{27C5}{32}\Cell{27C6}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{23B0}{64}\Cell{23B1}{64}\Cell{2772}{64}\Cell{2773}{64}\Cell{27C5}{64}\Cell{27C6}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / V}\Name{rBrack}{U+27E7 / V}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / S}\Name{Rbrbrak}{U+27ED / S}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / A}\Name{lBrace}{U+2983 / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27EC}{14}\Cell{27ED}{14}\Cell{27EE}{14}\Cell{27EF}{14}\Cell{2980}{14}\Cell{2983}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27EC}{32}\Cell{27ED}{32}\Cell{27EE}{32}\Cell{27EF}{32}\Cell{2980}{32}\Cell{2983}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27EC}{64}\Cell{27ED}{64}\Cell{27EE}{64}\Cell{27EF}{64}\Cell{2980}{64}\Cell{2983}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / V}\Name{lParen}{U+2985 / V}\Name{rParen}{U+2986 / V}\Name{llparenthesis}{U+2987 / S}\Name{rrparenthesis}{U+2988 / S}\Name{llangle}{U+2989 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2984}{14}\Cell{2985}{14}\Cell{2986}{14}\Cell{2987}{14}\Cell{2988}{14}\Cell{2989}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2984}{32}\Cell{2985}{32}\Cell{2986}{32}\Cell{2987}{32}\Cell{2988}{32}\Cell{2989}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2984}{64}\Cell{2985}{64}\Cell{2986}{64}\Cell{2987}{64}\Cell{2988}{64}\Cell{2989}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / S}\Name{lbrackubar}{U+298B / S}\Name{rbrackubar}{U+298C / S}\Name{lbrackultick}{U+298D / S}\Name{rbracklrtick}{U+298E / S}\Name{lbracklltick}{U+298F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{298A}{14}\Cell{298B}{14}\Cell{298C}{14}\Cell{298D}{14}\Cell{298E}{14}\Cell{298F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{298A}{32}\Cell{298B}{32}\Cell{298C}{32}\Cell{298D}{32}\Cell{298E}{32}\Cell{298F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{298A}{64}\Cell{298B}{64}\Cell{298C}{64}\Cell{298D}{64}\Cell{298E}{64}\Cell{298F}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / S}\Name{langledot}{U+2991 / S}\Name{rangledot}{U+2992 / S}\Name{lparenless}{U+2993 / S}\Name{rparengtr}{U+2994 / S}\Name{Lparengtr}{U+2995 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2990}{14}\Cell{2991}{14}\Cell{2992}{14}\Cell{2993}{14}\Cell{2994}{14}\Cell{2995}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2990}{32}\Cell{2991}{32}\Cell{2992}{32}\Cell{2993}{32}\Cell{2994}{32}\Cell{2995}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2990}{64}\Cell{2991}{64}\Cell{2992}{64}\Cell{2993}{64}\Cell{2994}{64}\Cell{2995}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{XITS Math}
+{\Large\bfseries XITS Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / S}\Name{lblkbrbrak}{U+2997 / S}\Name{rblkbrbrak}{U+2998 / S}\Name{lvzigzag}{U+29D8 / S}\Name{rvzigzag}{U+29D9 / S}\Name{Lvzigzag}{U+29DA / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2996}{14}\Cell{2997}{14}\Cell{2998}{14}\Cell{29D8}{14}\Cell{29D9}{14}\Cell{29DA}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2996}{32}\Cell{2997}{32}\Cell{2998}{32}\Cell{29D8}{32}\Cell{29D9}{32}\Cell{29DA}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2996}{64}\Cell{2997}{64}\Cell{2998}{64}\Cell{29D8}{64}\Cell{29D9}{64}\Cell{29DA}{64}}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / S}\Name{lcurvyangle}{U+29FC / S}\Name{rcurvyangle}{U+29FD / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{29DB}{14}\Cell{29FC}{14}\Cell{29FD}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{29DB}{32}\Cell{29FC}{32}\Cell{29FD}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{29DB}{64}\Cell{29FC}{64}\Cell{29FD}{64}}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{Libertinus Math}
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / S}\Name{downarrow}{U+2193 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / S}\Name{Uparrow}{U+21D1 / S}\Name{Downarrow}{U+21D3 / S}\Name{Updownarrow}{U+21D5 / S}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / S}\Name{rmoustache}{U+23B1 / S}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{23B0}{14}\Cell{23B1}{14}\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{23B0}{32}\Cell{23B1}{32}\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{23B0}{64}\Cell{23B1}{64}\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / V}\Name{rBrack}{U+27E7 / V}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / S}\Name{Rbrbrak}{U+27ED / S}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / missing}\Name{lBrace}{U+2983 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27EC}{14}\Cell{27ED}{14}\Cell{27EE}{14}\Cell{27EF}{14}\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27EC}{32}\Cell{27ED}{32}\Cell{27EE}{32}\Cell{27EF}{32}\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27EC}{64}\Cell{27ED}{64}\Cell{27EE}{64}\Cell{27EF}{64}\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / missing}\Name{lParen}{U+2985 / missing}\Name{rParen}{U+2986 / missing}\Name{llparenthesis}{U+2987 / V}\Name{rrparenthesis}{U+2988 / V}\Name{llangle}{U+2989 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Cell{2987}{14}\Cell{2988}{14}\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Cell{2987}{32}\Cell{2988}{32}\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Cell{2987}{64}\Cell{2988}{64}\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / missing}\Name{lbrackubar}{U+298B / missing}\Name{rbrackubar}{U+298C / missing}\Name{lbrackultick}{U+298D / missing}\Name{rbracklrtick}{U+298E / missing}\Name{lbracklltick}{U+298F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / missing}\Name{langledot}{U+2991 / missing}\Name{rangledot}{U+2992 / missing}\Name{lparenless}{U+2993 / missing}\Name{rparengtr}{U+2994 / missing}\Name{Lparengtr}{U+2995 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Libertinus Math}
+{\Large\bfseries Libertinus Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / missing}\Name{lblkbrbrak}{U+2997 / missing}\Name{rblkbrbrak}{U+2998 / missing}\Name{lvzigzag}{U+29D8 / missing}\Name{rvzigzag}{U+29D9 / missing}\Name{Lvzigzag}{U+29DA / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / missing}\Name{lcurvyangle}{U+29FC / S}\Name{rcurvyangle}{U+29FD / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Cell{29FC}{14}\Cell{29FD}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Cell{29FC}{32}\Cell{29FD}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Cell{29FC}{64}\Cell{29FD}{64}}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{Fira Math}
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / S}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / S}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / S}\Name{downarrow}{U+2193 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / S}\Name{Uparrow}{U+21D1 / S}\Name{Downarrow}{U+21D3 / S}\Name{Updownarrow}{U+21D5 / S}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / missing}\Name{urcorner}{U+231D / missing}\Name{llcorner}{U+231E / missing}\Name{lrcorner}{U+231F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / missing}\Name{rmoustache}{U+23B1 / missing}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / missing}\Name{rBrack}{U+27E7 / missing}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / missing}\Name{Rbrbrak}{U+27ED / missing}\Name{lgroup}{U+27EE / A}\Name{rgroup}{U+27EF / A}\Name{Vvert}{U+2980 / A}\Name{lBrace}{U+2983 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{14}\Cell{27EF}{14}\Cell{2980}{14}\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{32}\Cell{27EF}{32}\Cell{2980}{32}\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Cell{27EE}{64}\Cell{27EF}{64}\Cell{2980}{64}\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / missing}\Name{lParen}{U+2985 / missing}\Name{rParen}{U+2986 / missing}\Name{llparenthesis}{U+2987 / missing}\Name{rrparenthesis}{U+2988 / missing}\Name{llangle}{U+2989 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / missing}\Name{lbrackubar}{U+298B / missing}\Name{rbrackubar}{U+298C / missing}\Name{lbrackultick}{U+298D / missing}\Name{rbracklrtick}{U+298E / missing}\Name{lbracklltick}{U+298F / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / missing}\Name{langledot}{U+2991 / missing}\Name{rangledot}{U+2992 / missing}\Name{lparenless}{U+2993 / missing}\Name{rparengtr}{U+2994 / missing}\Name{Lparengtr}{U+2995 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{Fira Math}
+{\Large\bfseries Fira Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / missing}\Name{lblkbrbrak}{U+2997 / missing}\Name{rblkbrbrak}{U+2998 / missing}\Name{lvzigzag}{U+29D8 / missing}\Name{rvzigzag}{U+29D9 / missing}\Name{Lvzigzag}{U+29DA / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / missing}\Name{lcurvyangle}{U+29FC / missing}\Name{rcurvyangle}{U+29FD / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing}\par\medskip
+\bigskip
+\clearpage
+\setmathfont{GFS Neohellenic Math}
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lparen}{U+0028 / A}\Name{rparen}{U+0029 / A}\Name{slash}{U+002F / V}\Name{lbrack}{U+005B / A}\Name{backslash}{U+005C / V}\Name{rbrack}{U+005D / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{0028}{14}\Cell{0029}{14}\Cell{002F}{14}\Cell{005B}{14}\Cell{005C}{14}\Cell{005D}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{0028}{32}\Cell{0029}{32}\Cell{002F}{32}\Cell{005B}{32}\Cell{005C}{32}\Cell{005D}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{0028}{64}\Cell{0029}{64}\Cell{002F}{64}\Cell{005B}{64}\Cell{005C}{64}\Cell{005D}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lbrace}{U+007B / A}\Name{vert}{U+007C / A}\Name{rbrace}{U+007D / A}\Name{Vert}{U+2016 / A}\Name{uparrow}{U+2191 / A}\Name{downarrow}{U+2193 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{007B}{14}\Cell{007C}{14}\Cell{007D}{14}\Cell{2016}{14}\Cell{2191}{14}\Cell{2193}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{007B}{32}\Cell{007C}{32}\Cell{007D}{32}\Cell{2016}{32}\Cell{2191}{32}\Cell{2193}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{007B}{64}\Cell{007C}{64}\Cell{007D}{64}\Cell{2016}{64}\Cell{2191}{64}\Cell{2193}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{updownarrow}{U+2195 / A}\Name{Uparrow}{U+21D1 / A}\Name{Downarrow}{U+21D3 / A}\Name{Updownarrow}{U+21D5 / A}\Name{lceil}{U+2308 / A}\Name{rceil}{U+2309 / A}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2195}{14}\Cell{21D1}{14}\Cell{21D3}{14}\Cell{21D5}{14}\Cell{2308}{14}\Cell{2309}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2195}{32}\Cell{21D1}{32}\Cell{21D3}{32}\Cell{21D5}{32}\Cell{2308}{32}\Cell{2309}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2195}{64}\Cell{21D1}{64}\Cell{21D3}{64}\Cell{21D5}{64}\Cell{2308}{64}\Cell{2309}{64}}\par\medskip
+\bigskip
+\hbox{\Name{lfloor}{U+230A / A}\Name{rfloor}{U+230B / A}\Name{ulcorner}{U+231C / S}\Name{urcorner}{U+231D / S}\Name{llcorner}{U+231E / S}\Name{lrcorner}{U+231F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{230A}{14}\Cell{230B}{14}\Cell{231C}{14}\Cell{231D}{14}\Cell{231E}{14}\Cell{231F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{230A}{32}\Cell{230B}{32}\Cell{231C}{32}\Cell{231D}{32}\Cell{231E}{32}\Cell{231F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{230A}{64}\Cell{230B}{64}\Cell{231C}{64}\Cell{231D}{64}\Cell{231E}{64}\Cell{231F}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{lmoustache}{U+23B0 / missing}\Name{rmoustache}{U+23B1 / missing}\Name{lbrbrak}{U+2772 / missing}\Name{rbrbrak}{U+2773 / missing}\Name{lbag}{U+27C5 / missing}\Name{rbag}{U+27C6 / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Missing\Missing\Missing\Missing\Missing\Missing}\par\medskip
+\bigskip
+\hbox{\Name{lBrack}{U+27E6 / A}\Name{rBrack}{U+27E7 / A}\Name{langle}{U+27E8 / V}\Name{rangle}{U+27E9 / V}\Name{lAngle}{U+27EA / V}\Name{rAngle}{U+27EB / V}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27E6}{14}\Cell{27E7}{14}\Cell{27E8}{14}\Cell{27E9}{14}\Cell{27EA}{14}\Cell{27EB}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27E6}{32}\Cell{27E7}{32}\Cell{27E8}{32}\Cell{27E9}{32}\Cell{27EA}{32}\Cell{27EB}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27E6}{64}\Cell{27E7}{64}\Cell{27E8}{64}\Cell{27E9}{64}\Cell{27EA}{64}\Cell{27EB}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Lbrbrak}{U+27EC / S}\Name{Rbrbrak}{U+27ED / S}\Name{lgroup}{U+27EE / S}\Name{rgroup}{U+27EF / S}\Name{Vvert}{U+2980 / S}\Name{lBrace}{U+2983 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{27EC}{14}\Cell{27ED}{14}\Cell{27EE}{14}\Cell{27EF}{14}\Cell{2980}{14}\Cell{2983}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{27EC}{32}\Cell{27ED}{32}\Cell{27EE}{32}\Cell{27EF}{32}\Cell{2980}{32}\Cell{2983}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{27EC}{64}\Cell{27ED}{64}\Cell{27EE}{64}\Cell{27EF}{64}\Cell{2980}{64}\Cell{2983}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rBrace}{U+2984 / S}\Name{lParen}{U+2985 / S}\Name{rParen}{U+2986 / S}\Name{llparenthesis}{U+2987 / S}\Name{rrparenthesis}{U+2988 / S}\Name{llangle}{U+2989 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2984}{14}\Cell{2985}{14}\Cell{2986}{14}\Cell{2987}{14}\Cell{2988}{14}\Cell{2989}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2984}{32}\Cell{2985}{32}\Cell{2986}{32}\Cell{2987}{32}\Cell{2988}{32}\Cell{2989}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2984}{64}\Cell{2985}{64}\Cell{2986}{64}\Cell{2987}{64}\Cell{2988}{64}\Cell{2989}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{rrangle}{U+298A / S}\Name{lbrackubar}{U+298B / S}\Name{rbrackubar}{U+298C / S}\Name{lbrackultick}{U+298D / S}\Name{rbracklrtick}{U+298E / S}\Name{lbracklltick}{U+298F / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{298A}{14}\Cell{298B}{14}\Cell{298C}{14}\Cell{298D}{14}\Cell{298E}{14}\Cell{298F}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{298A}{32}\Cell{298B}{32}\Cell{298C}{32}\Cell{298D}{32}\Cell{298E}{32}\Cell{298F}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{298A}{64}\Cell{298B}{64}\Cell{298C}{64}\Cell{298D}{64}\Cell{298E}{64}\Cell{298F}{64}}\par\medskip
+\bigskip
+\hbox{\Name{rbrackurtick}{U+2990 / S}\Name{langledot}{U+2991 / S}\Name{rangledot}{U+2992 / S}\Name{lparenless}{U+2993 / S}\Name{rparengtr}{U+2994 / S}\Name{Lparengtr}{U+2995 / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2990}{14}\Cell{2991}{14}\Cell{2992}{14}\Cell{2993}{14}\Cell{2994}{14}\Cell{2995}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2990}{32}\Cell{2991}{32}\Cell{2992}{32}\Cell{2993}{32}\Cell{2994}{32}\Cell{2995}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2990}{64}\Cell{2991}{64}\Cell{2992}{64}\Cell{2993}{64}\Cell{2994}{64}\Cell{2995}{64}}\par\medskip
+\bigskip
+\clearpage
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries GFS Neohellenic Math}\par\medskip
+Each pair: native left, drawn right. Targets: 14, 32, 64 pt.\par
+S: fixed glyph; V: size variants; A: assembly; missing: absent from font.\par\bigskip
+\hbox{\Name{Rparenless}{U+2996 / S}\Name{lblkbrbrak}{U+2997 / S}\Name{rblkbrbrak}{U+2998 / S}\Name{lvzigzag}{U+29D8 / S}\Name{rvzigzag}{U+29D9 / S}\Name{Lvzigzag}{U+29DA / S}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{2996}{14}\Cell{2997}{14}\Cell{2998}{14}\Cell{29D8}{14}\Cell{29D9}{14}\Cell{29DA}{14}}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{2996}{32}\Cell{2997}{32}\Cell{2998}{32}\Cell{29D8}{32}\Cell{29D9}{32}\Cell{29DA}{32}}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{2996}{64}\Cell{2997}{64}\Cell{2998}{64}\Cell{29D8}{64}\Cell{29D9}{64}\Cell{29DA}{64}}\par\medskip
+\bigskip
+\hbox{\Name{Rvzigzag}{U+29DB / S}\Name{lcurvyangle}{U+29FC / missing}\Name{rcurvyangle}{U+29FD / missing}}\par\smallskip
+\textbf{14 pt}\par\smallskip\hbox{\Cell{29DB}{14}\Missing\Missing}\par\medskip
+\textbf{32 pt}\par\smallskip\hbox{\Cell{29DB}{32}\Missing\Missing}\par\medskip
+\textbf{64 pt}\par\smallskip\hbox{\Cell{29DB}{64}\Missing\Missing}\par\medskip
+\bigskip
+\end{document}

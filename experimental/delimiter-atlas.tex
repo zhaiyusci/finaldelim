@@ -1,0 +1,24 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=15mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{Delimiter construction study}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\directlua{atlas=dofile('experimental/delimiter-atlas.lua')}
+\newcommand\Cell[3]{\begingroup
+ \setbox0=\hbox{$\displaystyle\left#2\vrule width0pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax\right.$}%
+ \vtop{\hbox to .095\textwidth{\hss\ttfamily\scriptsize #3\hss}\vskip3pt
+ \hbox to .095\textwidth{\hss\copy0\hss}\vskip3pt
+ \hbox to .095\textwidth{\hss\scriptsize\directlua{atlas.record('\FontName','#3',#1)}\hss}}\endgroup}
+\newcommand\Row[1]{\par\smallskip\textbf{Target #1 pt}\par\smallskip
+ \hbox to \textwidth{\Cell{#1}{(}{(}\Cell{#1}{)}{)}\Cell{#1}{[}{[}\Cell{#1}{]}{]}\Cell{#1}{\lbrace}{brace-L}\Cell{#1}{\rbrace}{brace-R}\Cell{#1}{\langle}{angle-L}\Cell{#1}{\rangle}{angle-R}\Cell{#1}{|}{bar}\Cell{#1}{\Vert}{double}\hss}\par}
+\newcommand\Panel[1]{\def\FontName{#1}\setmathfont{#1}
+ {\Large\bfseries #1}\par\medskip
+ Native LuaLaTeX, 10pt. Each caption is actual total height (pt) / glyph count.
+ Size selection uses factor 1000 and shortfall 0; there is no weighted sizing.
+ \par\medskip
+ \Row{10}\Row{14}\Row{18}\Row{24}\Row{30}\Row{36}\Row{48}\Row{64}\Row{80}}
+\begin{document}
+\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\Panel{Latin Modern Math}\newpage\Panel{STIX Two Math}
+\end{document}

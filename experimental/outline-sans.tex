@@ -1,0 +1,63 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=17mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{experimental/finaldelim-draw}
+\usepackage{fancyhdr}\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: continuous outlines}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\One[2]{\hbox to .155\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
+\newcommand\Six[1]{\hbox{\One{#1}{(}\One{#1}{[}\One{#1}{\lbrace}\One{#1}{\langle}\One{#1}{|}\One{#1}{\Vert}}}
+\newcommand\AtlasRow[1]{\par\medskip\textbf{#1 pt target}\quad Native glyphs / continuous outlines\par\smallskip
+ \FinalDelimDrawOff\Six{#1}\vskip5pt\FinalDelimDrawOn\Six{#1}}
+\newcommand\Atlas[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries #1}\par\medskip
+ Each pair uses the same target height. Within the prebuilt range, contours are
+ interpolated; assembled delimiters retain the native part positions and are filled once.
+ \par\medskip
+ \begingroup\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+ \FinalDelimSetup{q=0,scale=1,niji=false}
+ \AtlasRow{12}\AtlasRow{20}\AtlasRow{32}\AtlasRow{64}
+ \endgroup}
+\newcommand\Compare[2]{\par\medskip\textbf{#1}\par\smallskip
+ Native glyph rendering\FinalDelimDrawOff\[#2\]
+ Continuous outline rendering\FinalDelimDrawOn\[#2\]}
+\newcommand\Examples[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries Formulas, scripts, colors and line breaks}\par\medskip
+ Both renderers use max position estimates, 20pt decay, q=8 and scale=0.9.
+ \FinalDelimSetup{q=8,scale=0.9,niji}
+ \Compare{Conditional expectation}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathsf F\right]^2_j}
+ \Compare{Nested delimiters and a tall matrix}{\left[\left(\begin{matrix}a&b\\c&d\\e&f\\g&h\end{matrix}\right)\middle\Vert\begin{matrix}x_1\\x_2\\x_3\\x_4\end{matrix}\right]^2_j}
+ \textbf{Explicit breaks with continuous outlines}\par
+ \begin{align}[spanning=full,niji]
+ F&=\left\{a+b+\frac{1}{1+x^2}\middle|\\
+ &\frac{\sum_{i=1}^n x_i}{1+x^2}+c+d\right\}^2_j\label{draw:rows:#1}
+ \end{align}
+}
+
+\newcommand\CrossFont[1]{\setmathfont{#1}\fancyhead[R]{#1}
+ {\Large\bfseries #1}\par\medskip
+ One common outline method; loaded from the current math font at runtime.
+ \par\medskip\begingroup\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+ \FinalDelimSetup{q=0,scale=1,niji=false}
+ \AtlasRow{20}\AtlasRow{64}\endgroup
+ \FinalDelimSetup{q=8,scale=0.9,niji}
+ \Compare{Formula at default sizing}{\mathbb E\left[\frac{\sum_{i=1}^n X_i}{n}\middle|\mathsf F\right]^2_j}
+}
+\begin{document}
+\Atlas{Fira Math}\newpage
+\Examples{Fira Math}\newpage
+\Atlas{GFS Neohellenic Math}\newpage
+\Examples{GFS Neohellenic Math}
+
+\newpage
+\setmathfont{GFS Neohellenic Math}
+\fancyhead[R]{GFS Neohellenic Math}
+{\Large\bfseries Bracket interpolation sweep}\par\medskip
+Native above, continuous below in each pair. Target heights in pt.
+Both sides and flared terminals are retained.\par\medskip
+\FinalDelimSetup{q=0,scale=1,niji=false}
+\delimiterfactor=1000\delimitershortfall=0pt
+\newcommand\Sweep[1]{\par\medskip\textbf{#1 pt}\par
+\FinalDelimDrawOff\hbox{\One{#1}{[}\One{#1}{]}\One{#1}{\lbrace}\One{#1}{\rbrace}}\par
+\FinalDelimDrawOn\hbox{\One{#1}{[}\One{#1}{]}\One{#1}{\lbrace}\One{#1}{\rbrace}}}
+\Sweep{11.5}\Sweep{12.5}\Sweep{13.5}\Sweep{14.5}\Sweep{15.5}\Sweep{16.5}
+\end{document}

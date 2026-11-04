@@ -150,6 +150,10 @@ local function delimiters(first,last,h,d,style)
  local middle = result.next
  result.next,middle.prev,tail.prev.next,tail.prev = nil,nil,nil,nil
  node.flush_list(middle)
+ if M.render_delimiter then
+  result=M.render_delimiter(result,first,h,d,style)
+  tail=M.render_delimiter(tail,last,h,d,style)
+ end
  return result,tail
 end
 local function boxed_noad(box, subtype, attr)
@@ -241,6 +245,12 @@ local function process_middles(head,style)
  local rest,delimiters=fence_boxes(node.mlist_to_hlist(probe,style,false))
  node.flush_list(rest)
  assert(#delimiters==count,'Native fence count changed')
+ if M.render_delimiter then
+  local index=0
+  for n in node.traverse(head) do
+   if n.id==fence then index=index+1;delimiters[index]=M.render_delimiter(delimiters[index],n,h,d,style) end
+  end
+ end
  -- Convert the actual contents once, preserving native math spacing, then
  -- substitute only the already selected fence boxes before packing the row.
  head=wrap_fences(head,false)

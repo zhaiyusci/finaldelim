@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{unicode-math}
+\usepackage{experimental/finaldelim-draw}
+\pagestyle{empty}
+\newsavebox\orig\newsavebox\drawn
+\newcount\calls
+\newcommand\Tall{\phantom{\vrule width1pt height43pt depth37pt}}
+\newcommand\OutlineCheck[1]{%
+ \FinalDelimSetup{q=0,scale=1,niji=false}\FinalDelimDrawOff
+ \sbox\orig{$\displaystyle\left(\Tall a+b\middle\Vert c\right)^2_j$}%
+ \FinalDelimDrawOn
+ \sbox\drawn{$\displaystyle\left(\Tall a+b\middle\Vert c\right)^2_j$}%
+ \ifdim\wd\orig=\wd\drawn\else\errmessage{Assembly width changed}\fi
+ \ifdim\ht\orig=\ht\drawn\else\errmessage{Assembly height changed}\fi
+ \ifdim\dp\orig=\dp\drawn\else\errmessage{Assembly depth changed}\fi
+ \noindent Original#1:\par\noindent\usebox\orig\par
+ \noindent Drawn#1:\par\noindent\usebox\drawn\par
+ \noindent End#1:\par
+}
+\begin{document}
+\setmathfont{Latin Modern Math}\OutlineCheck{L}
+\clearpage\setmathfont{STIX Two Math}\OutlineCheck{S}
+\clearpage\setmathfont{TeX Gyre Pagella Math}\OutlineCheck{P}
+\clearpage\setmathfont{TeX Gyre Termes Math}\OutlineCheck{T}
+\clearpage\setmathfont{XITS Math}\OutlineCheck{X}
+\clearpage\setmathfont{Libertinus Math}\OutlineCheck{B}
+\clearpage\setmathfont{Fira Math}\OutlineCheck{F}
+\clearpage\setmathfont{GFS Neohellenic Math}\OutlineCheck{G}
+\clearpage
+\FinalDelimSetup{q=8,scale=0.9,niji}
+\begin{align}[spanning=full,niji]
+ F&=\left[\global\advance\calls by1 a+\\
+ &\frac{1}{1+x^2}\middle|b\right]^2_j\label{outline:row}
+\end{align}
+\ifnum\calls=1\else\errmessage{Source replayed}\fi
+\begingroup\FinalDelimDrawOff\endgroup
+\ifnum\FinalDelimDrawing=1\else\errmessage{Drawing option leaked}\fi
+\typeout{OUTLINE ASSEMBLY DIMENSIONS AND SOURCE ASSERTIONS PASSED}
+\end{document}

@@ -1,0 +1,14 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage{unicode-math}\setmathfont{STIX Two Math}
+\pagestyle{empty}\setlength\parindent{0pt}
+\newcommand\Compare[1]{\par\bigskip\textbf{Height #1 pt}\par\medskip
+ \hbox to \textwidth{\hfil\vtop{\hbox{Native glyph assembly}\vskip8pt\hbox to 130pt{\hfil$\displaystyle\left\Vert\vrule width0pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax\right.$\hfil}}
+ \hfil\vtop{\hbox{Two continuous filled rules}\vskip8pt\hbox to 130pt{\hfil$\displaystyle\vcenter{\hbox{\vrule width.57pt height#1pt depth0pt\kern1.03pt\vrule width.57pt height#1pt depth0pt}}$\hfil}}\hfil}\par}
+\begin{document}
+{\Large\bfseries Double bars: native versus directly drawn}\par\medskip
+STIX Two Math, 10pt. Same LuaLaTeX PDF renderer on both sides.\par
+Continuous rules use measured stroke width 0.57pt and centre spacing 1.60pt.
+\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\Compare{16}\Compare{32}\Compare{64}\Compare{80}
+\end{document}

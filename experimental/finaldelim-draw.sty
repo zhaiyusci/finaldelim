@@ -1,0 +1,9 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{finaldelim-draw}[2026/11/04 Experimental continuous delimiter outlines]
+\RequirePackage{finaldelim}
+\newcount\FinalDelimDrawing
+\FinalDelimDrawing=1
+\newcommand\FinalDelimDrawOn{\FinalDelimDrawing=1\relax}
+\newcommand\FinalDelimDrawOff{\FinalDelimDrawing=0\relax}
+\directlua{finaldelim_drawing=dofile('experimental/finaldelim-draw.lua'); finaldelim_sizing.render_delimiter=finaldelim_drawing.render}
+\endinput

@@ -1,0 +1,64 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=17mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{experimental/finaldelim-draw}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: slashes and angles}\fancyfoot[C]{\thepage}
+\setlength\parindent{0pt}
+\newcommand\Cell[2]{\hbox to .105\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
+\newcommand\Four[1]{\Cell{#1}{/}\Cell{#1}{\backslash}\Cell{#1}{\langle}\Cell{#1}{\rangle}}
+\newcommand\Row[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimDrawOff\Four{#1}\hfil\FinalDelimDrawOn\Four{#1}}\vfil}}
+\newcommand\FontPage[1]{\clearpage\setmathfont{#1}\fancyhead[R]{#1}
+{\Large\bfseries #1}\par\medskip
+\hbox to \textwidth{\hskip.12\textwidth\hbox to .42\textwidth{\hfil Native glyphs\hfil}\hfil\hbox to .42\textwidth{\hfil Continuous outlines\hfil}}\par
+\hbox to \textwidth{\hbox to .12\textwidth{Target\hfil}\Four{8}\hfil\Four{8}}\par\smallskip\hrule
+\begingroup\FinalDelimSetup{q=0,scale=1,niji=false}\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\Row{10}\Row{14}\Row{18}\Row{24}\Row{32}\Row{48}\Row{64}\Row{96}
+\endgroup}
+\begin{document}
+{\Huge\bfseries Slashes and angles}\par\bigskip
+Pages 2--9: slashes and single angles. Pages 10--17: double angles.\par\medskip
+Eight fonts; identical target heights for native glyphs and continuous outlines.
+Each group shows slash, backslash, left angle and right angle.\par\bigskip
+Inspect slant, width, stroke weight, the angle vertex, and behavior beyond the
+largest prebuilt glyph. Requested height does not imply that a font can supply
+that height: without an assembly, native output may stop growing. The new renderer
+continues the recent width trend while retaining normal stroke thickness.\par\bigskip
+Controlled sizing: q=0, scale=1, delimiterfactor=1000, delimitershortfall=0pt.
+Beyond the prebuilt range, terminal and vertex contours are mapped around the extended stroke centerlines.\par\bigskip
+\begin{tabular}{lr}Font & Page\\\hline
+Latin Modern Math & 2\\
+STIX Two Math & 3\\
+TeX Gyre Pagella Math & 4\\
+TeX Gyre Termes Math & 5\\
+XITS Math & 6\\
+Libertinus Math & 7\\
+Fira Math & 8\\
+GFS Neohellenic Math & 9\\
+\end{tabular}
+\FontPage{Latin Modern Math}
+\FontPage{STIX Two Math}
+\FontPage{TeX Gyre Pagella Math}
+\FontPage{TeX Gyre Termes Math}
+\FontPage{XITS Math}
+\FontPage{Libertinus Math}
+\FontPage{Fira Math}
+\FontPage{GFS Neohellenic Math}
+
+\newcommand\DCell[2]{\hbox to .20\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
+\newcommand\DRow[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimDrawOff\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}\hfil\FinalDelimDrawOn\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}}\vfil}}
+\newcommand\DoublePage[1]{\clearpage\setmathfont{#1}\fancyhead[R]{#1}
+{\Large\bfseries Double angles: #1}\par\medskip
+Native left group; drawn right group. Each group: left and right double angle.
+The two strokes extend independently; their source offsets are retained.\par\bigskip
+\begingroup\FinalDelimSetup{q=0,scale=1,niji=false}\delimiterfactor=1000\delimitershortfall=0pt\nulldelimiterspace=0pt
+\DRow{32}\DRow{64}\DRow{96}\DRow{144}\endgroup}
+\DoublePage{Latin Modern Math}
+\DoublePage{STIX Two Math}
+\DoublePage{TeX Gyre Pagella Math}
+\DoublePage{TeX Gyre Termes Math}
+\DoublePage{XITS Math}
+\DoublePage{Libertinus Math}
+\DoublePage{Fira Math}
+\DoublePage{GFS Neohellenic Math}
+\end{document}
