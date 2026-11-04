@@ -121,6 +121,12 @@ local function dimensions(box)
  return cells[1], cells[index], rows, rowdims[1], rowdims[#rowdims], rowdims, fence_rows
 end
 local function measure(head, stop, style)
+ -- Physics and other macros may add an ordinary group around their entire
+ -- argument. Look through that wrapper for measurement, never for layout.
+ while head and head.next==stop and head.id==noad and head.subtype==0
+  and not head.sup and not head.sub and head.nucleus and head.nucleus.id==sub do
+  head,stop=head.nucleus.head,nil
+ end
  local copy = node.copy_list(head, stop)
  local box = node.hpack(node.mlist_to_hlist(copy, style, false))
  local a,b,rows,firstrow,lastrow = dimensions(box)

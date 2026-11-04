@@ -94,5 +94,49 @@
   [
     "break-explicit",
     "F&=\\left[a+\\\\&b\\right]^2"
+  ],
+  [
+    "trace-qty",
+    "\\tr\\qty(\\frac AB)"
+  ],
+  [
+    "trace-mqty",
+    "\\tr\\mqty(a&b\\\\c&d)"
+  ],
+  [
+    "qty-curly",
+    "\\quantity{\\frac ab}^U_D"
+  ],
+  [
+    "qty-bars",
+    "\\qty|\\frac ab|^U_D"
+  ],
+  [
+    "qty-following",
+    "\\qty{a}[b](c)|d|"
+  ],
+  [
+    "nested-fixed",
+    "\\bqty\\Big{\\abs*{\\frac ab}+x}^U_D"
+  ],
+  [
+    "small-matrix",
+    "\\smqty*(a&b\\\\c&d)"
+  ],
+  [
+    "matrix-brackets",
+    "\\mqty[a&b\\\\c&d]"
+  ],
+  [
+    "matrix-bars",
+    "\\mqty|a&b\\\\c&d|"
+  ],
+  [
+    "break-nested",
+    "F&=\\bqty{\\qty(a+\\\\&b)+c}^2"
+  ],
+  [
+    "break-matrix",
+    "F&=\\bqty{\\mqty(a&b\\\\c&d)+\\\\&x}^2"
   ]
 ]

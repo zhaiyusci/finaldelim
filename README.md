@@ -7,7 +7,7 @@ from matchedsplit, not a release of the original package.
 ## Load the package
 
 Place `finaldelim.sty`, `finaldelim-luatex.sty`, `finaldelim-interface.sty`,
-`finaldelim-size.lua`, and `finaldelim.lua` beside your
+`finaldelim-physics.sty`, `finaldelim-size.lua`, and `finaldelim.lua` beside your
 source, or under `tex/latex/finaldelim/` in a personal TEXMF tree.
 
 ```latex
@@ -109,3 +109,13 @@ numbering and independent numerical integration checks.
 Scale validation: compile `max-scale-sample.tex` and `scale-test.tex`, then run
 `python test-scale.py`. The sample compares native sizing, maximum with scale 1,
 and maximum with scale 0.9 in STIX Two Math.
+
+## Physics
+
+Load `physics` and `finaldelim` in either order. Integration is automatic:
+macro-generated delimiters receive niji in inline and display math, automatic
+`\qty`, `\bqty`, `\abs`, `\norm` and related argument bodies accept outer
+breaks, and `\mqty` / `\smqty` retain their internal matrix rows and columns.
+Starred arguments, fractions, scripts and unknown macros remain indivisible.
+See manual section 3.8 and `experimental/physics-compat-README.md` for the tested
+scope and reproducible PDF geometry regressions.

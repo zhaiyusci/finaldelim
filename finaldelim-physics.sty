@@ -1,0 +1,103 @@
+% Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
+\ProvidesExplFile{finaldelim-physics.sty}{2026-11-05}{0.1.0-dev}{Physics argument adapter}
+\RequirePackage{xparse}
+% Only known argument grammars are parsed. User contents are never expanded.
+\bool_new:N\g__fd_physics_bool
+\tl_new:N\l__fd_ph_out_tl
+\tl_new:N\l__fd_ph_command_tl
+\tl_new:N\l__fd_ph_open_tl
+\tl_new:N\l__fd_ph_close_tl
+\tl_new:N\l__fd_ph_left_tl
+\tl_new:N\l__fd_ph_right_tl
+% Keep a protected macro at the boundary, as in physics' original commands.
+% A literal bgroup would be consumed by a preceding operator's optional g arg.
+\cs_new_protected:Npn\__fd_ph_begin:{\bgroup}
+\cs_new_protected:Npn\__fd_ph_box:n #1{{#1}}
+\cs_new_protected:Npn\__fd_ph_install:
+ {\bool_if:NF\g__fd_physics_bool
+   {\bool_gset_true:N\g__fd_physics_bool
+    \RenewDocumentCommand\argclose{s}
+     {\IfBooleanTF{##1}{\egroup}{\__fd_ph_argclose:n}}}}
+\cs_new_protected:Npn\__fd_ph_argclose:n #1{\right#1\egroup}
+\AddToHook{package/physics/after}{\__fd_ph_install:}
+\IfPackageLoadedTF{physics}{\__fd_ph_install:}{}
+
+\cs_new_eq:NN\__fd_ph_dispatch:N\__mslua_dispatch:N
+\cs_set_protected:Npn\__mslua_dispatch:N #1
+ {\bool_if:NTF\g__fd_physics_bool
+   {\tl_set:Nn\l__fd_ph_command_tl{#1}
+    \token_case_meaning:NnF #1
+     {{\qty}{\__fd_ph_read:N\__fd_ph_qty}
+      {\quantity}{\__fd_ph_read:N\__fd_ph_qty}
+      {\pqty}{\__fd_ph_braced:nn{(}{)}}
+      {\bqty}{\__fd_ph_braced:nn{[}{]}}
+      {\Bqty}{\__fd_ph_braced:nn{\lbrace}{\rbrace}}
+      {\vqty}{\__fd_ph_braced:nn{\lvert}{\rvert}}
+      {\abs}{\__fd_ph_braced:nn{\lvert}{\rvert}}
+      {\absolutevalue}{\__fd_ph_braced:nn{\lvert}{\rvert}}
+      {\norm}{\__fd_ph_braced:nn{\lVert}{\rVert}}
+      {\mqty}{\__fd_ph_read:N\__fd_ph_matrix}
+      {\matrixquantity}{\__fd_ph_read:N\__fd_ph_matrix}
+      {\smqty}{\__fd_ph_read:N\__fd_ph_matrix}
+      {\smallmatrixquantity}{\__fd_ph_read:N\__fd_ph_matrix}}
+     {\__fd_ph_dispatch:N #1}}
+   {\__fd_ph_dispatch:N #1}}
+\cs_new_protected:Npn\__fd_ph_read:N #1
+ {\exp_after:wN #1\l__mslua_input_tl\q_stop}
+\cs_new_protected:Npn\__fd_ph_braced:nn #1#2
+ {\tl_set:Nn\l__fd_ph_open_tl{#1}\tl_set:Nn\l__fd_ph_close_tl{#2}
+  \__fd_ph_read:N\__fd_ph_braces}
+% Resume the outer scanner on normalized tokens, including the argument body.
+\cs_new_protected:Npn\__fd_ph_resume:w #1\q_stop
+ {\tl_set:Nx\l__mslua_input_tl{\exp_not:V\l__fd_ph_out_tl\exp_not:n{#1}}}
+% Matrix bodies and explicitly sized/starred arguments remain opaque.
+\cs_new_protected:Npn\__fd_ph_opaque:w #1\q_stop
+ {\tl_put_right:Nx\l__mslua_source_tl
+   {\exp_not:N\__fd_ph_box:n{\exp_not:V\l__fd_ph_out_tl}}
+  \tl_set:Nn\l__mslua_input_tl{#1}\bool_set_false:N\l__mslua_fresh_bool}
+\cs_new_protected:Npn\__fd_ph_sizes:nnnn #1#2#3#4
+ {\tl_set:Nn\l__fd_ph_left_tl{\left}\tl_set:Nn\l__fd_ph_right_tl{\right}
+  \IfBooleanT{#4}{\tl_set:Nn\l__fd_ph_left_tl{\Biggl}\tl_set:Nn\l__fd_ph_right_tl{\Biggr}}
+  \IfBooleanT{#3}{\tl_set:Nn\l__fd_ph_left_tl{\biggl}\tl_set:Nn\l__fd_ph_right_tl{\biggr}}
+  \IfBooleanT{#2}{\tl_set:Nn\l__fd_ph_left_tl{\Bigl}\tl_set:Nn\l__fd_ph_right_tl{\Bigr}}
+  \IfBooleanT{#1}{\tl_set:Nn\l__fd_ph_left_tl{\bigl}\tl_set:Nn\l__fd_ph_right_tl{\bigr}}}
+\cs_new_protected:Npn\__fd_ph_pair:nnn #1#2#3
+ {\tl_put_right:Nx\l__fd_ph_out_tl
+   {\exp_not:V\l__fd_ph_left_tl\exp_not:n{#1#3}
+    \exp_not:V\l__fd_ph_right_tl\exp_not:n{#2}}}
+\cs_new_protected:Npn\__fd_ph_wrap:
+ {\tl_put_left:Nn\l__fd_ph_out_tl{\__fd_ph_begin:}
+  \tl_put_right:Nn\l__fd_ph_out_tl{\egroup}}
+\NewDocumentCommand\__fd_ph_qty{t\big t\Big t\bigg t\Bigg g o d() d||}
+ {\__fd_ph_sizes:nnnn{#1}{#2}{#3}{#4}\tl_clear:N\l__fd_ph_out_tl
+  \IfNoValueTF{#5}
+   {\IfNoValueTF{#6}
+     {\IfNoValueTF{#7}
+       {\IfNoValueTF{#8}{\tl_set:Nn\l__fd_ph_out_tl{()}}
+         {\__fd_ph_pair:nnn{\lvert}{\rvert}{#8}}}
+       {\__fd_ph_pair:nnn{(}{)}{#7}\IfNoValueF{#8}{\tl_put_right:Nn\l__fd_ph_out_tl{|#8|}}}}
+     {\__fd_ph_pair:nnn{[}{]}{#6}
+      \IfNoValueF{#7}{\tl_put_right:Nn\l__fd_ph_out_tl{(#7)}}
+      \IfNoValueF{#8}{\tl_put_right:Nn\l__fd_ph_out_tl{|#8|}}}}
+   {\__fd_ph_pair:nnn{\lbrace}{\rbrace}{#5}
+    \IfNoValueF{#6}{\tl_put_right:Nn\l__fd_ph_out_tl{[#6]}}
+    \IfNoValueF{#7}{\tl_put_right:Nn\l__fd_ph_out_tl{(#7)}}
+    \IfNoValueF{#8}{\tl_put_right:Nn\l__fd_ph_out_tl{|#8|}}}
+  \__fd_ph_wrap:\__fd_ph_resume:w}
+\NewDocumentCommand\__fd_ph_braces{s t\big t\Big t\bigg t\Bigg m}
+ {\tl_clear:N\l__fd_ph_out_tl
+  \IfBooleanTF{#1}
+   {\tl_set:Nx\l__fd_ph_out_tl{\exp_not:V\l__fd_ph_command_tl*{\exp_not:n{#6}}}
+    \__fd_ph_opaque:w}
+   {\__fd_ph_sizes:nnnn{#2}{#3}{#4}{#5}
+    \exp_args:NVV\__fd_ph_pair:nnn\l__fd_ph_open_tl\l__fd_ph_close_tl{#6}
+    \__fd_ph_wrap:\__fd_ph_resume:w}}
+\NewDocumentCommand\__fd_ph_matrix{s g o d() d||}
+ {\tl_set_eq:NN\l__fd_ph_out_tl\l__fd_ph_command_tl
+  \IfBooleanT{#1}{\tl_put_right:Nn\l__fd_ph_out_tl{*}}
+  \IfNoValueF{#2}{\tl_put_right:Nn\l__fd_ph_out_tl{{#2}}}
+  \IfNoValueF{#3}{\tl_put_right:Nn\l__fd_ph_out_tl{[#3]}}
+  \IfNoValueF{#4}{\tl_put_right:Nn\l__fd_ph_out_tl{(#4)}}
+  \IfNoValueF{#5}{\tl_put_right:Nn\l__fd_ph_out_tl{|#5|}}
+  \__fd_ph_opaque:w}
+\endinput

@@ -148,10 +148,6 @@
   \bool_set_true:N\l__mslua_fresh_bool\__mslua_scan:
   \bool_if:NF\l__mslua_fresh_bool{\__mslua_finish_cell:}
   \tl_put_right:NV\l__mslua_layout_tl\l__mslua_meta_tl
-  \bool_if:NT\l__ms_rainbow_bool
-   {\tl_clear:N\l_tmpa_tl
-    \exp_args:NV\__ms_color_group:nnN\l__mslua_source_tl{0}\l_tmpa_tl
-    \tl_set_eq:NN\l__mslua_source_tl\l_tmpa_tl}
   \str_if_eq:VnF\l__mslua_debug_tl{none}
    {\directlua{require('lua-visual-debug-keys')}}
   \hbox_set:Nn\l__mslua_source_box

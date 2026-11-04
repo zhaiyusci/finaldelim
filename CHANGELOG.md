@@ -4,6 +4,15 @@ Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 
 ## Unreleased
 
+- Preserve native streaming `displaymath` after adapting bracket displays;
+  verify the complete official physics manual, including verbatim display
+  examples, in traditional-font and Unicode continuous-outline builds.
+
+- Integrate physics automatically in either loading order: runtime niji for
+  macro-generated fences, safe function-argument closing, automatic delimiter
+  argument breaks, and protected matrix arguments. Measure through single
+  unscripted ordinary grouping wrappers without changing actual content boxes.
+
 - Include every `\middle` position in distance-weighted delimiter sizing;
   support multiple middles, nested groups, niji and physical row splitting.
 - Preserve native middle spacing and glyph construction. Extend the endpoint

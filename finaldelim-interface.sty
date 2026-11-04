@@ -42,12 +42,13 @@
  {\bool_if:NTF\g__ms_rainbow_bool{\__ms_native_middle:n{#1}}{\__fd_tex_middle#1}}
 \cs_set_protected:Npn\right #1
  {\bool_if:NTF\g__ms_rainbow_bool{\__ms_native_right:n{#1}}{\__fd_tex_right#1}}
-% Parsed displays already have their own local rainbow pass; avoid recoloring.
+% Use runtime wrappers for displays as well: fences introduced by macros must
+% follow the same colour path as literal left/middle/right tokens.
 \cs_new_eq:NN\__fd_prepare:n\__mslua_prepare:n
 \cs_set_protected:Npn\__mslua_prepare:n #1
- {\cs_set_eq:NN\left\__fd_tex_left
-  \cs_set_eq:NN\middle\__fd_tex_middle
-  \cs_set_eq:NN\right\__fd_tex_right
+ {\bool_set_eq:NN\g__ms_rainbow_bool\l__ms_rainbow_bool
+  \clist_set_eq:NN\g__ms_colors_clist\l__ms_colors_clist
+  \int_zero:N\l__fd_color_depth_int
   \__fd_prepare:n{#1}}
 \NewDocumentCommand\FinalDelimSetup{m}
  {\keys_set:nn{matchedsplit/package}{#1}\__fd_math_settings:}
@@ -56,6 +57,11 @@
 \NewCommandCopy\fdNativeEndEquation\endequation
 \exp_args:Ncc\NewCommandCopy{fdNativeEquationStar}{equation*}
 \exp_args:Ncc\NewCommandCopy{fdNativeEndEquationStar}{endequation*}
+% LaTeX's displaymath begin/end expand to \[ and \]. Our bracket interface
+% collects a literal \] terminator, which cannot see through \end{displaymath}.
+% Keep this traditional environment streaming (including \verb in manuals).
+\RenewDocumentEnvironment{displaymath}{}
+ {\fdNativeEquationStar}{\fdNativeEndEquationStar}
 
 \tl_new:N\l__fd_equation_meta_tl
 \cs_new_protected:Npn\__fd_equation:nn #1#2
@@ -86,4 +92,5 @@
  {\fdNativeEquationStar\__fd_equation:nn{#2}{#1}\fdNativeEndEquationStar}{}
 \cs_set_protected:Npn\[ #1\]
  {\begin{equation*}#1\end{equation*}}
+\file_input:n{finaldelim-physics.sty}
 \endinput

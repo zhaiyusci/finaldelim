@@ -8,6 +8,7 @@ The inherited distribution manifest lists:
 - `finaldelim.sty` -- directly maintained package source;
 - `finaldelim-luatex.sty` -- LuaTeX alignment adapter;
 - `finaldelim-interface.sty` -- native display and inline interfaces;
+- `finaldelim-physics.sty` -- optional physics-package integration;
 - `finaldelim-size.lua` -- delimiter sizing;
 - `finaldelim.lua` -- LuaTeX physical partition backend;
 - `finaldelim.tex` -- user manual source;

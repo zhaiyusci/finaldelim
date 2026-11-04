@@ -30,7 +30,7 @@
 \clearpage
 \section*{Physics compatibility: inline math, display style}
 \makebox[.325\linewidth][l]{Native sizing}\makebox[.325\linewidth][l]{Weighted + outlines}\makebox[.325\linewidth][l]{Weighted + outlines + niji}\par\bigskip
-\texttt{dv with parenthesized argument}\par\smallskip\cell{sizing=native,niji=false}{\dv{x}(\frac{x^2}{1+x})}\hfill\cell{sizing=weighted,niji=false}{\dv{x}(\frac{x^2}{1+x})}\hfill\begin{minipage}{.325\linewidth}Niji: compilation error\end{minipage}\par\medskip
+\row{dv}{\dv{x}(\frac{x^2}{1+x})}
 \row{pdv}{\pdv{f}{x}+\pdv[2]{f}{x}}
 \row{dd}{\int\frac{1}{1+x^2}\dd{x}}
 \row{mqty}{\mqty(a&b\\c&d)^U_D}

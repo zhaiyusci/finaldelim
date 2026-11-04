@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\ifdefined\PhysicsAfter
+\usepackage{experimental/finaldelim-draw}\usepackage{physics}
+\else
+\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\fi
+\newcount\runs
+\begin{document}
+\FinalDelimSetup{niji}
+\begin{equation}[colors={red,blue}]
+ F&=\bqty{\global\advance\runs by1 a+\\&\norm{\frac bc}+\qty(d+e)}^2_j\label{ph:one}
+\end{equation}
+\begin{align}
+ G&=\qty[\global\advance\runs by1 a+\\&\abs{b}+c]\label{ph:two}
+\end{align}
+\begin{equation}
+ \mqty(a&b\\c&d)+\mqty[a&b\\c&d]+\mqty|a&b\\c&d|+\mqty*({a}&b\\c&d)\label{ph:matrix}
+\end{equation}
+\begin{equation*}
+ \smqty(a&b\\c&d)+\smqty[a&b\\c&d]+\mqty{a&b\\c&d}
+\end{equation*}
+\begin{equation*}
+ \qty{a+b}+\qty|a+b|+\Bqty{a+\vqty{b}}+\pqty{\bqty{x}}
+\end{equation*}
+\begin{equation*}
+ \abs*{\frac ab}+\norm\Big{\frac ab}+\bqty\big{a}+\qty\Bigg(\frac ab)
+\end{equation*}
+\begin{equation*}[niji=false]
+ \qty(a)+\sin(\frac ab)+\dv{x}(\frac{x^2}{1+x})
+\end{equation*}
+\begin{equation*}\qty(a)+\sin(\frac ab)+\dv{x}(\frac{x^2}{1+x})\end{equation*}
+\ifnum\runs=2\else\errmessage{Physics source replayed}\fi
+\typeout{PHYSICS SOURCE ONCE PASSED}
+\end{document}

@@ -3,6 +3,7 @@
 \usepackage[margin=18mm,headheight=14pt]{geometry}
 \usepackage{unicode-math}
 \setmathfont{Latin Modern Math}
+\usepackage{physics}
 \usepackage{finaldelim}
 \usepackage{experimental/finaldelim-draw}
 \FinalDelimDrawOff
@@ -44,7 +45,7 @@
 {\LARGE\bfseries finaldelim}\par
 {\large Delimiter sizing, nesting colors, and equation breaks}\par
 Yu Zhai \quad\href{mailto:me@zhaiyusci.net}{me@zhaiyusci.net}\par
-Version 0.1.0-dev \quad 4 November 2026
+Version 0.1.0-dev \quad 5 November 2026
 
 finaldelim adds three features to LuaLaTeX mathematics: distance-weighted
 delimiter sizing, nesting colors named \texttt{niji}, and explicit line breaks
@@ -345,10 +346,37 @@ Use \texttt{debug=boxes}, \texttt{debug=alignment}, or \texttt{debug=all} as a
 package or display option to inspect boxes and alignment points. Box outlines
 use \texttt{lua-visual-debug} and its \verb|\lvdset| interface.
 
+\newpage
+\subsection{Using physics}
+Load \texttt{physics} and \texttt{finaldelim} in either order. The integration
+is automatic; no extra option is needed. Automatic delimiters created by
+\verb|\qty|, \verb|\abs|, \verb|\norm| and bra--ket commands use the same sizing
+and niji colours as explicit \verb|\left| and \verb|\right| pairs.
+
+The Gaussian relative-entropy example can also be written with physics
+commands.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution\#Kullback\%E2\%80\%93Leibler_divergence}{Multivariate normal distribution}, Kullback--Leibler divergence.}
+Here the breaks and alignment points are inside the argument of \verb|\bqty|:
+\Example{physics-break}
+
+Direct breaks are recognized in the automatic forms of \verb|\qty|,
+\verb|\quantity|, \verb|\pqty|, \verb|\bqty|, \verb|\Bqty|, \verb|\vqty|,
+\verb|\abs|, \verb|\absolutevalue| and \verb|\norm|. Matrix arguments of
+\verb|\mqty|, \verb|\matrixquantity|, \verb|\smqty| and
+\verb|\smallmatrixquantity| retain their own rows and columns. For example,
+\verb|\mqty(a&b\\c&d)| remains a two-by-two matrix inside an equation.
+
+Starred forms keep physics' fixed-size behaviour. Their arguments, fractions,
+subscripts and superscripts remain indivisible. Other macros are not expanded
+by the break scanner; use explicit delimiters for breaks hidden inside an
+unsupported macro's argument. The normalization pass does not evaluate argument contents; they are left
+for mathematical typesetting.
+
 \subsection*{Installation}
-Install these five files together beside your document or in a local TEXMF tree:
+Install these six files together beside your document or in a local TEXMF tree:
 \path{finaldelim.sty}, \path{finaldelim-luatex.sty},
-\path{finaldelim-interface.sty}, \path{finaldelim.lua}, and
+\path{finaldelim-interface.sty}, \path{finaldelim-physics.sty},
+\path{finaldelim.lua}, and
 \path{finaldelim-size.lua}. This implementation targets LuaLaTeX; tagged
 mathematical structure for the physical line-breaking backend is not yet supported.
 
