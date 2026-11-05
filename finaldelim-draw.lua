@@ -1,6 +1,6 @@
--- Experimental outline renderer; production sizing remains unchanged when not loaded.
+-- Optional continuous outline renderer.
 local M={counts={interpolated=0,assembled=0,outlined=0,profile=0,fallback=0,extrapolated=0}}
-local source=dofile('experimental/finaldelim-outline-fonts.lua')
+local source=require('finaldelim-outline-fonts')
 M.method=source.version
 M.warnings={}
 local sp_to_bp=72/72.27/65536

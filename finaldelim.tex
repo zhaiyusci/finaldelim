@@ -4,10 +4,8 @@
 \usepackage{unicode-math}
 \setmathfont{Latin Modern Math}
 \usepackage{physics}
-\usepackage{finaldelim}
-\usepackage{experimental/finaldelim-draw}
-\FinalDelimDrawOff
-\usepackage{booktabs,array,listings,fancyhdr,etoolbox}
+\usepackage[render=draw]{finaldelim}
+\usepackage{booktabs,array,listings,fancyhdr,etoolbox,graphicx}
 \usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
 \lstset{basicstyle=\ttfamily\fontsize{8.5}{10.5}\selectfont,
  columns=fullflexible,keepspaces=true,breaklines=true,
@@ -17,7 +15,7 @@
 \emergencystretch=2em
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim}\fancyhead[R]{User manual}\fancyfoot[C]{\thepage}
 % Listings use live example files; the classic listing adds display-only markup.
-\newcommand\Example[2][]{\par\medskip\noindent
+\newcommand\Example[2][]{\par\medskip\noindent\begin{minipage}{\linewidth}
  \begin{minipage}[t]{.475\linewidth}\vspace{0pt}
  \textbf{LaTeX source}\par\smallskip
  \ifstrequal{#2}{classic-split}
@@ -27,7 +25,7 @@
  \begin{minipage}[t]{.495\linewidth}\vspace{0pt}
  \textbf{Result}\par\smallskip
  #1\input{manual-examples/#2.tex}
- \end{minipage}\par\medskip
+ \end{minipage}\end{minipage}\par\medskip
  \FinalDelimSetup{niji=false}}
 \ExplSyntaxOn
 \cs_new_protected:Npn\ClassicMode
@@ -37,350 +35,468 @@
   \cs_set_eq:NN\right\__fd_tex_right
   \int_zero:N\l__fd_sizing_int}
 \ExplSyntaxOff
-\newcommand\StirlingNote{\footnote{Wikipedia,
- \href{https://en.wikipedia.org/wiki/Stirling\%27s_approximation\#Speed_of_convergence_and_error_estimates}{Stirling's approximation}, Stirling series.}}
 \newcommand\NormalNote{\footnote{Wikipedia,
  \href{https://en.wikipedia.org/wiki/Normal_distribution\#Cumulative_distribution_function}{Normal distribution}, cumulative distribution function.}}
+
+\newcommand\ProfileComparison{%
+ \par\medskip\noindent\begin{minipage}[t]{.475\linewidth}\vspace{0pt}
+ \textbf{One source for both results}\par\smallskip
+ \lstinputlisting{manual-examples/size-lllhlll.tex}
+ \end{minipage}\hfill
+ \begin{minipage}[t]{.495\linewidth}\vspace{0pt}
+ \textbf{Native sizing}\par
+ {\FinalDelimSetup{sizing=native,render=native,niji=false}%
+  \input{manual-examples/size-lllhlll.tex}}
+ \textbf{Weighted sizing, continuous drawing}\par
+ {\FinalDelimSetup{sizing=weighted,render=draw,niji=false}%
+  \input{manual-examples/size-lllhlll.tex}}
+ \end{minipage}\par\medskip}
+
 \begin{document}
 {\LARGE\bfseries finaldelim}\par
-{\large Delimiter sizing, nesting colors, and equation breaks}\par
+{\large Better-sized delimiters, readable nesting, simpler line breaks}\par
 Yu Zhai \quad\href{mailto:me@zhaiyusci.net}{me@zhaiyusci.net}\par
 Version 0.1.0-dev \quad 5 November 2026
 
-finaldelim adds three features to LuaLaTeX mathematics: distance-weighted
-delimiter sizing, nesting colors named \texttt{niji}, and explicit line breaks
-directly inside \texttt{equation}.
+A formula may start as a short expression, acquire a tall fraction and nested
+brackets, and eventually need several lines. finaldelim lets you keep writing
+ordinary \verb|\left|, \verb|\middle| and \verb|\right| as those needs change.
+This manual follows that progression: adjust the size, make the nesting
+visible, then break and align the formula.
 
-Compile with \textbf{LuaLaTeX} and load the package:
+Compile with \textbf{LuaLaTeX}. To start, add:
 \begin{lstlisting}
-\usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
-\usepackage{finaldelim}
+\usepackage[render=draw]{finaldelim}
 \end{lstlisting}
-The new sizing policy is enabled by default. The manual uses Latin Modern Math;
-finaldelim also works with other math fonts. Optional continuous-outline rendering
-is described in Section~\ref{sec:outlines}. It loads \texttt{amsmath} and
-\texttt{xcolor} automatically.
+Weighted sizing is on by default; the example above also enables continuous
+drawing. Colors remain opt-in.
+The examples use Latin Modern Math, selected with \texttt{unicode-math};
+The manual uses \texttt{render=draw}, except in native-rendering comparisons.
+finaldelim does not select a font. It loads \texttt{amsmath} and \texttt{xcolor}.
 
-\section{Delimiter sizing}
-Native \verb|\left| and \verb|\right| size a pair from its tallest enclosed
-content. A distant fraction can therefore make both delimiters large beside
-much smaller neighbours. finaldelim weights content by its distance from each
-edge, balancing the pair with the surrounding expression.
+\section{A tall term makes the brackets look too large}
+Suppose a bracketed expression has three low terms, a tall central fraction,
+and three more low terms: the profile \texttt{lllhlll}. Native sizing sees
+the tallest content and gives both brackets enough height for it, even though
+their immediate neighbours are small.
 
-The correction factor in Stirling's series mixes low terms with taller
-fractions.\StirlingNote\ Here
-$C(n)=n!/\bigl[\sqrt{2\pi n}(n/e)^n\bigr]$.
-\par\textbf{Native sizing}
-\Example{size-native}
-\textbf{Default weighted sizing}
-\Example{size-weighted}
+The following schematic expression isolates that problem. The same source is
+actually typeset twice, with ordinary mathematical spacing and the same font.
+The native result uses native sizing and font glyphs; the finaldelim result
+uses the default weighted sizing with continuous drawing.
+\ProfileComparison
+
+The weighted result gives nearby content more influence. The brackets form a
+frame around the expression without needing to enclose the full height of the
+distant fraction. Both ends still receive a shared size target.
+No manual \verb|\bigl| or \verb|\bigr| commands are needed.
+
+The rest of this section explains the size controls and then the optional
+continuous renderer. For nesting colors, go to Section~\ref{sec:niji}; for
+line breaks, go to Section~\ref{sec:breaks}.
 
 \newpage
+\subsection{Make the frame more or less compact}
+The defaults are \texttt{lambda=20pt}, \texttt{q=8}, and \texttt{scale=0.9}.
+Usually no adjustment is needed. To ask for a fuller frame, increase
+\texttt{scale}; to give distant content less influence, decrease \texttt{lambda}.
+\begin{lstlisting}
+\FinalDelimSetup{scale=1}       % fuller frame in subsequent formulas
+\begin{equation}[scale=0.9]    % this display only
+  \left[a+\frac{b}{c}+d\right]
+\end{equation}
+\end{lstlisting}
+The default scale reduces the estimated radius by ten percent about the math
+axis. It changes the target size, not the shape of a glyph. With native font
+rendering, several nearby targets can select the same prebuilt glyph.
+\texttt{sizing=native} restores the native size policy; colors and line
+breaking remain available.
+
 \subsection{Why distance, width, and height matter}
-The model treats the contents as a horizontal profile. A measured box of height
-$h_i$ and depth $d_i$ has radius
+The purpose of the model is to balance a delimiter against the content near
+it while retaining the influence of taller material farther away.
+Treat the formula as a horizontal profile of boxes. For box $i$, let $h_i$
+and $d_i$ be its height and depth, and let $a$ be the math axis height. Its
+radius is
 \[
- r_i=\max(h_i-a,\,d_i+a),
+ r_i=\max(h_i-a,\,d_i+a).
 \]
-where $a$ is the math axis height. Its radius applies over its actual width.
-This gives a broad tall term more influence than a narrow one at the same
-height. Spaces use the smallest measured radius in the group.
-
-Let $r(x)$ be this profile over the content width $W$. The two delimiters see
-opposite distance weights:
-\[
- w_L(x)=e^{-x/\lambda},\qquad w_R(x)=e^{-(W-x)/\lambda}.
-\]
-At distance $\lambda$, a contribution has $1/e$ of its weight at the edge.
-The left and right radius estimates are
-\[
- R_L=\left(\frac{\int_0^W r(x)^q w_L(x)\,dx}
-                    {\int_0^W w_L(x)\,dx}\right)^{1/q},\qquad
- R_R=\left(\frac{\int_0^W r(x)^q w_R(x)\,dx}
-                    {\int_0^W w_R(x)\,dx}\right)^{1/q}.
-\]
-The larger estimate sets a shared target radius:
-\[
- R=s\max(R_L,R_R),\qquad s=\texttt{scale}.
-\]
-The power $q$ gives tall content extra influence even when it occupies only a
-small part of the width. Taking the maximum prevents a distant delimiter
-from diluting the estimate at a delimiter close to tall content.
-TeX then selects actual delimiters from the math font using this radius.
-
-\subsection{Choosing settings}
-\begin{center}
-\begin{tabular}{@{}llp{94mm}@{}}\toprule
-Option&Default&Effect\\\midrule
-\texttt{lambda}&\texttt{20pt}&A shorter decay length makes nearby content more decisive.\\
-\texttt{q}&\texttt{8}&A larger value gives tall content more influence.\\
-\texttt{scale}&\texttt{0.9}&Multiplies the target radius about the math axis.\\\bottomrule
-\end{tabular}
-\end{center}
-The default decay length is a physical distance: 20pt at every font size.
-\texttt{lambda} and \texttt{scale} must be positive; \texttt{q} must be nonnegative.
-The special value \texttt{q=0} selects the maximum-radius limit.
-
-\begin{lstlisting}
-\usepackage[lambda=20pt,q=8,scale=0.9]{finaldelim}
-% Change settings for subsequent formulas:
-\FinalDelimSetup{scale=1} % use the full estimated radius
-% Return to native sizing; colors and line breaks remain available:
-\FinalDelimSetup{sizing=native}
-\FinalDelimSetup{sizing=weighted,lambda=20pt}
-\end{lstlisting}
-For a local setting, write:\par
-\verb|\begin{equation}[lambda=30pt]|
-
-The default scale of 0.9 favours a compact visual frame rather than requiring
-the delimiters to enclose the full height of the contents.
-The scale applies to weighted and endpoint sizing. It changes the sizing
-target, not the glyph outline; font size steps can leave a glyph unchanged.
-Native sizing and explicitly sized delimiters are unaffected.
-
-\newpage
-\subsection{Continuous delimiter outlines}\label{sec:outlines}
-The sizing model chooses how large a delimiter should be. Continuous-outline
-rendering gives it intermediate sizes between the font's prebuilt glyphs and
-fills assembled delimiters as a single outline, avoiding repeated painting at
-component joins. It uses the current math font's own shapes.
-
-Enable this optional experimental feature after loading finaldelim:
-\begin{lstlisting}
-\usepackage{finaldelim}
-\usepackage{experimental/finaldelim-draw}
-\end{lstlisting}
-Keep \texttt{finaldelim-draw.sty}, \texttt{finaldelim-draw.lua} and
-\texttt{finaldelim-outline-fonts.lua} in an \texttt{experimental/} subdirectory
-beside the document. The renderer loads font outlines automatically.
-
-Then write ordinary \verb|\left|, \verb|\middle| and \verb|\right| commands.
-Niji and line breaks work with the drawn outlines too.
-Superscripts and subscripts after a visible closing delimiter follow its final
-size; the contents retain their full height and depth for surrounding layout.
-
-This four-by-two matrix illustrates the Frobenius norm.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Matrix_norm\#Frobenius_norm}{Matrix norm},
-Frobenius norm; shown here for a four-by-two matrix.}
-Both results below use the same default sizing settings.
-\par\textbf{Native font glyphs}
-\Example[\FinalDelimDrawOff]{outline-norm}
-\textbf{Continuous outlines}
-\Example[\FinalDelimDrawOn]{outline-norm}
-
-\verb|\FinalDelimDrawOff| returns to native glyph rendering;
-\verb|\FinalDelimDrawOn| enables drawing again. These commands respect TeX groups
-and do not change the sizing settings.
-
-Between prebuilt sizes, the renderer interpolates the font's contours.
-For larger assembled symbols it keeps the font's component placement but paints
-one combined path. Slashes, backslashes, single angles and double angles can
-extend beyond the largest prebuilt glyph: their width follows the recent size
-trend, while stroke thickness and terminal details are preserved. Double angles
-retain their inter-stroke spacing. Other symbols without larger variants or
-assembly parts retain their native size limit. Transformed fonts and explicit
-variable-font instances currently retain native rendering. Drawn delimiters are
-PDF paths; text extraction and accessibility tagging for these paths are not yet supported.
-
-\newpage
-\subsection{One or more middle delimiters}
-Use \verb|\middle| for a delimiter inside a \verb|\left|/\verb|\right| group.
-Every middle delimiter participates in the size calculation. A matrix element
-in bra--ket notation uses two of them.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Bra\%E2\%80\%93ket_notation\#Linear_operators_acting_on_bras}{Bra--ket notation}, linear operators acting on bras.}
-\Example{middle-pair}
-The outer delimiters and both bars share one sizing target. The math font
-supplies the actual glyphs. With \texttt{niji}, the middle delimiters receive
-the same color as their surrounding pair.
-
-\subsection*{Each delimiter sees its own neighbourhood}
-Let $s_j$ be the horizontal position of delimiter $j$, including both ends
-and every middle delimiter. Its weight and radius estimate are
+This radius applies over the box's actual width: a broad tall term contributes
+more than a narrow term of the same height. Spaces take the smallest measured
+radius in the group. Write the resulting profile as $r(x)$ over width $W$.
+A delimiter at position $s_j$ uses
 \[
  w_j(x)=e^{-|x-s_j|/\lambda},\qquad
  R_j=\left(\frac{\int_0^W r(x)^q w_j(x)\,dx}
                   {\int_0^W w_j(x)\,dx}\right)^{1/q}.
 \]
-For $N$ delimiters, their shared radius is
-\[
- R=s\max_{1\le j\le N}R_j.
-\]
-A middle delimiter receives contributions from both sides. Moving it closer
-to tall content can increase its estimate and therefore the shared size.
-With only the two outer delimiters, this is the earlier left/right model.
+At a distance of \texttt{lambda}, a contribution has $1/e$ of its weight at
+the delimiter. The fixed default of 20pt is a physical length, independent of
+font size. The power $q$ gives tall material extra influence even when it
+occupies only a small part of the width.
 
-\subsection*{Across line breaks}
-Middle delimiters stay at their source positions when the formula is split
-into rows. Under \texttt{spanning=endpoints}, the size envelope includes every
-row carrying one of the group's delimiters: the first row, the last row,
-and any row containing a middle delimiter. Under \texttt{spanning=full}, all
-delimiter positions use the distance-weighted model over the continuous contents.
-Nested groups are sized independently.
+The shared target radius is
+\[
+ R=\texttt{scale}\;\max_j R_j.
+\]
+For a pair, the delimiter positions are $0$ and $W$. Taking the maximum keeps
+the estimate at an end close to tall content from being diluted by the other
+end. Every \verb|\middle| position also contributes when present. Nested
+groups are sized independently.
+
+The renderer turns this target into a visible delimiter. The default renderer
+selects a font glyph or assembly. The next page shows how to obtain continuous
+intermediate sizes and clean joins instead.
 
 \newpage
-\section{Niji: colors for nested delimiters}
-Enable \texttt{niji} to give matching delimiters the same nesting color:
+\subsection{The size is right, but the outline has steps or joins}\label{sec:outlines}
+A font supplies a finite set of prebuilt delimiter sizes and may assemble
+larger ones from repeated pieces. To interpolate between those sizes and
+paint assembled outlines without repeated painting at the joins, enable
+continuous drawing:
+\begin{lstlisting}
+\usepackage[render=draw]{finaldelim}
+\end{lstlisting}
+Continue using the same delimiter commands. The renderer derives its shapes
+from the current math font. It needs no additional package or directory.
+
+Here is a Frobenius norm with a tall matrix.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Matrix_norm\#Frobenius_norm}{Matrix norm},
+Frobenius norm; adapted to a four-by-two matrix.}
+The sizing policy is identical in both results; only rendering changes.
+\textbf{Font glyphs: \texttt{render=native}}
+\Example[\FinalDelimSetup{render=native}]{outline-norm}
+\textbf{Continuous outlines: \texttt{render=draw}}
+\Example[\FinalDelimSetup{render=draw}]{outline-norm}
+
+Change the renderer for subsequent mathematics with
+\verb|\FinalDelimSetup{render=draw}|, or for one display with
+\verb|\begin{equation}[render=draw]|. Use \texttt{render=native} to return to
+font glyphs. Rendering and sizing are independent choices.
+
+Drawing also works with niji and line breaks. Scripts after a visible closing
+delimiter follow its final size; the formula contents retain their full height
+and depth for surrounding layout. Unsupported fonts or shapes retain native
+rendering. Drawn delimiters are PDF paths and do not provide text extraction
+or accessibility tagging.
+
+\newpage
+\subsection*{See the joins in a rasterized view}
+At screen resolution, overlapping assembly pieces can leave regularly spaced
+dark bands. The following is a real rasterization of a 64pt double bar in
+Latin Modern Math. Both versions use the same font, target size and rasterizer.
+The only change is \texttt{render=native} versus \texttt{render=draw}.
+
+\begin{center}
+\begin{minipage}[t]{.43\linewidth}\centering
+\textbf{Native assembly}\par\medskip
+\includegraphics[height=75mm]{manual-assets/joints-native.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{.43\linewidth}\centering
+\textbf{Continuous outline}\par\medskip
+\includegraphics[height=75mm]{manual-assets/joints-draw.png}
+\end{minipage}
+\end{center}
+\textbf{Look at the repeated horizontal bands in the left-hand bars.}
+They occur at the joins and give the strokes a segmented appearance. The
+right-hand bars are painted as a single filled outline, without those bands.
+
+These images were rendered from PDF by Poppler at 96 dpi and enlarged with
+nearest-neighbour sampling so individual pixels remain visible. No bands have
+been drawn in, removed or enhanced. Their appearance in a PDF viewer depends
+on resolution and rasterization; this comparison records one reproducible view.
+The source and generation script are included in \texttt{manual-assets/}.
+
+\newpage
+\section{Nested brackets become hard to follow}\label{sec:niji}
+Once a formula contains several levels of parentheses, color can make the
+matching pairs easier to find. Add \texttt{niji}:
 \begin{lstlisting}
 \usepackage[niji]{finaldelim}
+% Combine with continuous drawing if desired:
+% \usepackage[niji,render=draw]{finaldelim}
 \end{lstlisting}
-\texttt{rainbow} is an alias. Colors apply to explicit \verb|\left|/\verb|\right|
-pairs; a \verb|\middle| delimiter follows its pair. Ordinary parentheses and
-the mathematical contents keep their usual color.
+Each nesting level gets a color. The contents keep their usual color;
+ordinary parentheses written without \verb|\left| and \verb|\right| are not
+scanned. \texttt{rainbow} is an alias for \texttt{niji}.
 
-The normal cumulative distribution function has a bracketed expression with
-an inner argument of the error function.\NormalNote
-\par\textbf{Without niji}
+The normal cumulative distribution function contains an inner argument of
+the error function.\NormalNote
+\textbf{Without niji}
 \Example{niji-plain}
 \textbf{With niji}
 \Example{niji-display}
 
-\subsection{Inline mathematics}
-The same setting works in ordinary inline math.
+\subsection{Use the same colors inline}
+No special inline command is needed.
 \Example{niji-inline}
 
-\subsection{Settings and palettes}
+\subsection{Choose a palette or turn it off locally}
 \begin{lstlisting}
-\FinalDelimSetup{niji=false}             % subsequent mathematics
 \FinalDelimSetup{niji,colors={blue,red,teal}}
-\end{lstlisting}
-Use an environment option, such as \verb|\begin{equation}[niji=false]|,
-to override the setting for one display. The palette repeats at deeper nesting
-levels. Sizing and coloring can be selected independently.
-
-\newpage
-\section{Line breaks directly in equation}
-Place \verb|\\| at a break and \verb|&| at the alignment point.
-Keep the original delimiter pair: \verb|\left| can open on one row and
-\verb|\right| can close on another.
-
-\subsection{The same long formula, old and new}
-The divergence between two multivariate normal distributions contains a trace,
-a quadratic form, and a logarithmic determinant.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Kullback\%E2\%80\%93Leibler_divergence\#Multivariate_normal_distributions}{Kullback--Leibler divergence}, multivariate normal distributions.}
-Keeping the full notation makes this a useful case for several rows: the
-left-hand side introduces the quantity, and each subsequent row carries a term.
-
-\textbf{Plain amsmath: split and invisible delimiters}\par
-The traditional form uses an inner \texttt{split}. The opening bracket is
-paired with \verb|\right.|; the closing bracket is paired with \verb|\left.|.
-The intermediate row needs no delimiter commands. A \verb|\vphantom| copies
-the height and depth of the final logarithmic fraction into the opening row,
-so both brackets receive the same size.
-\textcolor{red!70!black}{\textbf{Red bold}} marks the extra code.
-\Example[\ClassicMode]{classic-split}
-
-\textbf{finaldelim: direct breaks, with niji included}\par
-Keep the same break points, remove the extra wrapper, invisible delimiters, and height phantom,
-and keep a single
-\verb|\left|/\verb|\right| pair across the rows.
-\Example{direct-break}
-Niji is included as an optional companion feature: adding \texttt{[niji]}
-colors matching delimiters by nesting level, including pairs that cross rows.
-The example also uses \verb|\left|/\verb|\right| around the trace argument
-so its inner pair receives the next color. Both forms keep one equation number.
-
-\newpage
-\subsection{Break a long expansion into readable groups}
-The cubic trinomial expansion has ten terms.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Multinomial_theorem\#Example}{Multinomial theorem}, cubic trinomial example.}
-Breaking before groups of mixed terms makes it easier to scan while preserving
-one equation number. The source contains only \texttt{equation}, alignment
-markers, and the chosen breaks.
-\Example{multinomial-break}
-
-\subsection{Break at a change in the calculation}
-The normal-distribution log-likelihood starts with a sum and then expands into
-logarithmic terms and a sum of squared residuals.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Normal_distribution\#Estimation_of_parameters}{Normal distribution}, estimation of parameters.}
-A new row separates the expansion step; another keeps the residual sum together.
-\Example{loglike-break}
-
-\subsection{Choose the spanning size}
-\texttt{spanning=endpoints}, the default, uses the maximum height and depth of
-the first and last rows inside a spanning pair, plus any rows carrying its
-\verb|\middle| delimiters. \texttt{spanning=full} instead
-applies the weighted model to its entire continuous contents, including the
-middle rows. Select either policy on the display:
-\begin{lstlisting}
-\begin{equation}[spanning=full,niji]
- ...
+\begin{equation}[niji=false]
+  \left[a+\left(b+c\right)\right]
 \end{equation}
 \end{lstlisting}
-For pairs contained on one row, weighted sizing applies in either mode.
-\verb|\\[3pt]| adds space after a row; \verb|\jot| controls the usual extra
-row spacing. Additional \verb|&| markers create additional alignment pairs.
+The palette repeats at deeper levels. The environment option affects only
+that display; the surrounding niji setting resumes afterwards.
 
 \newpage
-\subsection{A number for each row}
-Change \texttt{equation} to \texttt{align} when rows need separate numbers.
-The maximum-likelihood estimates of a normal distribution provide a short
-example.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Normal_distribution\#Estimation_of_parameters}{Normal distribution}, estimation of parameters.}
+\subsection{A delimiter is also needed inside the pair}
+Use \verb|\middle| without ending and restarting the surrounding group.
+There may be more than one middle delimiter. A matrix element in bra--ket
+notation supplies a simple example.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Bra\%E2\%80\%93ket_notation\#Linear_operators_acting_on_bras}{Bra--ket notation},
+linear operators acting on bras.}
+\Example{middle-pair}
+Both bars use the color of the surrounding pair. All four positions contribute
+to the shared size target described earlier; a middle delimiter close to tall
+content can therefore increase that target. The visible extents also depend
+on the particular delimiter shapes supplied by the font.
+
+\section{The formula no longer fits on one line}\label{sec:breaks}
+Choose the break with \verb|\\| and the alignment point with \verb|&|.
+Keep one delimiter pair even when \verb|\left| and \verb|\right| occur on
+different rows. In the default mode, write directly inside \texttt{equation}.
+
+\subsection{Remove the extra scaffolding from a long formula}
+The divergence between two multivariate normal distributions contains a trace,
+a quadratic form and a logarithmic determinant.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Kullback\%E2\%80\%93Leibler_divergence\#Multivariate_normal_distributions}{Kullback--Leibler divergence},
+multivariate normal distributions.}
+It is long enough that putting these terms on separate rows helps the reader.
+The next page compares the same break points in plain amsmath and finaldelim.
+
+\textbf{What the traditional form needs}
+\begin{itemize}
+\item An inner \texttt{split} environment.
+\item \verb|\right.| on the opening row and \verb|\left.| on the closing row.
+\item A \verb|\vphantom| to give both brackets the same size when their rows
+have different heights.
+\end{itemize}
+The intermediate row needs no invisible delimiter pair. The comparison marks
+only the additional code in \textcolor{red!70!black}{\textbf{red bold}}.
+
+\newpage
+\textbf{Plain amsmath}
+\Example[\ClassicMode]{classic-split}
+\textbf{finaldelim: direct breaks, with niji}
+\Example{direct-break}
+The finaldelim source keeps a single \verb|\left|/\verb|\right| pair and the
+chosen alignment points. There is no inner alignment wrapper or height
+phantom. Adding \texttt{niji} colors the nested pairs, including the pair that
+crosses rows. Both versions give the whole expression one equation number.
+
+\newpage
+\subsection{Choose what determines a spanning pair's size}
+The default \texttt{spanning=folded} lets tall middle content influence the
+brackets without giving it its full horizontal extent in the measurement.
+Use \texttt{spanning=endpoints} to size from the delimiter-bearing rows alone,
+or \texttt{spanning=full} to weight the whole continuous expression.
+
+Here the earlier \texttt{lllhlll} expression is broken into three rows.
+The contents and break points are identical; only the spanning policy changes.
+Use this source, changing only the \texttt{spanning} option:
+\lstinputlisting{manual-examples/spanning-folded.tex}
+\begin{center}
+\begin{minipage}[t]{.32\linewidth}\vspace{0pt}\centering
+\textbf{endpoints}
+\input{manual-examples/spanning-endpoints.tex}
+\end{minipage}\hfill
+\begin{minipage}[t]{.32\linewidth}\vspace{0pt}\centering
+\textbf{folded (default)}
+\input{manual-examples/spanning-folded.tex}
+\end{minipage}\hfill
+\begin{minipage}[t]{.32\linewidth}\vspace{0pt}\centering
+\textbf{full}
+\input{manual-examples/spanning-full.tex}
+\end{minipage}
+\end{center}
+The endpoint result follows the low terms beside the brackets. The folded
+result also accounts for the tall middle content, represented for measurement
+by a box of width \texttt{fold-width} (default 0.01em), retaining its maximum height and depth. The full
+result uses the actual widths of all the contents. Choose the framing that
+suits the formula. Folding can also bring tall content closer to a delimiter,
+so its result is not necessarily smaller than \texttt{full}.
+
+\texttt{endpoints} uses the maximum height and depth of the first and last
+rows inside the pair, plus any rows containing its \verb|\middle| delimiters.
+\texttt{folded} retains the horizontal profiles of delimiter-bearing rows and
+replaces each intervening run of rows by one representative box.
+It applies the same distance weighting and never uses a target smaller than
+\texttt{endpoints}. The actual contents and line breaks are unchanged.
+Set the representative width with \texttt{fold-width}, for example:
+\begin{lstlisting}
+\FinalDelimSetup{fold-width=0.01em}
+\begin{equation}[fold-width=0.1em]
+  ...
+\end{equation}
+\end{lstlisting}
+The option also works at package level. Positive TeX lengths such as
+\texttt{0.01em} or \texttt{0.1pt} are accepted; font-relative units are
+evaluated when the formula is typeset.
+\texttt{full} applies the distance-weighted model to the continuous contents.
+Pairs contained on one row use weighted sizing in either mode.
+\verb|\\[3pt]| adds space after a row; \verb|\jot| controls the usual extra
+row spacing. Row layout and numbering follow amsmath conventions.
+
+\newpage
+\subsection{Give each row its own number}
+Use \texttt{align} when the rows need separate numbers. The estimates of a
+normal distribution's mean and variance make a short example.\footnote{Wikipedia,
+\href{https://en.wikipedia.org/wiki/Normal_distribution\#Estimation_of_parameters}{Normal distribution},
+estimation of parameters.}
 \Example{numbered}
 The labels refer separately to the mean, \eqref{eq:mean}, and the variance,
-\eqref{eq:variance}. Use \verb|\notag| on a row to suppress its number.
-\texttt{align*} suppresses all automatic numbers.
+\eqref{eq:variance}. Use \verb|\notag| to suppress a row's number, or
+\texttt{align*} to suppress all automatic numbers. \texttt{equation*} and
+\verb|\[...\]| give an unnumbered display with one or more rows.
 
-\subsection{Environment guide}
-\begin{center}
-\begin{tabular}{@{}lp{100mm}@{}}\toprule
-Environment&Use\\\midrule
-\texttt{equation}&Direct breaks and alignment, one number for the whole formula.\\
-\texttt{equation*}, \verb|\[...\]|&The same layout without an automatic number.\\
-\texttt{align}, \texttt{align*}&With or without per-row numbering.\\
-\texttt{alignat}, \texttt{alignat*}&An explicit column-pair count, with user-controlled spacing.\\
-\texttt{matchedaligned}&An embedded alignment, with optional \texttt{[t]}, \texttt{[c]}, or \texttt{[b]} positioning.\\\bottomrule
-\end{tabular}
-\end{center}
-The explicit names \texttt{matchedsplit}, \texttt{matchedalign} and
-\texttt{matchedalignat} are also available. Multiple alignment pairs are
-supported; the author determines their mathematical interpretation.
+\subsection{Align more than one pair of columns}
+Additional \verb|&| markers create additional alignment pairs. Use
+\texttt{alignat} to specify the number of pairs and arrange their spacing
+explicitly. Here two related identities share each row; each identity keeps
+its own delimiter pair.
+\Example{alignat-pairs}
 
-\subsection{Layout controls}
-finaldelim lays out the mathematics continuously and then separates the actual
-contents at the row and alignment markers. Fractions, scripts and embedded
-matrices stay together. You choose where to break.
-
-Use \texttt{debug=boxes}, \texttt{debug=alignment}, or \texttt{debug=all} as a
-package or display option to inspect boxes and alignment points. Box outlines
-use \texttt{lua-visual-debug} and its \verb|\lvdset| interface.
+\subsection{Choose sensible break points}
+Break between complete terms or at a step in the calculation, where the reader
+can follow the continuation. Keep a fraction, an exponent or a matrix together.
+You choose the breaks; finaldelim arranges the resulting rows.
 
 \newpage
-\subsection{Using physics}
-Load \texttt{physics} and \texttt{finaldelim} in either order. The integration
-is automatic; no extra option is needed. Automatic delimiters created by
-\verb|\qty|, \verb|\abs|, \verb|\norm| and bra--ket commands use the same sizing
-and niji colours as explicit \verb|\left| and \verb|\right| pairs.
+\section{Use finaldelim in an existing document}\label{sec:integration}
+\subsection{Keep standard environment names, or opt in explicitly}
+By default, finaldelim extends \texttt{equation}, \texttt{align} and
+\texttt{alignat}, their starred forms and \verb|\[...\]|. Existing displays
+can therefore use the new breaks without changing their environment names.
 
-The Gaussian relative-entropy example can also be written with physics
+If you prefer to leave those standard interfaces alone, load the package
+with \texttt{override=false} and use its own environments:
+\Example{explicit-environment}
+For this example, the preamble is
+\begin{lstlisting}
+\usepackage[niji,render=draw,override=false]{finaldelim}
+\end{lstlisting}
+The fd-prefixed environments are always available, whether or not standard
+names are replaced. The option controls the display interfaces; delimiter
+sizing and niji still apply in native mathematics.
+
+\begin{center}
+\begin{tabular}{@{}llp{64mm}@{}}\toprule
+Explicit interface&Default standard name&Purpose\\\midrule
+\texttt{fdequation}&\texttt{equation}&One number for the whole formula.\\
+\texttt{fdequation*}&\texttt{equation*}, \verb|\[...\]|&No automatic number.\\
+\texttt{fdalign}, \texttt{fdalign*}&\texttt{align}, \texttt{align*}&Multiple rows, numbered or unnumbered.\\
+\texttt{fdalignat}, \texttt{fdalignat*}&\texttt{alignat}, \texttt{alignat*}&Explicit column-pair count.\\
+\texttt{fdsplit}&Not replaced by default&Embedded block, outer numbering.\\
+\texttt{fdaligned}&Not replaced&Embedded block with vertical positioning.\\\bottomrule
+\end{tabular}
+\end{center}
+\texttt{fdaligned} takes \texttt{[t]}, \texttt{[c]} or \texttt{[b]}, followed
+by an optional settings list. To align a block at its top, write:
+\begin{lstlisting}
+\begin{fdaligned}[t][niji]
+  ...
+\end{fdaligned}
+\end{lstlisting}
+\texttt{fdsplit} takes an optional settings list.
+
+For selective replacement, set \texttt{overrideequation},
+\texttt{overridealign} or \texttt{overridealignat} in the package options.
+\texttt{overridesplit} is opt-in. These are preamble choices, not switches
+for individual formulas.
+
+\newpage
+\subsection{Already using physics?}
+Load \texttt{physics} and \texttt{finaldelim} in either order. Integration is
+automatic: delimiters made by \verb|\qty|, \verb|\abs|, \verb|\norm| and
+bra--ket commands use the same sizing and niji colors.
+\begin{lstlisting}
+\usepackage{physics}
+\usepackage[niji]{finaldelim}
+\end{lstlisting}
+The earlier Gaussian relative-entropy expression can be written with physics
 commands.\footnote{Wikipedia,
-\href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution\#Kullback\%E2\%80\%93Leibler_divergence}{Multivariate normal distribution}, Kullback--Leibler divergence.}
-Here the breaks and alignment points are inside the argument of \verb|\bqty|:
+\href{https://en.wikipedia.org/wiki/Multivariate_normal_distribution\#Kullback\%E2\%80\%93Leibler_divergence}{Multivariate normal distribution},
+Kullback--Leibler divergence.}
+The alignment markers and breaks are inside the argument of \verb|\bqty|:
 \Example{physics-break}
 
 Direct breaks are recognized in the automatic forms of \verb|\qty|,
 \verb|\quantity|, \verb|\pqty|, \verb|\bqty|, \verb|\Bqty|, \verb|\vqty|,
-\verb|\abs|, \verb|\absolutevalue| and \verb|\norm|. Matrix arguments of
-\verb|\mqty|, \verb|\matrixquantity|, \verb|\smqty| and
-\verb|\smallmatrixquantity| retain their own rows and columns. For example,
-\verb|\mqty(a&b\\c&d)| remains a two-by-two matrix inside an equation.
+\verb|\abs|, \verb|\absolutevalue| and \verb|\norm|.
+Matrix commands such as \verb|\mqty| and \verb|\smqty| retain their internal
+rows and columns. Starred arguments, fractions, scripts and unknown macro
+arguments remain indivisible. Use explicit delimiters for outer breaks hidden
+inside an unsupported macro's argument.
 
-Starred forms keep physics' fixed-size behaviour. Their arguments, fractions,
-subscripts and superscripts remain indivisible. Other macros are not expanded
-by the break scanner; use explicit delimiters for breaks hidden inside an
-unsupported macro's argument. The normalization pass does not evaluate argument contents; they are left
-for mathematical typesetting.
+\newpage
+\subsection{Inspect an unexpected alignment}
+If the alignment or row spacing is unclear, add \texttt{debug=all} to that
+display. The same formula below is first shown normally, then with its boxes
+and alignment points visible.
+\par\textbf{Normal output}
+\Example{debug-plain}
+\textbf{With diagnostics}
+\Example{debug-all}
+The alignment marks show where the rows meet at \verb|&|. The box outlines
+show the space occupied by each row; the fraction makes the second row taller.
+The diagnostics are overlays, not additional mathematical content.
 
-\subsection*{Installation}
-Install these six files together beside your document or in a local TEXMF tree:
+Use \texttt{debug=alignment} for alignment marks only, or
+\texttt{debug=boxes} for boxes only. Remove the option, or use
+\texttt{debug=none}, for the final document. Box outlines use
+\texttt{lua-visual-debug} and can be configured with its \verb|\lvdset| interface.
+
+\newpage
+\section{Settings and installation reference}
+\subsection{Set a default, then override it where needed}
+Supply settings when loading the package, change subsequent mathematics with
+\verb|\FinalDelimSetup|, or supply local settings on a finaldelim display.
+The same display options work with either the standard or fd-prefixed names.
+\begin{lstlisting}
+\usepackage[niji,render=draw]{finaldelim}
+\FinalDelimSetup{scale=0.95}
+\begin{fdequation}[niji=false,scale=0.9]
+  \left[a+\frac{b}{c}\right]
+\end{fdequation}
+\end{lstlisting}
+Sizing and rendering settings respect TeX groups. To limit any setup change
+to a passage, enclose that passage and its setup command in a group.
+
+\begin{center}
+\begin{tabular}{@{}llp{86mm}@{}}\toprule
+Option&Default&Effect\\\midrule
+\texttt{sizing}&\texttt{weighted}&\texttt{native} restores the native size policy.\\
+\texttt{lambda}&\texttt{20pt}&Physical decay length; smaller values emphasize nearby content.\\
+\texttt{q}&\texttt{8}&Height emphasis; larger values favor tall content.\\
+\texttt{scale}&\texttt{0.9}&Multiplier for the estimated radius.\\
+\texttt{spanning}&\texttt{folded}&\texttt{folded} compresses middle rows for measurement; \texttt{full} retains their actual widths.\\
+\texttt{fold-width}&\texttt{0.01em}&Width of a folded representative box; a positive TeX length.\\
+\texttt{render}&\texttt{native}&\texttt{draw} enables continuous outlines.\\
+\texttt{niji}&\texttt{false}&Nesting colors; \texttt{rainbow} is an alias.\\
+\texttt{colors}&Built-in palette&A nonempty list of xcolor colors.\\
+\texttt{debug}&\texttt{none}&\texttt{boxes}, \texttt{alignment}, or \texttt{all}.\\\bottomrule
+\end{tabular}
+\end{center}
+\texttt{lambda} and \texttt{scale} must be positive; \texttt{q} must be
+nonnegative. The special value \texttt{q=0} selects the maximum-radius limit.
+Native sizing and explicitly sized delimiters are unaffected by the weighted
+size controls. Environment replacement options are listed in
+Section~\ref{sec:integration} and apply only when loading the package.
+
+\subsection{Install and compile}
+Install these eight files together beside your document or in a local TEXMF tree:
 \path{finaldelim.sty}, \path{finaldelim-luatex.sty},
 \path{finaldelim-interface.sty}, \path{finaldelim-physics.sty},
-\path{finaldelim.lua}, and
-\path{finaldelim-size.lua}. This implementation targets LuaLaTeX; tagged
-mathematical structure for the physical line-breaking backend is not yet supported.
+\path{finaldelim.lua}, \path{finaldelim-size.lua},
+\path{finaldelim-draw.lua}, and \path{finaldelim-outline-fonts.lua}.
+Compile with LuaLaTeX. No Lua code is needed in the document.
+This development version does not yet provide tagged mathematical structure
+for its physical line-breaking backend.
 
-Maintained by Yu Zhai. LPPL 1.3c or later. Formula sources are given in footnotes;
-notation and line breaks are adapted for these examples. Sources consulted
-4 November 2026.
+Maintained by Yu Zhai. LPPL 1.3c or later. Formula sources appear in footnotes;
+notation and breaks are adapted for the examples. The \texttt{lllhlll} profile
+and the short interface examples are schematic demonstrations.
 \end{document}

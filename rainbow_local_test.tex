@@ -2,16 +2,16 @@
 \usepackage{finaldelim}
 \begin{document}
 \section*{Rainbow delimiters: local options}
-\begin{matchedalign}[rainbow]
+\begin{fdalign}[rainbow]
 f &= \left\{\frac{a}{b}+\left[ x+\left(y\middle|z \\
  &+1\right)\right]\right\}
-\end{matchedalign}
-\begin{matchedalign}
+\end{fdalign}
+\begin{fdalign}
 f &= \left(a+\left[b\\ &+c\right]\right)
-\end{matchedalign}
+\end{fdalign}
 {\color{purple}
-\begin{matchedalign*}[rainbow,colors={blue,orange}]
+\begin{fdalign*}[rainbow,colors={blue,orange}]
 f &= \left(a+\left[b\\ &+c\right]\right)
-\end{matchedalign*}}
-\[\begin{matchedsplit}[rainbow]f&=\left(a+\left[b\\&+c\right]\right)\end{matchedsplit}\]
+\end{fdalign*}}
+\[\begin{fdsplit}[rainbow]f&=\left(a+\left[b\\&+c\right]\right)\end{fdsplit}\]
 \end{document}

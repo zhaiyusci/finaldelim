@@ -1,9 +1,9 @@
 \documentclass{article}
 \usepackage{unicode-math}\setmathfont{Latin Modern Math}
 \ifdefined\PhysicsAfter
-\usepackage{experimental/finaldelim-draw}\usepackage{physics}
+\usepackage[render=draw]{finaldelim}\usepackage{physics}
 \else
-\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\usepackage{physics}\usepackage[render=draw]{finaldelim}
 \fi
 \newcount\runs
 \begin{document}

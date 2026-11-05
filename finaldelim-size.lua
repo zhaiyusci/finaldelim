@@ -1,12 +1,12 @@
 -- Experimental measure -> single-line layout -> physical partition pipeline.
 -- The input is an already parsed math list; user source is never replayed.
 local M = { enabled = true, measured = 0 }
-M.spanning_scope='endpoints'
+M.spanning_scope='folded'
 M.from_tex=true
-M.config={lambda_pt=20,q=8,scale=0.9}
+M.config={lambda_pt=20,q=8,scale=0.9,fold_width_pt=0.1}
 function M.configure(options)
  for k,v in pairs(options) do
-  if k=='spanning_scope' then assert(v=='endpoints' or v=='full','Invalid spanning_scope')
+  if k=='spanning_scope' then assert(v=='endpoints' or v=='full' or v=='folded','Invalid spanning_scope')
   else
    assert(M.config[k]~=nil and type(v)=='number' and v==v and v<math.huge)
    assert((k=='q' and v>=0) or (k~='q' and v>0))
@@ -36,22 +36,31 @@ local function fence_marker(n)
  return n.id == node.id('whatsit') and n.subtype == node.subtype('user_defined')
   and n.user_id == fence_marker_id
 end
-local function profile(box,style,all_fences)
+local function profile(box,style,all_fences,folded)
  local axis=tex.getmath('axis',style)
  local terms,positions={},{}; local L,H=math.huge,0
+ local row,starts,position_rows=1,{0},{}
+ local rowext={{h=0,d=0}}
  local function scan(head,x,shift,parent)
   for n in node.traverse(head) do
    local width=n.width or 0
    if n.id==node.id('glue') then width=node.effective_glue(n,parent)
    elseif n.id==node.id('kern') then width=n.kern end
-   if fence_marker(n) and n.value>0 then positions[#positions+1]=x end
+   if marker(n) and n.value==2 then
+    row=row+1;starts[row]=x;rowext[row]={h=0,d=0}
+   end
+   if fence_marker(n) and n.value>0 then
+    positions[#positions+1]=x;position_rows[#positions]=row
+   end
    if n.id==hl and hascut(n.list) then
     scan(n.list,x,shift+n.shift,n)
    elseif n.id==hl or n.id==vl or n.id==node.id('glyph') or n.id==node.id('rule') then
     local sh=shift+((n.id==hl or n.id==vl) and n.shift or 0)
+    rowext[row].h=math.max(rowext[row].h,n.height-sh)
+    rowext[row].d=math.max(rowext[row].d,n.depth+sh)
     if width>0 then
      local r=math.max(n.height-sh-axis,n.depth+sh+axis,0)
-     terms[#terms+1]={x=x,finish=x+width,r=r}
+     terms[#terms+1]={x=x,finish=x+width,r=r,row=row}
      L=math.min(L,r); H=math.max(H,r)
     end
    end
@@ -60,7 +69,44 @@ local function profile(box,style,all_fences)
  end
  scan(box.list,0,0,box)
  if #terms==0 or H==0 then return box.height,box.depth end
- local W=box.width; local lambda=M.config.lambda_pt*65536
+ local W=box.width
+ local endpoint_radius,fold_count=0,0
+ if folded and row>1 then
+  starts[row+1]=W
+  local keep={[1]=true,[row]=true}
+  for _,r in ipairs(position_rows) do keep[r]=true end
+  local mapped,newterms,newW={}, {},0
+  local current=1
+  while current<=row do
+   if keep[current] then
+    mapped[current]=newW-starts[current]
+    endpoint_radius=math.max(endpoint_radius,rowext[current].h-axis,rowext[current].d+axis)
+    for _,v in ipairs(terms) do
+     if v.row==current then
+      newterms[#newterms+1]={x=v.x+mapped[current],finish=v.finish+mapped[current],r=v.r}
+     end
+    end
+    newW=newW+starts[current+1]-starts[current]
+    current=current+1
+   else
+    local radius=0
+    repeat
+     radius=math.max(radius,rowext[current].h-axis,rowext[current].d+axis)
+     current=current+1
+    until current>row or keep[current]
+    -- Keep the synthetic width on TeX's integer scaled-point grid.
+    local width=math.max(1,math.floor(M.config.fold_width_pt*65536+0.5))
+    newterms[#newterms+1]={x=newW,finish=newW+width,r=radius,fold=true}
+    newW=newW+width;fold_count=fold_count+1
+   end
+  end
+  for i,x in ipairs(positions) do positions[i]=x+mapped[position_rows[i]] end
+  terms,W=newterms,newW
+  L,H=math.huge,0
+  for _,v in ipairs(terms) do L=math.min(L,v.r);H=math.max(H,v.r) end
+  H=math.max(H,endpoint_radius)
+ end
+ local lambda=M.config.lambda_pt*65536
  local q=M.config.q
  local R=H
  if q>0 then
@@ -88,9 +134,11 @@ local function profile(box,style,all_fences)
   end
   R=H*maximum
  end
+ if folded then R=math.max(R,endpoint_radius) end
  if M.inspect_profile then
   M.inspect_profile{terms=terms,positions=all_fences and positions or {0,W},
-   width=W,lambda=lambda,q=q,scale=M.config.scale,radius=R,axis=axis}
+   width=W,lambda=lambda,q=q,scale=M.config.scale,radius=R,axis=axis,
+   folded=folded or false,fold_count=fold_count,endpoint_radius=endpoint_radius}
  end
  assert(R>=L-1 and R<=H+1)
  return math.floor(R+axis+.5),math.floor(R-axis+.5)
@@ -134,7 +182,7 @@ local function measure(head, stop, style)
  if rows>0 and M.spanning_scope=='endpoints' then
   -- Spanning pairs retain the endpoint policy; middle rows do not size fences.
   h,d=math.max(firstrow.h,lastrow.h),math.max(firstrow.d,lastrow.d)
- else h,d=profile(box,style) end
+ else h,d=profile(box,style,false,rows>0 and M.spanning_scope=='folded') end
  node.flush_node(box)
  return a,b,rows,h,d
 end
@@ -253,7 +301,7 @@ local function process_middles(head,style)
   for row in pairs(fence_rows) do
    h=math.max(h,rowdims[row].h);d=math.max(d,rowdims[row].d)
   end
- else h,d=profile(box,style,true) end
+ else h,d=profile(box,style,true,rows>0 and M.spanning_scope=='folded') end
  node.flush_node(box)
  h,d=scaled_extent(h,d,style)
  -- Ask native TeX to build all fence glyphs around the selected extent.
@@ -358,6 +406,7 @@ luatexbase.add_to_callback('pre_mlist_to_hlist_filter',function(head,style)
   active=tex.count['l__fd_sizing_int']==1
   if active then
    M.configure{lambda_pt=tex.dimen['l__fd_lambda_dim']/65536,
+    fold_width_pt=tex.dimen['l__fd_fold_width_dim']/65536,
     q=tonumber(token.get_macro('fdSizingQ')),scale=tonumber(token.get_macro('fdSizingScale')),
     spanning_scope=token.get_macro('l__fd_span_tl')}
   end

@@ -12,12 +12,13 @@ The inherited distribution manifest lists:
 - `finaldelim-size.lua` -- delimiter sizing;
 - `finaldelim.lua` -- LuaTeX physical partition backend;
 - `finaldelim.tex` -- user manual source;
+- `manual-assets/joints.tex`, `manual-assets/build-joints.py`, and
+  `manual-assets/joints-*.png` -- reproducible rasterized joint comparison;
 - `manual-examples/*.tex` -- live source-and-result examples used by the manual;
 - `manual-examples/classic-split-highlight.txt` -- highlighted copy of the classic example for the manual;
 - `finaldelim.pdf` -- compiled user manual;
-- `experimental/finaldelim-draw.sty`, `experimental/finaldelim-draw.lua`, and
-  `experimental/finaldelim-outline-fonts.lua` -- optional outline renderer, also
-  required to compile the continuous-outline examples in the manual;
+- `finaldelim-draw.lua` -- continuous delimiter renderer;
+- `finaldelim-outline-fonts.lua` -- font outline extraction and interpolation;
 - `quickstart.tex` -- native equation, align and inline examples;
 - `numbered_example.tex` -- complete example using the replacement options;
 - `luatex_example.tex` -- multi-pair LuaLaTeX example with numbering and debug;

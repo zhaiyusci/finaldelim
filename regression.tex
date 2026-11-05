@@ -6,47 +6,47 @@
 \section*{Matchedsplit 0.5 regression examples}
 Nested pairs across three rows:
 \[
-\begin{matchedsplit}
+\begin{fdsplit}
 F &= \left( a+\left[\frac{x}{y}+b \\
   &\quad +c\right]+d \\
   &\quad +\frac{p}{q}\right)
-\end{matchedsplit}
+\end{fdsplit}
 \]
 Three levels, grouped arguments, subscripts and explicit row spacing:
 \[
-\begin{matchedsplit}
+\begin{fdsplit}
 G &= \left\{ \frac{\frac{a}{b}}{\frac{c}{d}} + \left[ x_i^2+\left( u \\*[4pt]
   &\quad +v\right)+w\right] \\[2pt]
   &\quad +z\right\}
-\end{matchedsplit}
+\end{fdsplit}
 \]
 Middle delimiters and invisible delimiters:
 \[
-\begin{matchedsplit}
+\begin{fdsplit}
 S &= \left\{ x\in\mathbb{R} \middle| \frac{x}{2}>0 \\
   &\quad \middle| x<10 \right\} + \left.\frac{f(x)}{g(x)} \\
   &\quad +h(x)\right|_{x=0}
-\end{matchedsplit}
+\end{fdsplit}
 \]
 Independent pairs (the first pair should remain small):
 \[
-\begin{matchedsplit}
+\begin{fdsplit}
 H &= \left(a+b\right)+\left[\frac{\frac{x}{y}}{\frac{u}{v}} \\
   &\quad +1\right]
-\end{matchedsplit}
+\end{fdsplit}
 \]
 Opaque groups retain their native math syntax:
 %\begin{equation}
-\begin{matchedalign}
+\begin{fdalign}
 	Q &= \left( \frac{\displaystyle\int dx}{\displaystyle\int x d x}+\frac{a+b}{c+d} + {\left[\frac{x}{y}\right]} \\
 	&\middle|\quad + {\begin{matrix} a&b\\c&d\end{matrix}} + \text{two words} \\
 	&\quad +kx+b \\
 	& \quad + by + o \right)
-\end{matchedalign}
+\end{fdalign}
 %\end{equation}
 
 No delimiters and environment reuse:
-\[\begin{matchedsplit}x &= a+b\\ y &= c+d\end{matchedsplit}\]
+\[\begin{fdsplit}x &= a+b\\ y &= c+d\end{fdsplit}\]
 
 
 \begin{multline}
@@ -57,6 +57,6 @@ No delimiters and environment reuse:
 	- 12x^2y^4 - 12xy^5 + 2y^6 - a^3b^3
 \end{multline}
 
-\[\left\{\begin{matchedaligned}[c][rainbow,colors={blue,red}]F &= \left(a+\frac{x}{y}\\&+b\right)\end{matchedaligned}\right.\qquad x>0\]
+\[\left\{\begin{fdaligned}[c][rainbow,colors={blue,red}]F &= \left(a+\frac{x}{y}\\&+b\right)\end{fdaligned}\right.\qquad x>0\]
 
 \end{document}

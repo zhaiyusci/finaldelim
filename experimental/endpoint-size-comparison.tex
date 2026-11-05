@@ -6,11 +6,11 @@
 \directlua{endpoint = dofile('experimental/endpoint-size.lua')}
 \newcount\sourceevaluations
 \newcommand\once{\global\advance\sourceevaluations by 1 }
-\newcommand\sample{\begin{matchedalignat}{2}
+\newcommand\sample{\begin{fdalignat}{2}
  \once F&=\left[a+b &\qquad G&=u+v\\
  &+\frac{\displaystyle\sum_{k=1}^n x_k}{1+\frac pq} & &+\left(\frac rs\right)^2\\[3pt]
  &+\left(c+d\right)^2\right]^{n+1}_j & &=w.
-\end{matchedalignat}}
+\end{fdalignat}}
 \begin{document}
 \section*{Endpoint delimiter sizing: experimental comparison}
 \noindent Same source, XITS Math, LuaLaTeX. Only the sizing policy changes.

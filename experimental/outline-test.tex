@@ -1,15 +1,15 @@
 \documentclass{article}
 \usepackage{unicode-math}
-\usepackage{experimental/finaldelim-draw}
+\usepackage[render=draw]{finaldelim}
 \pagestyle{empty}
 \newsavebox\orig\newsavebox\drawn
 \newcount\calls
 % Above every tested font's prebuilt range: this checks assembly invariance.
 \newcommand\Tall{\phantom{\vrule width1pt height83pt depth77pt}}
 \newcommand\OutlineCheck[1]{%
- \FinalDelimSetup{q=0,scale=1,niji=false}\FinalDelimDrawOff
+ \FinalDelimSetup{q=0,scale=1,niji=false}\FinalDelimSetup{render=native}
  \sbox\orig{$\displaystyle\left(\Tall a+b\middle\Vert c\right)^2_j$}%
- \FinalDelimDrawOn
+ \FinalDelimSetup{render=draw}
  \sbox\drawn{$\displaystyle\left(\Tall a+b\middle\Vert c\right)^2_j$}%
  \ifdim\wd\orig=\wd\drawn\else\errmessage{Assembly width changed}\fi
  \ifdim\ht\orig=\ht\drawn\else\errmessage{Assembly height changed}\fi
@@ -34,7 +34,7 @@
  &\frac{1}{1+x^2}\middle|b\right]^2_j\label{outline:row}
 \end{align}
 \ifnum\calls=1\else\errmessage{Source replayed}\fi
-\begingroup\FinalDelimDrawOff\endgroup
+\begingroup\FinalDelimSetup{render=native}\endgroup
 \ifnum\FinalDelimDrawing=1\else\errmessage{Drawing option leaked}\fi
 \typeout{OUTLINE ASSEMBLY DIMENSIONS AND SOURCE ASSERTIONS PASSED}
 \end{document}

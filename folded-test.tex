@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage[render=draw,niji,fold-width=0.01em]{finaldelim}
+\directlua{assert(finaldelim_sizing.spanning_scope=='folded');dofile('folded-test.lua')}
+\ExplSyntaxOn
+\tl_if_eq:NnF\l__fd_span_tl{folded}{\errmessage{Wrong spanning default}}
+\ExplSyntaxOff
+\newcommand\Case[1]{\directlua{finaldelim_sizing.test_case='#1'}}
+\newcommand\Tall{\frac{\displaystyle\sum_{i=1}^n x_i}{\displaystyle\sum_{j=1}^m y_j}}
+\newcount\runs
+\begin{document}
+\Case{base}
+\begin{fdequation} F&=\left[\global\advance\runs by1 a+b+\\&\Tall+\\&c+d\right]^2\label{fold:base}\end{fdequation}
+\Case{wide}
+\begin{fdequation} F&=\left[a+b+\\&\Tall+e+f+g+h+i+j+k+l+\\&c+d\right]^2\end{fdequation}
+\Case{manyrows}
+\begin{fdequation} F&=\left[a+b+\\&\Tall+\\&e+f+g+\\&c+d\right]^2\end{fdequation}
+\Case{tworows}
+\begin{fdequation} F&=\left[a+b+\\&c+d\right]^2\end{fdequation}
+\Case{middle}
+\begin{fdequation} F&=\left[a+\\&\Tall+\\&b\middle|c+\\&\Tall+\\&d\right]^2\end{fdequation}
+\Case{large}
+{\fontsize{20}{24}\selectfont
+\begin{fdequation} F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}}
+\Case{maximum}
+\begin{fdequation}[q=0] F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
+\Case{custom}
+\begin{fdequation}[fold-width=0.5em] F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
+\Case{restored}
+\begin{fdequation} F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
+\FinalDelimSetup{fold-width=2pt}
+\Case{absolute}
+\begin{fdequation} F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
+\ifnum\runs=1\else\errmessage{Source replayed}\fi
+\end{document}

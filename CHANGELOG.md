@@ -104,3 +104,31 @@ Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
   math axis after weighted or endpoint estimation; `scale=0.9` reduces the target.
 
 - Set the default target-radius scale to 0.9; scale=1 remains available.
+
+- Expose continuous outlines as `render=draw` / `render=native` at package,
+  setup, and environment scope. Install the Lua renderer beside the core files;
+  remove the experimental loading entry points and matchedxxx environment aliases.
+
+- Provide fdequation, fdalign, fdalignat (including starred forms), fdsplit
+  and fdaligned as explicit APIs; override=false retains native display
+  interfaces. Standard equation/align/alignat replacement remains the default.
+
+- Rewrite the user manual around formula-writing problems, add a shared-source
+  lllhlll sizing comparison, and consolidate explicit environments and options.
+
+- Add rendered spanning-policy and debug comparisons and reproducible raster
+  close-ups of delimiter joins; remove the redundant line-breaking subsection.
+- Initialize inherited box directions on diagnostic copies before invoking
+  lua-visual-debug, preventing a crash for script attachment boxes.
+
+- Add opt-in spanning=folded: compress intermediate rows to 0.01em-wide height/depth
+  envelopes for weighted sizing, preserving delimiter-bearing rows and an
+  endpoint lower bound. Use render=draw throughout the manual except native
+  comparisons, and show all three spanning policies side by side.
+
+- Make spanning=folded the default, with a 0.01em representative width.
+  Keep endpoints and full as explicit alternative policies.
+
+- Expose fold-width as a positive TeX length (default 0.01em), with package,
+  setup, and local display scope; move continuation operators to row starts
+  in the spanning-policy comparison.

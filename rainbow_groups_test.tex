@@ -6,8 +6,8 @@
 \newsavebox{\plain}
 \newsavebox{\painted}
 \newcommand\checkgroups[1]{%
- \sbox{\plain}{$\begin{matchedsplit}[rainbow=false]x&=#1\end{matchedsplit}$}%
- \sbox{\painted}{$\begin{matchedsplit}x&=#1\end{matchedsplit}$}%
+ \sbox{\plain}{$\begin{fdsplit}[rainbow=false]x&=#1\end{fdsplit}$}%
+ \sbox{\painted}{$\begin{fdsplit}x&=#1\end{fdsplit}$}%
  \ifdim\wd\plain=\wd\painted\else\errmessage{Group color changed width}\fi
  \ifdim\ht\plain=\ht\painted\else\errmessage{Group color changed height}\fi
  \ifdim\dp\plain=\dp\painted\else\errmessage{Group color changed depth}\fi
@@ -21,13 +21,13 @@
  {\seq_gput_right:Nn \g__rainbow_test_colors_seq {#1}
   \rainbow_test_left:nn {#1}{#2}}
 \hbox_set:Nn \l_tmpa_box
- {$\begin{matchedsplit}F&=\left[e^{-\left(\frac{a}{b}\right)\left(A+B\right)}\right]\end{matchedsplit}$}
+ {$\begin{fdsplit}F&=\left[e^{-\left(\frac{a}{b}\right)\left(A+B\right)}\right]\end{fdsplit}$}
 \tl_set:Nx \l_tmpa_tl {\seq_use:Nn \g__rainbow_test_colors_seq {,}}
 \tl_if_eq:NnF \l_tmpa_tl {msblue,msorange,msorange}
  {\errmessage{Exponent~pairs~did~not~inherit~the~outer~depth}}
 \seq_gclear:N \g__rainbow_test_colors_seq
 \hbox_set:Nn \l_tmpa_box
- {$\begin{matchedsplit}[rainbow=false]F&=e^{\left(a\right)}\end{matchedsplit}$}
+ {$\begin{fdsplit}[rainbow=false]F&=e^{\left(a\right)}\end{fdsplit}$}
 \seq_if_empty:NF \g__rainbow_test_colors_seq
  {\errmessage{Grouped~coloring~ignored~rainbow=false}}
 \group_end:
@@ -35,8 +35,8 @@
 \newsavebox{\nativebox}
 \newcommand\checknative[1]{%
  \sbox{\nativebox}{$\begin{aligned}F&=#1\end{aligned}$}%
- \sbox{\plain}{$\begin{matchedsplit}[rainbow=false]F&=#1\end{matchedsplit}$}%
- \sbox{\painted}{$\begin{matchedsplit}F&=#1\end{matchedsplit}$}%
+ \sbox{\plain}{$\begin{fdsplit}[rainbow=false]F&=#1\end{fdsplit}$}%
+ \sbox{\painted}{$\begin{fdsplit}F&=#1\end{fdsplit}$}%
  \ifdim\wd\nativebox=\wd\plain\else\errmessage{Native plain spacing mismatch}\fi
  \ifdim\wd\nativebox=\wd\painted\else\errmessage{Native rainbow spacing mismatch}\fi
  \ifdim\ht\nativebox=\ht\painted\else\errmessage{Native height mismatch}\fi

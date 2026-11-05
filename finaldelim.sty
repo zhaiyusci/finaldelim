@@ -18,6 +18,8 @@
 \RequirePackage{l3keys2e}
 \ExplSyntaxOn
 
+\bool_new:N \g__fd_override_equation_bool
+\bool_set_true:N \g__fd_override_equation_bool
 \bool_new:N \g__ms_override_split_bool
 \bool_new:N \g__ms_override_align_bool
 \bool_new:N \g__ms_override_alignat_bool
@@ -48,28 +50,42 @@
    {\clist_set_eq:NN #1\l_tmpa_clist}}
 
 % User-facing sizing settings; assignments are local inside environments/groups.
+\newcount\FinalDelimDrawing
+\tl_new:N \l__fd_fold_width_tl
+\tl_set:Nn \l__fd_fold_width_tl {0.01em}
+\dim_new:N \l__fd_fold_width_dim
 \dim_new:N \l__fd_lambda_dim
 \dim_set:Nn \l__fd_lambda_dim {20pt}
 \fp_new:N \l__fd_q_fp \fp_set:Nn \l__fd_q_fp {8}
 \fp_new:N \l__fd_scale_fp \fp_set:Nn \l__fd_scale_fp {0.9}
 \int_new:N \l__fd_sizing_int \int_set:Nn \l__fd_sizing_int {1}
-\tl_new:N \l__fd_span_tl \tl_set:Nn \l__fd_span_tl {endpoints}
+\tl_new:N \l__fd_span_tl \tl_set:Nn \l__fd_span_tl {folded}
 \keys_define:nn {finaldelim/settings}
- {lambda .dim_set:N=\l__fd_lambda_dim,
+ {render .choice:,
+  render / native .code:n={\FinalDelimDrawing=0\relax},
+  render / draw .code:n={\FinalDelimDrawing=1\relax},
+  fold-width .tl_set:N=\l__fd_fold_width_tl,
+  lambda .dim_set:N=\l__fd_lambda_dim,
   q .fp_set:N=\l__fd_q_fp,
   scale .fp_set:N=\l__fd_scale_fp,
   sizing .choice:,
   sizing / weighted .code:n={\int_set:Nn\l__fd_sizing_int{1}},
   sizing / native .code:n={\int_zero:N\l__fd_sizing_int},
-  spanning .choices:nn={endpoints,full}{\tl_set_eq:NN\l__fd_span_tl\l_keys_choice_tl}}
+  spanning .choices:nn={endpoints,folded,full}{\tl_set_eq:NN\l__fd_span_tl\l_keys_choice_tl}}
 
 \keys_define:nn {matchedsplit/package}
  {
+  render .code:n={\keys_set:nn{finaldelim/settings}{render={#1}}},
+  fold-width .code:n={\keys_set:nn{finaldelim/settings}{fold-width={#1}}},
   lambda .code:n={\keys_set:nn{finaldelim/settings}{lambda={#1}}},
   q .code:n={\keys_set:nn{finaldelim/settings}{q={#1}}},
   scale .code:n={\keys_set:nn{finaldelim/settings}{scale={#1}}},
   sizing .code:n={\keys_set:nn{finaldelim/settings}{sizing={#1}}},
   spanning .code:n={\keys_set:nn{finaldelim/settings}{spanning={#1}}},
+  override .code:n={\keys_set:nn{matchedsplit/package}
+   {overrideequation=#1,overridealign=#1,overridealignat=#1}},
+  override .default:n=true,
+  overrideequation .bool_gset:N=\g__fd_override_equation_bool,
   overridesplit .bool_gset:N = \g__ms_override_split_bool,
   overridealign .bool_gset:N = \g__ms_override_align_bool,
   overridealignat .bool_gset:N = \g__ms_override_alignat_bool,
@@ -87,6 +103,8 @@
 \ProcessKeysOptions{matchedsplit/package}
 \keys_define:nn {matchedsplit/environment}
  {
+  render .code:n={\keys_set:nn{finaldelim/settings}{render={#1}}},
+  fold-width .code:n={\keys_set:nn{finaldelim/settings}{fold-width={#1}}},
   lambda .code:n={\keys_set:nn{finaldelim/settings}{lambda={#1}}},
   q .code:n={\keys_set:nn{finaldelim/settings}{q={#1}}},
   scale .code:n={\keys_set:nn{finaldelim/settings}{scale={#1}}},
@@ -424,12 +442,10 @@
   \group_end:\group_align_safe_end:}
 % Like aligned, the position belongs to the block, independently of tag policy.
 \msg_new:nnn {matchedsplit}{position}{Unknown~aligned~position~'#1';~use~t,~c~or~b.}
-\NewDocumentEnvironment{matchedaligned}{O{c} O{} +b}
- {\str_case:nnF {#1}
-   {{t}{\__ms_typeset:nnn {#3}{t}{#2}}
-    {c}{\__ms_typeset:nnn {#3}{c}{#2}}
-    {b}{\__ms_typeset:nnn {#3}{b}{#2}}}
-   {\msg_error:nnn {matchedsplit}{position}{#1}}}{}
+\NewDocumentEnvironment{fdaligned}{O{c} O{} +b}
+ {\__ms_typeset:nnn{#3}{#1}{#2}}{}
+\NewDocumentEnvironment{fdsplit}{O{} +b}
+ {\__ms_split:nn{#2}{#1}}{}
 % Apply the same amsmath tag-placement policy to both entry points.
 \cs_new_protected:Npn \__ms_split:nn #1#2
  {\ifctagsplit@
@@ -438,8 +454,6 @@
     \iftagsleft@ \__ms_typeset:nnn {#1}{t}{#2}
     \else \__ms_typeset:nnn {#1}{b}{#2}\fi
   \fi}
-\NewDocumentEnvironment{matchedsplit}{O{} +b}
- {\__ms_split:nn {#2}{#1}}{}
 \bool_if:NT \g__ms_override_split_bool
  {
   \RenewDocumentEnvironment{split}{O{} +b}
@@ -469,8 +483,8 @@
   \cs_set_eq:cc {align*}{msnativealign*}
   \cs_set_eq:cc {endalign*}{endmsnativealign*}
   \begin{align#1}#2\end{align#1}}
-\NewDocumentEnvironment{matchedalign}{O{} +b}{\__ms_align:nnn {#2}{}{#1}}{}
-\NewDocumentEnvironment{matchedalign*}{O{} +b}{\__ms_align:nnn {#2}{*}{#1}}{}
+\NewDocumentEnvironment{fdalign}{O{} +b}{\__ms_align:nnn{#2}{}{#1}}{}
+\NewDocumentEnvironment{fdalign*}{O{} +b}{\__ms_align:nnn{#2}{*}{#1}}{}
 \bool_if:NT \g__ms_override_align_bool
  {
   \RenewDocumentEnvironment{align}{O{} +b}{\__ms_align:nnn {#2}{}{#1}}{}
@@ -501,10 +515,8 @@
   \cs_set_eq:cc {endalignat*}{endmsnativealignat*}
   \cs_set_eq:NN \endalign \endmsnativealign
   \begin{alignat#1}{#2}#3\end{alignat#1}}
-\NewDocumentEnvironment{matchedalignat}{O{} m +b}
- {\__ms_alignat:nnnn {#3}{}{#2}{#1}}{}
-\NewDocumentEnvironment{matchedalignat*}{O{} m +b}
- {\__ms_alignat:nnnn {#3}{*}{#2}{#1}}{}
+\NewDocumentEnvironment{fdalignat}{O{} m +b}{\__ms_alignat:nnnn{#3}{}{#2}{#1}}{}
+\NewDocumentEnvironment{fdalignat*}{O{} m +b}{\__ms_alignat:nnnn{#3}{*}{#2}{#1}}{}
 \bool_if:NT \g__ms_override_alignat_bool
  {\RenewDocumentEnvironment{alignat}{O{} m +b}
    {\__ms_alignat:nnnn {#3}{}{#2}{#1}}{}

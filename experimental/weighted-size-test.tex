@@ -7,14 +7,14 @@
  F&=\left[a+b+\\& #1 +\\ &(c+d)^2\right]^{n+1}_j}
 \begin{document}
 PlainStart:
-\begin{matchedalign*}\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{matchedalign*}
+\begin{fdalign*}\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{fdalign*}
 RainbowStart:
-\begin{matchedalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{matchedalign*}
+\begin{fdalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{fdalign*}
 TallerStart:
-\begin{matchedalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\displaystyle\sum_{k=1}^n\frac{x_k}{y_k}}{1+\frac{p}{1+\frac qt}} +\\ &(c+d)^2\right]^{n+1}_j\end{matchedalign*}
+\begin{fdalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\displaystyle\sum_{k=1}^n\frac{x_k}{y_k}}{1+\frac{p}{1+\frac qt}} +\\ &(c+d)^2\right]^{n+1}_j\end{fdalign*}
 FullStart:
 \directlua{weighted.configure{spanning_scope='full'}}
-\begin{matchedalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{matchedalign*}
+\begin{fdalign*}[rainbow]\global\advance\calls by1 F&=\left[a+b+\\& \frac{\sum_{k=1}^n x_k}{1+\frac pq} +\\ &(c+d)^2\right]^{n+1}_j\end{fdalign*}
 EndChecks.
 \ifnum\calls=4\else\errmessage{Source replayed}\fi
 \directlua{assert(weighted.measured==4)}

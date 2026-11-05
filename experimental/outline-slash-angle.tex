@@ -1,13 +1,13 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage[margin=17mm]{geometry}
 \usepackage{unicode-math}
-\usepackage{experimental/finaldelim-draw}
+\usepackage[render=draw]{finaldelim}
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: slashes and angles}\fancyfoot[C]{\thepage}
 \setlength\parindent{0pt}
 \newcommand\Cell[2]{\hbox to .105\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
 \newcommand\Four[1]{\Cell{#1}{/}\Cell{#1}{\backslash}\Cell{#1}{\langle}\Cell{#1}{\rangle}}
-\newcommand\Row[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimDrawOff\Four{#1}\hfil\FinalDelimDrawOn\Four{#1}}\vfil}}
+\newcommand\Row[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimSetup{render=native}\Four{#1}\hfil\FinalDelimSetup{render=draw}\Four{#1}}\vfil}}
 \newcommand\FontPage[1]{\clearpage\setmathfont{#1}\fancyhead[R]{#1}
 {\Large\bfseries #1}\par\medskip
 \hbox to \textwidth{\hskip.12\textwidth\hbox to .42\textwidth{\hfil Native glyphs\hfil}\hfil\hbox to .42\textwidth{\hfil Continuous outlines\hfil}}\par
@@ -46,7 +46,7 @@ GFS Neohellenic Math & 9\\
 \FontPage{GFS Neohellenic Math}
 
 \newcommand\DCell[2]{\hbox to .20\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
-\newcommand\DRow[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimDrawOff\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}\hfil\FinalDelimDrawOn\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}}\vfil}}
+\newcommand\DRow[1]{\vbox to \dimexpr#1pt+15pt\relax{\vfil\hbox to \textwidth{\hbox to .12\textwidth{#1 pt\hfil}\FinalDelimSetup{render=native}\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}\hfil\FinalDelimSetup{render=draw}\DCell{#1}{\lAngle}\DCell{#1}{\rAngle}}\vfil}}
 \newcommand\DoublePage[1]{\clearpage\setmathfont{#1}\fancyhead[R]{#1}
 {\Large\bfseries Double angles: #1}\par\medskip
 Native left group; drawn right group. Each group: left and right double angle.

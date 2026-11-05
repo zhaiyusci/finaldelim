@@ -10,19 +10,19 @@
 \begin{document}
 % Equal box dimensions detect changes in native spacing, with two pairs.
 \setbox\actual=\vbox{\hsize=300pt
-\begin{matchedalignat*}{2}a&=b&\qquad c&=d\\e&=f&g&=h\end{matchedalignat*}}
+\begin{fdalignat*}{2}a&=b&\qquad c&=d\\e&=f&g&=h\end{fdalignat*}}
 \setbox\expected=\vbox{\hsize=300pt
 \begin{alignat*}{2}a&=b&\qquad c&=d\\e&=f&g&=h\end{alignat*}}
 \ifdim\wd\actual=\wd\expected\else\errmessage{Width mismatch}\fi
 \ifdim\ht\actual=\ht\expected\else\errmessage{Height mismatch}\fi
 \ifdim\dp\actual=\dp\expected\else\errmessage{Depth mismatch}\fi
-\begin{matchedalignat}[rainbow]{2}
+\begin{fdalignat}[rainbow]{2}
  F&=\left(a+\left[\frac{x}{y} &\quad&\text{first part}\label{at:first}\\[3pt]
  &+b\right]+c\right) &&\text{continuation}\label{at:second}
-\end{matchedalignat}
-\begin{matchedalignat}{1}a&=b\tag{A}\label{at:custom}\\
-\intertext{A continuation.}c&=d\notag\\e&=f\label{at:third}\end{matchedalignat}
-\begin{matchedalignat*}[rainbow=false]{1}a&=\left(x\\&+y\right)\end{matchedalignat*}
+\end{fdalignat}
+\begin{fdalignat}{1}a&=b\tag{A}\label{at:custom}\\
+\intertext{A continuation.}c&=d\notag\\e&=f\label{at:third}\end{fdalignat}
+\begin{fdalignat*}[rainbow=false]{1}a&=\left(x\\&+y\right)\end{fdalignat*}
 \ifdefined\OverrideAlignat
 \begin{alignat}{1}a&=\left(x\label{at:fourth}\\&+y\right)\label{at:fifth}\end{alignat}
 \begin{alignat*}[rainbow]{1}a&=\left(x\\&+y\right)\end{alignat*}

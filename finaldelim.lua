@@ -194,14 +194,28 @@ function M.prepare(source, expected, base)
   tex.sprint('\\def\\msluagrid{' .. serial .. '}')
 end
 
+-- Newly constructed math boxes can inherit their direction at output time.
+-- lua-visual-debug needs it explicitly before shipout. Normalize only the
+-- copied diagnostic tree, preserving the formula's stored cells.
+local function debug_directions(box, inherited)
+  local direction = box.dir or inherited or 'TLT'
+  if box.direction == nil then box.dir = direction end
+  for n in node.traverse(box.list) do
+    if n.id == hlist or n.id == vlist then debug_directions(n, direction) end
+  end
+end
+
 function M.cell(id, index, measuring, boxes, alignment, odd)
   local part = assert(grids[id] and grids[id][index], 'finaldelim: missing cell')
   local b = node.copy(part.box)
   if not measuring and boxes then
+    local before = snapshot(b)
     local visual = require('lua-visual-debug')
     local wrapper = pack(b)
+    debug_directions(wrapper)
     visual.show_page_elements(wrapper)
     b = wrapper.list; wrapper.list = nil; node.free(wrapper)
+    assert(snapshot(b) == before, 'finaldelim: diagnostics changed math geometry')
   end
   if not measuring and alignment then
     local visual = require('lua-visual-debug')

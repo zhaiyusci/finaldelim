@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newcount\runs
+\newcommand\Sample[1]{\begin{fdequation*}[debug=#1]
+ \global\advance\runs by1 F&=\left[a+b+\\
+ &\quad\frac{x}{y}+c\right]^2
+\end{fdequation*}}
+\begin{document}
+\Sample{none}\newpage
+\Sample{all}\newpage
+\Sample{boxes}\newpage
+\Sample{alignment}\newpage
+\lvdset{hlist={color={0 0 1 RG} width=0.7}}
+\Sample{boxes}
+\ifnum\runs=5\else\errmessage{Source replayed}\fi
+\end{document}
+

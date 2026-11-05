@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{unicode-math}\setmathfont{Latin Modern Math}
-\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\usepackage{physics}\usepackage[render=draw]{finaldelim}
 \newcommand\bodyexpr{x+x+x+\frac{\sum_{i=1}^n a_i}{1+x^2}+x+x+x}
 \newsavebox\sample
 \newcommand\probe[2]{\typeout{CASE #1}\sbox\sample{$\displaystyle #2$}\noindent #1:\quad\usebox\sample\par\bigskip}

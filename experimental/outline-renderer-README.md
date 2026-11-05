@@ -9,12 +9,12 @@ In this checkout:
 ```tex
 \usepackage{unicode-math}
 \setmathfont{STIX Two Math} % or another supported outline math font
-\usepackage{experimental/finaldelim-draw}
+\usepackage[render=draw]{finaldelim}
 ```
 
-Use `\FinalDelimDrawOn` / `\FinalDelimDrawOff` to compare renderers; these settings
+Use `\FinalDelimSetup{render=draw}` / `\FinalDelimSetup{render=native}` to compare renderers; these settings
 are local to the TeX group. Sizing, niji and direct equation/align breaks keep the
-usual finaldelim interface. The experimental package is not the production default.
+usual finaldelim interface. Drawing is opt-in; the default is `render=native`.
 
 Build from the project root with LuaLaTeX and the eight fonts listed below.
 Python checks need fontTools, numpy, scipy, matplotlib, Pillow, pdfplumber,

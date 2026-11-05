@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage{amsmath}
+\let\BeforeEquation\equation
+\let\BeforeAlign\align
+\let\BeforeAlignat\alignat
+\let\BeforeBracket\[
+\ifdefined\NoOverride
+\usepackage[niji,render=draw,override=false]{finaldelim}
+\else
+\usepackage[niji,render=draw]{finaldelim}
+\fi
+\ifdefined\NoOverride
+\ifx\BeforeEquation\equation\else\errmessage{Native equation changed}\fi
+\ifx\BeforeAlign\align\else\errmessage{Native align changed}\fi
+\ifx\BeforeAlignat\alignat\else\errmessage{Native alignat changed}\fi
+\ifx\BeforeBracket\[\else\errmessage{Native brackets changed}\fi
+\fi
+\newcommand\CheckRender[1]{\ifnum\FinalDelimDrawing=#1\relax\else\errmessage{Rendering scope mismatch}\fi}
+\ExplSyntaxOn
+\clist_map_inline:nn {matchedsplit,matchedaligned,matchedalign,matchedalign*,matchedalignat,matchedalignat*}
+ {\cs_if_exist:cT{#1}{\errmessage{Obsolete environment still defined}}}
+\ExplSyntaxOff
+\begin{document}
+\CheckRender{1}
+$\left[\frac{a}{b}\right]^2$
+\begin{fdequation}[render=native]
+\CheckRender{0} F=\left[\frac{a}{b}\right]^2
+\end{fdequation}
+\CheckRender{1}
+\FinalDelimSetup{render=native}
+\begin{fdequation}[render=draw]
+\CheckRender{1} F&=\left[a+\\&\frac{b}{c}\middle|d\right]^2
+\end{fdequation}
+\CheckRender{0}
+{\FinalDelimSetup{render=draw}\CheckRender{1}$\left(x\right)$}
+\CheckRender{0}
+\begin{fdalign}a&=b\\c&=d\end{fdalign}
+\begin{fdalignat}{2}a&=b&c&=d\end{fdalignat}
+\begin{equation}\begin{aligned}a&=b\\c&=d\end{aligned}\end{equation}
+\directlua{assert(finaldelim_drawing and finaldelim_drawing.counts.interpolated>0)}
+\end{document}

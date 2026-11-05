@@ -2,29 +2,29 @@
 \usepackage{finaldelim}
 \begin{document}
 \section*{Automatic delimiters with per-row numbering}
-\begin{matchedalign}
+\begin{fdalign}
 F &= \left( a+\left[\frac{x}{y}+b \label{row:first}\\
   &\quad +c\right]+d \label{row:second}\\
   &\quad +\frac{p}{q}\right)\label{row:third}
-\end{matchedalign}
-\begin{matchedalign}
+\end{fdalign}
+\begin{fdalign}
 G &= \left\{\frac{a}{b} \middle| x \label{row:fourth}\\*[3pt]
   &\quad +y \notag\\
   &\quad +z\right\}\label{row:fifth}
-\end{matchedalign}
-\begin{matchedalign}
+\end{fdalign}
+\begin{fdalign}
 H &= \left(\frac{a}{b}\tag{A}\label{row:custom}\\
   &+x\tag*{B}\label{row:bare}\\
   &+y\nonumber\\
   &+z\right)\label{row:sixth}
-\end{matchedalign}
-\begin{matchedalign*}
+\end{fdalign}
+\begin{fdalign*}
 u &= \left(\frac{x}{y}\\ &+1\right)
-\end{matchedalign*}
-\begin{matchedalign}
+\end{fdalign*}
+\begin{fdalign}
 \begin{split}v &= a+b\\ &= c+d\end{split}\label{row:seventh}\\
 w &= \left(\begin{matrix}a&b\\c&d\end{matrix}\\ &+z\right)\notag
-\end{matchedalign}
+\end{fdalign}
 References: \eqref{row:first}, \eqref{row:second}, \eqref{row:third},
 \eqref{row:fourth}, \eqref{row:fifth}, \eqref{row:custom},
 \ref{row:bare}, \eqref{row:sixth}, \eqref{row:seventh}.

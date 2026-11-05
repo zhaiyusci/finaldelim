@@ -2,8 +2,8 @@
 \usepackage[rainbow,colors={red,blue},overridesplit,overridealign]{finaldelim}
 \newsavebox{\plainbox}\newsavebox{\colorboxmeasure}
 \begin{document}
-\sbox{\plainbox}{$\begin{matchedsplit}[rainbow=false]f&=\left(\frac{x}{y}\\&+z\right)\end{matchedsplit}$}
-\sbox{\colorboxmeasure}{$\begin{matchedsplit}f&=\left(\frac{x}{y}\\&+z\right)\end{matchedsplit}$}
+\sbox{\plainbox}{$\begin{fdsplit}[rainbow=false]f&=\left(\frac{x}{y}\\&+z\right)\end{fdsplit}$}
+\sbox{\colorboxmeasure}{$\begin{fdsplit}f&=\left(\frac{x}{y}\\&+z\right)\end{fdsplit}$}
 \ifdim\wd\plainbox=\wd\colorboxmeasure\else\errmessage{Color changed width}\fi
 \ifdim\ht\plainbox=\ht\colorboxmeasure\else\errmessage{Color changed height}\fi
 \ifdim\dp\plainbox=\dp\colorboxmeasure\else\errmessage{Color changed depth}\fi

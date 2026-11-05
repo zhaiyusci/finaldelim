@@ -6,7 +6,7 @@
 \box_new:N \l__ms_test_expected_box
 \cs_new_protected:Npn \ms_test_position:n #1
  {
-  \hbox_set:Nn \l__ms_test_actual_box {$\begin{matchedsplit}a&=b\\&=c\end{matchedsplit}$}
+  \hbox_set:Nn \l__ms_test_actual_box {$\begin{fdsplit}a&=b\\&=c\end{fdsplit}$}
   \hbox_set:Nn \l__ms_test_expected_box {$\begin{aligned}[#1]a&=b\\&=c\end{aligned}$}
   \clist_map_inline:nn {wd,ht,dp}
    {\dim_compare:nNnF {\use:c {box_##1:N}\l__ms_test_actual_box} =
@@ -21,5 +21,5 @@
 \tagsleft@true \ms_test_position:n {t}
 \iow_term:n {SPLIT~PLACEMENT~PASSED}
 \ExplSyntaxOff
-\begin{matchedalign}a&=b&x&=y\\c&=d&u&=v\end{matchedalign}
+\begin{fdalign}a&=b&x&=y\\c&=d&u&=v\end{fdalign}
 \end{document}

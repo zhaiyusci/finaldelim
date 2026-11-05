@@ -2,9 +2,9 @@
 \usepackage[a4paper,margin=16mm]{geometry}
 \usepackage{unicode-math}\setmathfont{Latin Modern Math}
 \ifdefined\PhysicsAfter
-\usepackage{experimental/finaldelim-draw}\usepackage{physics}
+\usepackage[render=draw]{finaldelim}\usepackage{physics}
 \else
-\usepackage{physics}\usepackage{experimental/finaldelim-draw}
+\usepackage{physics}\usepackage[render=draw]{finaldelim}
 \fi
 \setlength\parindent{0pt}
 \newcommand\cell[2]{\begin{minipage}[c][17mm][c]{.325\linewidth}\FinalDelimSetup{#1}$\displaystyle #2$\end{minipage}}

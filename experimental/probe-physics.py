@@ -8,7 +8,7 @@ for name,formula in cases:
  for context in contexts:
   for niji in [False,True]:
    job=f'{name}-{context}-{int(niji)}'
-   tex=r'\documentclass{article}\usepackage{unicode-math}\setmathfont{Latin Modern Math}\usepackage{physics}\usepackage{experimental/finaldelim-draw}\FinalDelimSetup{niji='+str(niji).lower()+r'}\pagestyle{empty}\begin{document}'
+   tex=r'\documentclass{article}\usepackage{unicode-math}\setmathfont{Latin Modern Math}\usepackage{physics}\usepackage[render=draw]{finaldelim}\FinalDelimSetup{niji='+str(niji).lower()+r'}\pagestyle{empty}\begin{document}'
    tex+=(r'$\displaystyle '+formula+'$') if context=='inline' else r'\begin{equation*}'+formula+r'\end{equation*}'
    tex+=r'\end{document}'
    (base/(job+'.tex')).write_text(tex)

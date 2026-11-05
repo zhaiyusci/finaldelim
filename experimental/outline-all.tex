@@ -1,14 +1,14 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage[margin=17mm]{geometry}
 \usepackage{unicode-math}
-\usepackage{experimental/finaldelim-draw}
+\usepackage[render=draw]{finaldelim}
 \usepackage{fancyhdr}\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: continuous outlines}\fancyfoot[C]{\thepage}
 \setlength\parindent{0pt}
 \newcommand\One[2]{\hbox to .155\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width1pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right.$\hfil}}
 \newcommand\Pair[3]{\hbox to .155\textwidth{\hfil$\displaystyle\left#2\phantom{\vrule width3pt height\dimexpr#1pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#1pt/2-\Umathaxis\displaystyle\relax}\right#3$\hfil}}
 \newcommand\Six[1]{\hbox{\Pair{#1}{(}{)}\Pair{#1}{[}{]}\Pair{#1}{\lbrace}{\rbrace}\Pair{#1}{\langle}{\rangle}\Pair{#1}{|}{|}\Pair{#1}{\Vert}{\Vert}}}
 \newcommand\AtlasRow[1]{\par\medskip\textbf{#1 pt target}\quad Native glyphs / continuous outlines\par\smallskip
- \FinalDelimDrawOff\Six{#1}\vskip5pt\FinalDelimDrawOn\Six{#1}}
+ \FinalDelimSetup{render=native}\Six{#1}\vskip5pt\FinalDelimSetup{render=draw}\Six{#1}}
 \newcommand\Atlas[1]{\setmathfont{#1}\fancyhead[R]{#1}
  {\Large\bfseries #1}\par\medskip
  Each pair uses the same target height. Within the prebuilt range, contours are
@@ -19,8 +19,8 @@
  \AtlasRow{12}\AtlasRow{20}\AtlasRow{32}\AtlasRow{64}
  \endgroup}
 \newcommand\Compare[2]{\par\medskip\textbf{#1}\par\smallskip
- Native glyph rendering\FinalDelimDrawOff\[#2\]
- Continuous outline rendering\FinalDelimDrawOn\[#2\]}
+ Native glyph rendering\FinalDelimSetup{render=native}\[#2\]
+ Continuous outline rendering\FinalDelimSetup{render=draw}\[#2\]}
 \newcommand\Examples[1]{\setmathfont{#1}\fancyhead[R]{#1}
  {\Large\bfseries Formulas, scripts, colors and line breaks}\par\medskip
  Both renderers use max position estimates, 20pt decay, q=8 and scale=0.9.

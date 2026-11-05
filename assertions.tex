@@ -15,9 +15,9 @@
 \box_new:N \l__test_expected_box
 \ExplSyntaxOff
 \begin{document}
-\[\begin{matchedsplit}
+\[\begin{fdsplit}
 f &= \left(a \\ * [3pt] &+b\right)+\left[\frac{x}{y}\\ &+c\right]
-\end{matchedsplit}\]
+\end{fdsplit}\]
 \ExplSyntaxOn
 \hbox_set:Nn \l__test_expected_box {$\displaystyle a+b$}
 \test_assert:nn {\prop_item:Nn \g__test_heights_prop {1}}
@@ -28,9 +28,9 @@ f &= \left(a \\ * [3pt] &+b\right)+\left[\frac{x}{y}\\ &+c\right]
 \dim_compare:nNnF {\prop_item:Nn \g__test_heights_prop {1}} <
  {\prop_item:Nn \g__test_heights_prop {2}} {\errmessage{Pairs~not~independent}}
 \ExplSyntaxOff
-\[\begin{matchedsplit}
+\[\begin{fdsplit}
 f &= \left( a+\left[\frac{x}{y}\\ &+b\right]\\ &+c\right)
-\end{matchedsplit}\]
+\end{fdsplit}\]
 \ExplSyntaxOn
 \hbox_set:Nn \l__test_expected_box {$\displaystyle a+\left[\frac{x}{y}+b\right]+c$}
 \test_assert:nn {\prop_item:Nn \g__test_heights_prop {1}}

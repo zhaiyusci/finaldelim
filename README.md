@@ -7,7 +7,8 @@ from matchedsplit, not a release of the original package.
 ## Load the package
 
 Place `finaldelim.sty`, `finaldelim-luatex.sty`, `finaldelim-interface.sty`,
-`finaldelim-physics.sty`, `finaldelim-size.lua`, and `finaldelim.lua` beside your
+`finaldelim-physics.sty`, `finaldelim-size.lua`, `finaldelim-draw.lua`,
+`finaldelim-outline-fonts.lua`, and `finaldelim.lua` beside your
 source, or under `tex/latex/finaldelim/` in a personal TEXMF tree.
 
 ```latex
@@ -21,9 +22,7 @@ source, or under `tex/latex/finaldelim/` in a personal TEXMF tree.
 \end{document}
 ```
 
-Compile with LuaLaTeX. The manual and public examples use Latin Modern Math; the package itself does not select a font. Existing environment names `matchedsplit`,
-`matchedaligned`, `matchedalign`, `matchedalign*`, `matchedalignat` and
-`matchedalignat*` are retained. `niji` aliases `rainbow` at package and environment
+Compile with LuaLaTeX. The manual and public examples use Latin Modern Math; the package itself does not select a font. `niji` aliases `rainbow` at package and environment
 scope. Native amsmath handles alignment, row numbering and row spacing.
 `debug=boxes`, `debug=alignment`, and `debug=all` enable diagnostics.
 
@@ -38,7 +37,7 @@ Tagged-PDF support for physical partitioning has not been implemented.
 Weighted sizing is enabled by default. No Lua code is needed:
 
 ```latex
-\usepackage[niji,lambda=20pt,q=8,scale=0.9,spanning=endpoints]{finaldelim}
+\usepackage[niji,lambda=20pt,q=8,scale=0.9,spanning=folded]{finaldelim}
 % Or change subsequent formulas:
 \FinalDelimSetup{spanning=full}
 ```
@@ -57,13 +56,24 @@ Use `scale=1` for the full estimated radius.
 The option works at package, setup, and environment level; native sizing is unaffected.
 
 Selected defaults are a fixed physical decay length of 20pt, q=8, maximum over delimiter positions, and scale=0.9.
-Cross-row pairs use first/last-row dimensions by default; `spanning=full`
-uses the full-content weighted model. With one or more `\middle` delimiters,
+Cross-row pairs use `spanning=folded` by default: intervening rows are
+represented by 0.01em-wide measurement boxes with their maximum height and
+depth. `spanning=endpoints` uses only delimiter-bearing row dimensions;
+`spanning=full` uses the full-content weighted model. With one or more `\middle` delimiters,
 every delimiter position contributes to the shared weighted radius. The
 endpoint policy includes rows carrying middle delimiters too. Single-line
 pairs use weighted sizing.
 `sizing=native` disables weighted sizing while retaining colors and splitting.
 See the English manual `finaldelim.pdf` for examples and parameter definitions.
+
+## Continuous outlines
+
+Use `\usepackage[render=draw]{finaldelim}` to draw continuous delimiter outlines.
+The default `render=native` uses font glyphs. Both settings work in
+`\FinalDelimSetup{render=draw}` and environment options such as
+`\begin{equation}[render=draw]`. No extra package or experimental directory is
+needed. Drawing loads on demand and falls back to glyphs for unsupported fonts
+or shapes. The drawn PDF paths do not provide text extraction or tagging.
 
 ## Validation
 
@@ -95,10 +105,13 @@ See [project provenance](PROJECT.md) for its relationship to matchedsplit.
 
 ## Building the manual
 
-Keep `manual-examples/` beside `finaldelim.tex` and compile the manual twice
+Keep `manual-examples/` and `manual-assets/` beside `finaldelim.tex` and compile the manual twice
 with LuaLaTeX. The printed listings and rendered examples use the same files.
-Formula sources appear in footnotes; the line-breaking section compares native
-amsmath with direct breaks in `equation`.
+The manual follows writing problems: a tall central term (`lllhlll`),
+outline steps and joins, nested pairs, then line breaks and existing-document
+integration. Formula sources appear in footnotes; the line-breaking section
+compares native amsmath with direct breaks in `equation`. The opening sizing
+comparison typesets one shared source under both policies.
 
 Middle-delimiter validation: compile `middle-test.tex`,
 `middle-profile-test.tex`, `middle-endpoint-test.tex`, and `middle-comparison.tex`. The traditional-font
@@ -119,3 +132,30 @@ breaks, and `\mqty` / `\smqty` retain their internal matrix rows and columns.
 Starred arguments, fractions, scripts and unknown macros remain indivisible.
 See manual section 3.8 and `experimental/physics-compat-README.md` for the tested
 scope and reproducible PDF geometry regressions.
+
+## Explicit environments
+
+`fdequation`, `fdequation*`, `fdalign`, `fdalign*`, `fdalignat`, and
+`fdalignat*` provide explicit finaldelim displays. `fdsplit` and
+`fdaligned` provide embedded blocks; `fdaligned` takes `[t|c|b][options]`.
+The standard equation, align and alignat interfaces are replaced by default.
+Load `\usepackage[override=false]{finaldelim}` to retain the native standard
+interfaces and use the fd-prefixed environments explicitly. This is a
+load-time choice; sizing and niji still apply to delimiters in native math.
+`overrideequation`, `overridealign`, and `overridealignat` allow individual
+load-time choices. `overridesplit` remains opt-in.
+
+The manual includes actual 96 dpi rasterizations of delimiter joins. Regenerate
+them with `python manual-assets/build-joints.py` (Pillow and Poppler required).
+Compile `debug-render-test.tex` and run `python test-debug-render.py` to verify
+diagnostic overlays and unchanged glyph geometry.
+
+`spanning=folded` retains delimiter-bearing rows and replaces each intervening
+run of rows by a 0.01em-wide measurement box with the maximum height and depth.
+It uses the weighted model, with the endpoint estimate as a lower bound. Actual
+contents are unchanged; `folded` is the default. Compile `folded-test.tex`
+and run `python test-folded.py` for independent quadrature and folding invariants.
+
+The representative width is configurable with `fold-width=0.01em` at package,
+setup, and environment scope. Positive TeX dimensions are accepted; relative
+units are evaluated when typesetting each formula.

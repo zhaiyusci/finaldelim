@@ -1,8 +1,16 @@
 % Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 \ProvidesExplFile{finaldelim-interface.sty}{2026-11-04}{0.1.0-dev}{Native math interfaces}
-\directlua{finaldelim_sizing=require('finaldelim-size')}
+\directlua{finaldelim_sizing=require('finaldelim-size')
+ finaldelim_sizing.render_delimiter=function(...)
+  if~tex.count.FinalDelimDrawing==1~then~
+   finaldelim_drawing=finaldelim_drawing~or~require('finaldelim-draw');
+   return~finaldelim_drawing.render(...);
+  end;
+  return~(...)
+ end}
 \cs_new_protected:Npn\__fd_math_settings:
- {\cs_set:Npx\fdSizingQ{\fp_to_decimal:N\l__fd_q_fp}
+ {\dim_set:Nn\l__fd_fold_width_dim{\l__fd_fold_width_tl}
+  \cs_set:Npx\fdSizingQ{\fp_to_decimal:N\l__fd_q_fp}
   \cs_set:Npx\fdSizingScale{\fp_to_decimal:N\l__fd_scale_fp}}
 \__fd_math_settings:
 \everymath\expandafter{\the\everymath\__fd_math_settings:}
@@ -86,11 +94,19 @@
   \tl_remove_once:Nn\l__mslua_input_tl{\q_mark}
   \tl_put_right:NV\l__fd_equation_meta_tl\l__mslua_command_tl
   \tl_put_right:Nn\l__fd_equation_meta_tl{{#1}}}
+\NewDocumentEnvironment{fdequation}{O{} +b}
+ {\fdNativeEquation\__fd_equation:nn{#2}{#1}\fdNativeEndEquation}{}
+\NewDocumentEnvironment{fdequation*}{O{} +b}
+ {\fdNativeEquationStar\__fd_equation:nn{#2}{#1}\fdNativeEndEquationStar}{}
+\bool_if:NT \g__fd_override_equation_bool
+ {
 \RenewDocumentEnvironment{equation}{O{} +b}
  {\fdNativeEquation\__fd_equation:nn{#2}{#1}\fdNativeEndEquation}{}
 \RenewDocumentEnvironment{equation*}{O{} +b}
  {\fdNativeEquationStar\__fd_equation:nn{#2}{#1}\fdNativeEndEquationStar}{}
-\cs_set_protected:Npn\[ #1\]
- {\begin{equation*}#1\end{equation*}}
+}
+\bool_if:NT \g__fd_override_equation_bool
+ {\cs_set_protected:Npn\[ #1\]
+   {\begin{equation*}#1\end{equation*}}}
 \file_input:n{finaldelim-physics.sty}
 \endinput

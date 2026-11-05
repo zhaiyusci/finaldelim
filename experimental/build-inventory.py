@@ -13,11 +13,11 @@ items.sort();inventory=[]
 s=r'''\documentclass[10pt,a4paper]{article}
 \usepackage[margin=16mm]{geometry}
 \usepackage{unicode-math}
-\usepackage{experimental/finaldelim-draw}
+\usepackage[render=draw]{finaldelim}
 \usepackage{fancyhdr}\pagestyle{fancy}\fancyhf{}\fancyhead[L]{finaldelim: complete delimiter inventory}\fancyfoot[C]{\thepage}
 \setlength\parindent{0pt}
 \newcommand\Glyph[2]{$\displaystyle\left\Udelimiter 0 0 "#1\relax\phantom{\vrule width1pt height\dimexpr#2pt/2+\Umathaxis\displaystyle\relax depth\dimexpr#2pt/2-\Umathaxis\displaystyle\relax}\right.$}
-\newcommand\Cell[2]{\hbox to .16\textwidth{\hfil\FinalDelimDrawOff\Glyph{#1}{#2}\hskip4pt\FinalDelimDrawOn\Glyph{#1}{#2}\hfil}}
+\newcommand\Cell[2]{\hbox to .16\textwidth{\hfil\FinalDelimSetup{render=native}\Glyph{#1}{#2}\hskip4pt\FinalDelimSetup{render=draw}\Glyph{#1}{#2}\hfil}}
 \newcommand\Missing{\hbox to .16\textwidth{\hfil\textit{missing}\hfil}}
 \newcommand\Name[2]{\hbox to .16\textwidth{\hfil\vbox{\hbox{\scriptsize\ttfamily #1}\hbox{\scriptsize #2}}\hfil}}
 \begin{document}
