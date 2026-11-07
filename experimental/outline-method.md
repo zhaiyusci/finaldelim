@@ -12,8 +12,9 @@ outline units, advances and native assembly nodes. Obtain outlines from
 `fonts.handlers.otf.readers.loadshapes`, with a per-compilation file/subfont cache.
 Compute actual ink bounds, including cubic Bezier extrema. Express target height
 in that font's design units using the current math-style font size. Alignment is
-about the current mathematical axis. Native delimiterfactor/shortfall still
-convert the sizing model's radius into a requested total height.
+about the current mathematical axis. The requested total height is twice the
+already scaled model radius. Native delimiterfactor/shortfall apply only to
+native rendering, not to continuous drawing.
 
 ## Prebuilt range
 
@@ -21,7 +22,8 @@ Choose the adjacent ink heights H0 and H1 enclosing H, and define
 
     t = (H-H0)/(H1-H0).
 
-Interpolate advances with the same t. Below the smallest glyph, retain that glyph.
+Interpolate advances with the same t. Below the smallest glyph, scale that
+outline vertically to the target, retaining its horizontal stroke width.
 At the tabulated heights, use the corresponding original outline.
 
 1. If the paths have the same command sequence and their on-curve endpoints
@@ -47,12 +49,17 @@ not proof of compatibility for every possible font design.
 
 ## Beyond the prebuilt range
 
-Keep LuaTeX's actual component selection, positions, overlap kerns and box shifts.
-Collect their original outlines and fill the compound path once. For the validated
-fonts, consistent contour winding yields the union without repeatedly painting the
-joints. Preserve the native width, height, depth and shift exactly in this branch.
+Read the font's vertical assembly parts, full advances and connector lengths.
+Repeat extenders equally, and choose connector overlap continuously within the
+font's permitted range to reach the requested ink height exactly. Correct the
+first/last advances for actual outline bounds. Preserve cap and cusp geometry;
+collect original outlines into one fill. Center the result on the math axis and
+give its box the resulting extent so scripts attach to the drawn delimiter.
 For the six diagonal delimiters listed below, use geometric extension instead.
-For other glyphs without assembly, retain the largest native glyph outline.
+When no assembly is available, or a gap exists between the last prebuilt glyph
+and the shortest legal assembly, vertically extend the last prebuilt outline.
+This may change curvature in that range; it never snaps the length to a font
+size. Bar outlines remain straight with unchanged stroke width.
 
 ## Unsupported inputs and scope
 
@@ -61,18 +68,28 @@ profile correspondences retain native rendering. Transformed faces and explicitl
 selected variable instances currently retain native rendering; loading an unmodified
 base outline would be incorrect. The source adapter can be extended independently of
 the interpolation algorithm. Text extraction/tagging for the drawn delimiter paths
-is not implemented. Production rendering remains native unless the experimental
-package is loaded.
+is not implemented. Drawing is enabled with `render=draw`.
 
 ## Cross-font verification
 
 The same runtime implementation was compiled with Latin Modern Math, STIX Two Math,
 TeX Gyre Pagella Math, TeX Gyre Termes Math, XITS Math and Libertinus Math.
 `outline-crossfont.tex` renders 20pt and 64pt target atlases and an actual formula
-for each. The samples have no native fallbacks. `outline-test.tex` checks assembled
-box equality and source execution in eight fonts, including Fira and GFS; `test-outline.py` checks
+for each. The samples have no native fallbacks. `outline-test.tex` checks source execution in eight fonts, including Fira and GFS; `test-outline.py` checks
 body/script coordinates, niji colors, scope, labels and absence of clipping.
 This is the verified test set, not a claim that every installed math font is tested.
+
+## Exact-length regression
+
+Compile `experimental/continuous-lengths.tex`. Its Lua assertions cover 2,638
+target lengths in Latin Modern Math, STIX Two Math, XITS Math and Fira Math.
+They include both sides of every prebuilt-size boundary, short targets and
+targets up to 100pt. The test reads the emitted PDF path commands and computes
+their actual cubic extrema: ink height and axis must agree with the requested
+values within 8sp, and box height plus depth within 1sp. This tests the painted
+outline, not just the box dimensions. The PDF supplies a visible size sweep
+with middles and scripts; `outline-test.tex` checks body geometry and script
+attachment separately in eight fonts.
 
 ## Stroke weight is separate
 

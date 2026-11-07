@@ -4,6 +4,21 @@ Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 
 ## Unreleased
 
+- Add dvips and dvisvgm drawing specials, automatic graphics-driver detection,
+  and the load-time `dvi-driver` override. Preserve separate fill/stroke colors
+  and restore DVI color after each PostScript drawing. Test actual PS/PDF and
+  SVG conversion, continuous outlines, native glyphs, colors and debug overlays.
+
+- Support LuaLaTeX DVI output through dvipdfmx: continuous outlines, cross-row
+  color restoration, and debug overlays. Preserve native leader font mapping
+  for long arrows. Compare converted output with direct PDF in Unicode and
+  traditional fonts, including page-wide lua-visual-debug diagnostics.
+
+- Use exact target lengths for drawn weighted delimiters, without native
+  size-selection tolerances. Interpolate prebuilt shapes, adjust assembly
+  overlap continuously, and use the final ink extent for boxes and scripts.
+  Add four-font tests of ink bounds, including all prebuilt-size boundaries.
+
 - Preserve native streaming `displaymath` after adapting bracket displays;
   verify the complete official physics manual, including verbatim display
   examples, in traditional-font and Unicode continuous-outline builds.
@@ -132,3 +147,11 @@ Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 - Expose fold-width as a positive TeX length (default 0.01em), with package,
   setup, and local display scope; move continuation operators to row starts
   in the spanning-policy comparison.
+
+- Draw square/nth-root signs and their overbars together under render=draw,
+  after native math layout; retain native metrics, degree and script positions.
+  Audit integral variants in four fonts without changing integral rendering.
+
+- Extend render=draw to horizontal font assemblies, wide accents and amsmath
+  centered-leader arrows, keeping native geometry and labels. Add four-font
+  source/result comparisons and geometry/color regressions.

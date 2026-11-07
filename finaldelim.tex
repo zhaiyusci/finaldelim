@@ -159,6 +159,11 @@ continuous drawing:
 \end{lstlisting}
 Continue using the same delimiter commands. The renderer derives its shapes
 from the current math font. It needs no additional package or directory.
+The visible delimiter height is exactly $2R$, with the target radius $R$
+defined above; \texttt{scale=0.9} is applied only once. Font sizes serve as
+shape samples, not size steps. Between samples the renderer interpolates;
+beyond them it extends the font's construction to the requested length.
+The delimiter boxes and attached scripts use that same final extent.
 
 Here is a Frobenius norm with a tall matrix.\footnote{Wikipedia,
 \href{https://en.wikipedia.org/wiki/Matrix_norm\#Frobenius_norm}{Matrix norm},
@@ -206,6 +211,53 @@ nearest-neighbour sampling so individual pixels remain visible. No bands have
 been drawn in, removed or enhanced. Their appearance in a PDF viewer depends
 on resolution and rasterization; this comparison records one reproducible view.
 The source and generation script are included in \texttt{manual-assets/}.
+
+\newpage
+\subsection*{Keep native root geometry, but draw clean joins}
+The same \texttt{render=draw} setting also applies to \verb|\sqrt| and
+\verb|\sqrt[n]|. TeX first lays out the root normally. finaldelim then paints
+the selected root sign and its overbar together as one filled outline.
+
+\textbf{Native rendering}
+\Example[\FinalDelimSetup{render=native}]{radical-drawing}
+\textbf{Continuous drawing}
+\Example[\FinalDelimSetup{render=draw}]{radical-drawing}
+The root index, superscript, subscript, radicand and surrounding spacing keep
+their native positions. The weighted delimiter-size policy is not applied to
+the root: its bar still clears the full height of the radicand. Nested roots
+and inline roots use the same drawing path, with no extra syntax.
+
+Unsupported font outlines retain native rendering. As with drawn delimiters,
+the root sign becomes a PDF path rather than extractable text. Integral signs
+retain their native glyphs and limit positioning; ordinary integrals in the
+tested fonts use complete glyphs rather than stacked extender pieces.
+
+\newpage
+\subsection*{Long braces, arrows and accents}
+Long horizontal symbols can have the same repeated joins as tall delimiters.
+With \texttt{render=draw}, finaldelim paints horizontal font assemblies and
+amsmath's repeated arrow pieces as a single outline. Continue using the usual
+commands:
+\begin{center}
+\begin{tabular}{@{}ll@{}}\toprule
+Purpose&Commands\\\midrule
+Group terms above or below&\verb|\overbrace|, \verb|\underbrace|\\
+Label a long arrow&\verb|\xrightarrow|, \verb|\xleftarrow|\\
+Put an arrow over an expression&\verb|\overrightarrow|, \verb|\overleftarrow|, \verb|\overleftrightarrow|\\
+Use a wide accent&\verb|\widehat|, \verb|\widetilde|\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Native rendering}
+\Example[\FinalDelimSetup{render=native}]{stretch-drawing}
+\textbf{Continuous drawing}
+\Example[\FinalDelimSetup{render=draw}]{stretch-drawing}
+Lengths, attachment points, text labels and scripts keep their native positions.
+For a wide accent supplied as a complete glyph, drawing preserves that glyph's
+native shape and size; it does not stretch it to cover more of the expression.
+Ordinary fraction rules, overlines and underlines remain native rules.
+
+Unsupported outline constructions retain native rendering. Like the other
+drawn symbols, these outlines become PDF paths rather than extractable glyphs.
 
 \newpage
 \section{Nested brackets become hard to follow}\label{sec:niji}
@@ -486,15 +538,56 @@ Native sizing and explicitly sized delimiters are unaffected by the weighted
 size controls. Environment replacement options are listed in
 Section~\ref{sec:integration} and apply only when loading the package.
 
+\newpage
 \subsection{Install and compile}
-Install these eight files together beside your document or in a local TEXMF tree:
-\path{finaldelim.sty}, \path{finaldelim-luatex.sty},
-\path{finaldelim-interface.sty}, \path{finaldelim-physics.sty},
-\path{finaldelim.lua}, \path{finaldelim-size.lua},
-\path{finaldelim-draw.lua}, and \path{finaldelim-outline-fonts.lua}.
+Install these nine files together beside your document or in a local TEXMF tree:
+\begin{lstlisting}[language={}]
+finaldelim.sty               finaldelim-luatex.sty
+finaldelim-interface.sty     finaldelim-physics.sty
+finaldelim.lua               finaldelim-size.lua
+finaldelim-draw.lua          finaldelim-outline-fonts.lua
+finaldelim-output.lua
+\end{lstlisting}
 Compile with LuaLaTeX. No Lua code is needed in the document.
 This development version does not yet provide tagged mathematical structure
 for its physical line-breaking backend.
+
+\subsection{DVI output}
+For a DVI workflow, compile with LuaLaTeX and convert with dvipdfmx:
+\begin{lstlisting}[language={}]
+lualatex --output-format=dvi document.tex
+dvipdfmx document.dvi
+\end{lstlisting}
+Select the dvipdfmx color and graphics driver in the document, for example:
+\begin{lstlisting}
+\documentclass[dvipdfmx]{article}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage[niji,render=draw]{finaldelim}
+\end{lstlisting}
+The package detects DVI mode and the graphics driver automatically. The same
+sizing, continuous drawing, colors, explicit line breaks, numbering and debug
+options apply. Direct PDF output remains available with the usual LuaLaTeX
+command and default document driver.
+
+For PostScript or SVG, use \texttt{dvips} or \texttt{dvisvgm} as the document-class
+driver and convert the DVI with the matching command:
+\begin{lstlisting}[language={}]
+dvips -o document.ps document.dvi
+dvisvgm --no-fonts --page=1- --bbox=papersize document.dvi
+\end{lstlisting}
+If driver detection needs an override, pass \texttt{dvi-driver=dvipdfmx},
+\texttt{dvi-driver=dvips} or \texttt{dvi-driver=dvisvgm} when loading finaldelim.
+The default is \texttt{dvi-driver=auto}; this setting does not change the
+color or graphics package's driver.
+
+dvisvgm uses its Ghostscript-backed PostScript handler for the drawn paths.
+Traditional dvips requires fonts it can read, such as TFM/Type~1 fonts;
+\verb|\usepackage[OT1]{fontenc}| selects traditional text encoding in LuaLaTeX.
+For OpenType mathematics with \texttt{unicode-math}, use dvipdfmx or dvisvgm.
+The converter's font support is independent of finaldelim's drawn outlines.
+SVG has no device-dependent hairline, so zero-width debug strokes become
+explicit 0.1bp strokes there.
 
 Maintained by Yu Zhai. LPPL 1.3c or later. Formula sources appear in footnotes;
 notation and breaks are adapted for the examples. The \texttt{lllhlll} profile

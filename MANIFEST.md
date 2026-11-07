@@ -11,6 +11,7 @@ The inherited distribution manifest lists:
 - `finaldelim-physics.sty` -- optional physics-package integration;
 - `finaldelim-size.lua` -- delimiter sizing;
 - `finaldelim.lua` -- LuaTeX physical partition backend;
+- `finaldelim-output.lua` -- PDF, dvipdfmx, dvips and dvisvgm output adapter;
 - `finaldelim.tex` -- user manual source;
 - `manual-assets/joints.tex`, `manual-assets/build-joints.py`, and
   `manual-assets/joints-*.png` -- reproducible rasterized joint comparison;

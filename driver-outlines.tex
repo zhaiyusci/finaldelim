@@ -1,0 +1,32 @@
+% Exercise OpenType-derived outlines in dvips without emitting OpenType glyphs.
+\ifnum\outputmode=0
+ \ifdefined\DVIDriver\else\def\DVIDriver{dvips}\fi
+ \edef\DriverOptions{\noexpand\documentclass[\DVIDriver]{article}}\DriverOptions
+\else\documentclass{article}\fi
+\usepackage[margin=20mm]{geometry}
+\usepackage{unicode-math}\setmathfont{Latin Modern Math}
+\usepackage[niji,render=draw]{finaldelim}
+\pagestyle{empty}\font\CaptionFont=cmr10
+\newcommand\Tall[1]{\phantom{\rule{12pt}{#1pt}}}
+\begin{document}\CaptionFont
+Continuous outlines, generated from Latin Modern Math
+\begin{equation*}
+ \left(\Tall{18}\right)\quad\left[\Tall{18}\middle|\Tall{18}\right]
+ \quad\left\{\Tall{18}\right\}\quad\left\Vert\Tall{18}\right\Vert
+ \quad\left\langle\Tall{18}\right\rangle
+\end{equation*}
+\begin{equation*}
+ \left(\Tall{45}\right)\quad\left[\Tall{45}\middle|\Tall{45}\right]
+ \quad\left\{\Tall{45}\right\}\quad\left\Vert\Tall{45}\right\Vert
+\end{equation*}
+Nested colors and physical line breaks
+\begin{equation*}
+ &\left[\Tall{18}\left(\Tall{10}\right)\\
+ &\quad\Tall{12}\right]
+\end{equation*}
+Roots and horizontal constructions
+{\color{blue}\begin{equation*}
+ \sqrt{\Tall{25}}\quad\overbrace{\phantom{\rule{60pt}{6pt}}}
+ \quad\overrightarrow{\phantom{\rule{30pt}{6pt}}}
+\end{equation*}}
+\end{document}

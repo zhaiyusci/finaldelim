@@ -51,6 +51,7 @@
 
 % User-facing sizing settings; assignments are local inside environments/groups.
 \newcount\FinalDelimDrawing
+\cs_new:Npn\fdDVIDriver{auto}
 \tl_new:N \l__fd_fold_width_tl
 \tl_set:Nn \l__fd_fold_width_tl {0.01em}
 \dim_new:N \l__fd_fold_width_dim
@@ -75,6 +76,8 @@
 
 \keys_define:nn {matchedsplit/package}
  {
+  dvi-driver .choices:nn={auto,dvipdfmx,dvips,dvisvgm}
+   {\cs_gset:Npx\fdDVIDriver{\l_keys_choice_tl}},
   render .code:n={\keys_set:nn{finaldelim/settings}{render={#1}}},
   fold-width .code:n={\keys_set:nn{finaldelim/settings}{fold-width={#1}}},
   lambda .code:n={\keys_set:nn{finaldelim/settings}{lambda={#1}}},

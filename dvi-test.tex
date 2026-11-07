@@ -1,0 +1,45 @@
+\ifnum\outputmode=0
+ \ifdefined\DVIDriver\else\def\DVIDriver{dvipdfmx}\fi
+ \edef\DriverOptions{\noexpand\documentclass[\DVIDriver]{article}}\DriverOptions
+\else\documentclass{article}\fi
+\usepackage[margin=20mm]{geometry}
+\ifdefined\Traditional\usepackage[OT1]{fontenc}\else
+ \usepackage{unicode-math}
+ \ifdefined\MathFace\else\def\MathFace{Latin Modern Math}\fi
+ \setmathfont{\MathFace}
+\fi
+\usepackage{graphicx}
+\usepackage[niji,render=draw]{finaldelim}
+\ifdefined\GlobalDebug\usepackage{lua-visual-debug}\fi
+\pagestyle{empty}
+\newcount\runs
+\newcommand\Sample{%
+ Inline $\left(1+\left[x\right]\right)^2$ and black text.
+ \begin{fdequation}\global\advance\runs by1
+ F&=\left[\frac{1}{1+x^2}+\left(a+b\right)\\
+ &\quad+\frac{y}{z}\middle|\sqrt{1+\frac{x}{y}}\right]^2_j
+ \end{fdequation}
+ {\color{red}\begin{fdequation*}
+ A&=\left(\color{blue}a+\\
+ &b\right)+c
+ \end{fdequation*}Red again.} Black again.
+ \begin{fdalignat}{2}
+ a&=\left(x+&\quad b&=1\\
+ &y\right),& c&=2\ifnum\runs=3\label{dvi:last}\fi
+ \end{fdalignat}
+ \begin{fdequation*}
+ \sqrt[3]{\frac{a+b}{c+d}}+\underbrace{x+y+z}_{n}
+ \xrightarrow[below]{above}\widehat{xy}+\overrightarrow{AB}
+ \end{fdequation*}
+ \ifdefined\GlobalDebug
+  $\left\langle\frac{1}{1+x^2}\right\rangle$
+ \else\rotatebox{15}{$\left\langle\frac{1}{1+x^2}\right\rangle$}\fi
+}
+\begin{document}
+\Sample\newpage
+\FinalDelimSetup{render=native}\Sample\newpage
+\FinalDelimSetup{render=draw,debug=all}
+\lvdset{hlist={color={0 0 1 RG} width=0.7}}
+\Sample
+\ifnum\runs=3\else\errmessage{Source replayed}\fi
+\end{document}

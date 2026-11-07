@@ -12,20 +12,23 @@ with pdfplumber.open('build/outline-test.pdf') as pdf:
   drawn=[v for v in chars[b+len('Drawn'+tag+':'):c] if v['text'] in 'abc+2j']
   assert ''.join(v['text'] for v in orig)==''.join(v['text'] for v in drawn)=='a+bc2j'
   dx,dy=drawn[0]['x0']-orig[0]['x0'],drawn[0]['top']-orig[0]['top']
-  for u,v in zip(orig,drawn):
+  for u,v in zip(orig[:4],drawn[:4]):
    assert u['fontname']==v['fontname']
    for key,shift in [('x0',dx),('x1',dx),('top',dy),('bottom',dy)]:assert abs(v[key]-u[key]-shift)<.012,(tag,key,u,v)
+  # Scripts follow the requested radius without native shortfall.
+  assert drawn[4]['top']-orig[4]['top']-dy <= .012,tag
+  assert drawn[5]['top']-orig[5]['top']-dy >= -.012,tag
  reader=PdfReader('build/outline-test.pdf')
  for page in reader.pages:
   ops=ContentStream(page.get_contents(),reader).operations
   assert not any(op in (b'W',b'W*') for _,op in ops)
  for page in pdf.pages[:8]:assert len(page.curves)>0
 log=Path('build/outline-test.log').read_text()
-assert 'OUTLINE ASSEMBLY DIMENSIONS AND SOURCE ASSERTIONS PASSED' in log
+assert 'OUTLINE SOURCE ASSERTIONS PASSED' in log
 assert 'forcing bad dir' not in log
 assert re.search(r'OUTLINE fallback 0\b',log)
 assert r'\newlabel{outline:row}{{2}' in Path('build/outline-test.aux').read_text()
-print('PASS: eight fonts: assembled boxes and body/script geometry unchanged; scope, source-once, labels, paths, no clipping; no native fallbacks')
+print('PASS: eight fonts: body geometry unchanged and scripts follow continuous fences; scope, source-once, labels, paths, no clipping; no native fallbacks')
 
 
 with pdfplumber.open('build/outline-comparison.pdf') as pdf:

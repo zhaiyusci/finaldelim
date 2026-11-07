@@ -38,6 +38,7 @@ local function bounds(path)
  end
  return {xmin,ymin,xmax,ymax}
 end
+M.path_bounds=bounds
 local function compatible(a,b)
  if #a~=#b then return false end
  for i,c in ipairs(a) do if #c~=#b[i] or c[1]~=b[i][1] then return false end end
@@ -362,7 +363,7 @@ function M.get(f,code)
    local g=fd.glyphs[id]
    if not g then specs[code]=false;return nil,'glyph has no readable outline' end
    if g.bounds[4]>g.bounds[2] then ids[#ids+1]=id end
-   assembly=assembly or ch.vert_variants~=nil
+   assembly=assembly or ch.vert_variants
    ch=ch.next and f.characters[ch.next]
   end
   table.sort(ids,function(i,j)

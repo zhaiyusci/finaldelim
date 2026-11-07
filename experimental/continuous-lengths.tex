@@ -1,0 +1,33 @@
+\documentclass[10pt]{article}
+\usepackage[margin=16mm]{geometry}
+\usepackage{unicode-math}
+\usepackage[render=draw,scale=0.9]{finaldelim}
+\pagestyle{empty}
+\directlua{dofile('experimental/continuous-lengths.lua')}
+% A single atom retains x's width and the strut's height for measurement.
+\newcommand\HeightX[1]{\hbox{$\vphantom{\rule{0pt}{#1pt}}x$}}
+\newcommand\LengthRow[1]{%
+ #1\,pt & $\left(\HeightX{#1}\right)^a_b$ &
+ $\left[\HeightX{#1}\middle|y\right]^a_b$ &
+ $\left\{\HeightX{#1}\right\}$ &
+ $\left\Vert\HeightX{#1}\right\Vert$ &
+ $\left\langle\HeightX{#1}\right\rangle$\\[5pt]}
+\newcommand\LengthFont[1]{%
+ \setmathfont{#1}\setbox0=\hbox{$($}\directlua{continuous_check()}
+ \section*{#1: continuous target lengths}
+ \noindent Small changes in content height produce small changes in delimiter
+ length. The same target is used for the middle delimiter and script anchors.
+ \medskip
+ \begin{center}\begin{tabular}{rccccc}
+ Content height & Parentheses & Middle & Braces & Norm & Angles\\[5pt]
+ \LengthRow{7}\LengthRow{7.5}\LengthRow{8}\LengthRow{8.5}
+ \LengthRow{18}\LengthRow{18.5}\LengthRow{19}\LengthRow{19.5}
+ \LengthRow{45}\LengthRow{45.5}\LengthRow{46}
+ \end{tabular}\end{center}
+ \clearpage}
+\begin{document}
+\LengthFont{Latin Modern Math}
+\LengthFont{STIX Two Math}
+\LengthFont{XITS Math}
+\LengthFont{Fira Math}
+\end{document}

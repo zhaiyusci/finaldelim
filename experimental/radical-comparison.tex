@@ -1,0 +1,41 @@
+\documentclass[10pt]{article}
+\usepackage[margin=16mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newsavebox\nativebox\newsavebox\drawbox
+\newcommand\RadicalBody{\frac{\displaystyle\sum_{i=1}^n\frac{x_i^2}{1+x_i^2}}
+ {\displaystyle\sum_{j=1}^m\frac{y_j^2}{1+y_j^2}}}
+\newcommand\RadicalCheck[1]{%
+ {\FinalDelimSetup{render=native}\global\setbox\nativebox=\hbox{$\displaystyle #1$}}%
+ {\FinalDelimSetup{render=draw}\global\setbox\drawbox=\hbox{$\displaystyle #1$}}%
+ \ifdim\wd\nativebox=\wd\drawbox\else\errmessage{Width changed}\fi
+ \ifdim\ht\nativebox=\ht\drawbox\else\errmessage{Height changed}\fi
+ \ifdim\dp\nativebox=\dp\drawbox\else\errmessage{Depth changed}\fi
+}
+\newcommand\Samples{%
+ \noindent Inline: $\sqrt{x}+\sqrt[3]{1+x^2}+x^{\sqrt{y}}$\par
+ \[\sqrt{x}+\sqrt[3]{\RadicalBody}^{u}_{v}+\sqrt{\sqrt{1+x^2}}\]
+ \[\sqrt{\begin{matrix}a&b\\c&d\\e&f\\g&h\\i&j\\k&l\\m&n\\o&p\end{matrix}}+\sqrt[12]{\frac{1}{1+\frac{1}{1+x}}}\]
+ \[\color{blue}\sqrt{\textcolor{red}{x+y}}+\sqrt{\left(a+\frac{b}{c}\right)}\]
+ \[\int_0^1 f(x)\,dx+\iint_D f(x,y)\,dx\,dy+\iiint_V f\,dV+\oint_C f(z)\,dz\]
+ \[\int\limits_0^\infty e^{-x^2}\,dx+\int_{\frac12}^{\sqrt{2}}x\,dx\]
+}
+\newcommand\FontPair[1]{%
+ \setmathfont{#1}
+ \RadicalCheck{\sqrt[3]{\RadicalBody}^{u}_{v}+\sqrt{\sqrt{1+x^2}}}
+ \RadicalCheck{\sqrt{\begin{matrix}a&b\\c&d\\e&f\\g&h\\i&j\\k&l\\m&n\\o&p\end{matrix}}}
+ \RadicalCheck{\int_0^1 f(x)\,dx+\iint_D f(x,y)\,dx\,dy+\iiint_V f\,dV+\oint_C f(z)\,dz}
+ \directlua{radical_test_font='#1';radical_audit_box=tex.box[\number\nativebox];dofile('experimental/integral-audit.lua')}
+ \FinalDelimSetup{render=native,sizing=native,niji=false}
+ \section*{#1: native}\Samples\clearpage
+ \FinalDelimSetup{render=draw,sizing=native,niji=false}
+ \section*{#1: drawn radicals}\Samples\clearpage
+}
+\begin{document}
+\directlua{local f=assert(io.open('build/integral-audit.txt','w'));f:close()}
+\FontPair{Latin Modern Math}
+\FontPair{STIX Two Math}
+\FontPair{XITS Math}
+\FontPair{Fira Math}
+\end{document}

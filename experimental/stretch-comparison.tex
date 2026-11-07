@@ -1,0 +1,37 @@
+\documentclass[10pt]{article}
+\usepackage[margin=16mm]{geometry}
+\usepackage{unicode-math}
+\usepackage{finaldelim}
+\pagestyle{empty}
+\newsavebox\nativebox\newsavebox\drawbox
+\newcommand\StretchCheck[1]{%
+ {\FinalDelimSetup{render=native}\global\setbox\nativebox=\hbox{$\displaystyle #1$}}%
+ {\FinalDelimSetup{render=draw}\global\setbox\drawbox=\hbox{$\displaystyle #1$}}%
+ \ifdim\wd\nativebox=\wd\drawbox\else\errmessage{Width changed}\fi
+ \ifdim\ht\nativebox=\ht\drawbox\else\errmessage{Height changed}\fi
+ \ifdim\dp\nativebox=\dp\drawbox\else\errmessage{Depth changed}\fi
+}
+\newcommand\StretchSamples{%
+ \[\overbrace{a+b+c+d+e+f}^{n}\qquad\underbrace{a+b+c+d+e+f}_{m}\]
+ \[A\xrightarrow[a+b]{u+v+w+x+y+z}B\qquad C\xleftarrow[c+d]{u+v+w+x+y+z}D\]
+ \[\overrightarrow{a+b+c+d+e+f}\quad\overleftarrow{a+b+c+d+e+f}\]
+ \[\overleftrightarrow{a+b+c+d+e+f}\]
+ \[\widehat{xy}+\widehat{a+b+c+d+e+f}\qquad\widetilde{xy}+\widetilde{a+b+c+d+e+f}\]
+ \[\color{blue}\overbrace{\textcolor{red}{a+b+c}}^{n}+\overrightarrow{\textcolor{red}{x+y+z}}\]
+ \[\overbrace{a+\underbrace{b+c+d}_{m}+e}^{n}+x^{\widehat{ab}}\]
+ \[\overline{a+b+c}+\underline{x+y+z}+\frac{a+b}{c+d}\]
+}
+\newcommand\StretchFont[1]{%
+ \setmathfont{#1}
+ \StretchCheck{\overbrace{a+b+c+d+e+f}^{n}+\underbrace{x+y+z}_{m}}
+ \StretchCheck{A\xrightarrow[below]{u+v+w+x+y+z}B}
+ \StretchCheck{\overrightarrow{a+b+c+d+e+f}+\widehat{xy}+\widetilde{x+y+z}}
+ \FinalDelimSetup{render=native}\section*{#1: native}\StretchSamples\clearpage
+ \FinalDelimSetup{render=draw}\section*{#1: continuous outlines}\StretchSamples\clearpage
+}
+\begin{document}
+\StretchFont{Latin Modern Math}
+\StretchFont{STIX Two Math}
+\StretchFont{XITS Math}
+\StretchFont{Fira Math}
+\end{document}

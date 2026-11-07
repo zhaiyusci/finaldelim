@@ -401,6 +401,7 @@ process = function(head,style)
  return box,anchor
 end
 luatexbase.add_to_callback('pre_mlist_to_hlist_filter',function(head,style)
+ if tex.count.FinalDelimDrawing==1 then require('finaldelim-draw') end
  local active=M.enabled
  if M.from_tex then
   active=tex.count['l__fd_sizing_int']==1

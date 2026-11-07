@@ -8,7 +8,7 @@ from matchedsplit, not a release of the original package.
 
 Place `finaldelim.sty`, `finaldelim-luatex.sty`, `finaldelim-interface.sty`,
 `finaldelim-physics.sty`, `finaldelim-size.lua`, `finaldelim-draw.lua`,
-`finaldelim-outline-fonts.lua`, and `finaldelim.lua` beside your
+`finaldelim-outline-fonts.lua`, `finaldelim-output.lua`, and `finaldelim.lua` beside your
 source, or under `tex/latex/finaldelim/` in a personal TEXMF tree.
 
 ```latex
@@ -25,6 +25,37 @@ source, or under `tex/latex/finaldelim/` in a personal TEXMF tree.
 Compile with LuaLaTeX. The manual and public examples use Latin Modern Math; the package itself does not select a font. `niji` aliases `rainbow` at package and environment
 scope. Native amsmath handles alignment, row numbering and row spacing.
 `debug=boxes`, `debug=alignment`, and `debug=all` enable diagnostics.
+
+For DVI output, use the **LuaLaTeX -> dvipdfmx** route. Select the `dvipdfmx`
+driver for color/graphics, for example with `\documentclass[dvipdfmx]{article}`,
+and run:
+
+```sh
+lualatex --output-format=dvi document.tex
+dvipdfmx document.dvi
+```
+
+The output mode and graphics driver are detected automatically. Continuous
+outlines, niji, physical line breaks, numbering and debug overlays also support
+`dvips` and `dvisvgm`. Select the corresponding document-class driver, then use
+`dvips -o document.ps document.dvi` or
+`dvisvgm --no-fonts --page=1- --bbox=papersize document.dvi`.
+The package option `dvi-driver=auto|dvipdfmx|dvips|dvisvgm` can override detection;
+it must agree with the color/graphics driver and the converter.
+
+The PostScript and SVG routes use PostScript specials. dvisvgm therefore needs
+its Ghostscript-backed PostScript handler. Traditional dvips retains its normal
+font restrictions: use TFM/Type 1 fonts (for example `\usepackage[OT1]{fontenc}`
+with traditional math), rather than LuaLaTeX's OpenType font output. For
+`unicode-math`, use dvipdfmx or dvisvgm. This is separate from the outline paths,
+which carry their own geometry. SVG debug hairlines use an explicit 0.1bp width.
+Use a current TeX distribution; the regression suite is tested with TeX Live 2026.
+Run `python run-dvi-tests.py` to compare direct PDF with converted DVI, including
+Latin Modern Math, STIX Two Math, traditional TeX fonts and page-wide debugging.
+`python run-driver-tests.py` additionally exercises dvips and dvisvgm, compares
+rendered pages with direct PDF, and checks continuous outline geometry through
+PostScript. Its raster comparison requires Poppler, Pillow, numpy, Node and sharp;
+`FINALDELIM_SHARP` can point to an installed sharp module directory.
 
 The new backend typesets continuous mathematics once, then physically partitions
 its contents at explicit alignment/row markers. It does not use PDF clipping.
@@ -159,3 +190,22 @@ and run `python test-folded.py` for independent quadrature and folding invariant
 The representative width is configurable with `fold-width=0.01em` at package,
 setup, and environment scope. Positive TeX dimensions are accepted; relative
 units are evaluated when typesetting each formula.
+
+`render=draw` also draws native square/nth-root signs and overbars as a single
+filled outline, preserving native size, index placement, scripts and spacing.
+Integral signs remain native. Compile `experimental/radical-comparison.tex` and
+run `python experimental/test-radicals.py` for four-font comparisons and geometry
+checks. See `experimental/radical-rendering.md` for the integral audit.
+
+Continuous drawing also covers horizontal font assemblies (over/underbraces and
+expression arrows), wide accents, and amsmath centered-leader long arrows. It
+preserves native dimensions, labels, attachment and script positioning. Compile
+`experimental/stretch-comparison.tex` and run `python experimental/test-stretch.py`
+for four-font comparisons. Complete accents retain their native selected size.
+
+For weighted delimiters, `render=draw` uses the exact target height `2R` after
+`scale`, without native delimiterfactor/shortfall or snapping to font sizes.
+Prebuilt outlines are interpolation samples; larger constructions use continuously
+adjusted connector overlap. Delimiter boxes and scripts follow the final extent.
+Compile `experimental/continuous-lengths.tex` for the four-font size sweep and
+assertions of actual outline bounds around every prebuilt-size boundary.

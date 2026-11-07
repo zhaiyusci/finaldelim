@@ -1,6 +1,7 @@
 -- Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 -- LuaTeX backend: native math layout followed by physical cell partition.
 local M = {}
+local output = require('finaldelim-output')
 local hlist, vlist = node.id('hlist'), node.id('vlist')
 local whatsit, glue, kern = node.id('whatsit'), node.id('glue'), node.id('kern')
 local marker_id = 0x4D53
@@ -139,23 +140,18 @@ local function snapshot(box)
 end
 
 local grids, serial = {}, 0
-local colorstack = node.subtype('pdf_colorstack')
-local function color_node(command, data)
-  local n = node.new('whatsit', 'pdf_colorstack')
-  n.stack, n.command, n.data = 0, command, data or ''
-  return n
-end
+local color_node = output.color
 local function track_colors(head, stack)
   for n in node.traverse(head) do
-    if n.id == whatsit and n.subtype == colorstack then
-      assert(n.stack == 0, 'finaldelim: non-default PDF color stacks are unsupported')
-      if n.command == 1 then stack[#stack+1] = n.data
-      elseif n.command == 2 then
+    local command,data = output.color_action(n)
+    if command then
+      if command == 1 then stack[#stack+1] = data
+      elseif command == 2 then
         assert(#stack > 0, 'finaldelim: unbalanced source color stack')
         stack[#stack] = nil
-      elseif n.command == 0 then
+      elseif command == 0 then
         assert(#stack > 0, 'finaldelim: unscoped PDF color assignment')
-        stack[#stack] = n.data
+        stack[#stack] = data
       end
     elseif n.id == hlist or n.id == vlist then track_colors(n.list, stack) end
   end
@@ -222,10 +218,8 @@ function M.cell(id, index, measuring, boxes, alignment, odd)
     local config = visual.params.rule
     local scale = 72 / 72.27 / 65536
     local x = odd and b.width * scale or 0
-    local mark = node.new('whatsit', 'pdf_literal')
-    mark.mode = 0
-    mark.data = string.format('q %s %g w [2 2] 0 d %g %g m %g %g l S [] 0 d %g 0 m %g 0 l S Q',
-      config.color, config.width, x, -b.depth*scale, x, b.height*scale, x-1.5, x+1.5)
+    local mark = output.literal(string.format('q %s %g w [2 2] 0 d %g %g m %g %g l S [] 0 d %g 0 m %g 0 l S Q',
+      config.color, config.width, x, -b.depth*scale, x, b.height*scale, x-1.5, x+1.5))
     if b.list then b.list = node.insert_before(b.list, b.list, mark) else b.list = mark end
   end
   node.write(b)
