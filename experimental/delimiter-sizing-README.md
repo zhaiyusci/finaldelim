@@ -1,6 +1,6 @@
 > Historical parameter experiments: the cubic-mean results below are retained
 > for comparison. The production package now uses a fixed maximum over delimiter
-> positions, with lambda=20pt, q=8, and scale=0.9 (optional scale=1).
+> positions, with lambda=20pt, q=3, and scale=1 (optional scale=0.9).
 
 # Experimental delimiter sizing
 

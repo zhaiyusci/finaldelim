@@ -3,7 +3,7 @@
 local M = { enabled = true, measured = 0 }
 M.spanning_scope='folded'
 M.from_tex=true
-M.config={lambda_pt=20,q=8,scale=0.9,fold_width_pt=0.1}
+M.config={lambda_pt=20,q=3,scale=1,fold_width_pt=1}
 function M.configure(options)
  for k,v in pairs(options) do
   if k=='spanning_scope' then assert(v=='endpoints' or v=='full' or v=='folded','Invalid spanning_scope')

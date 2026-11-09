@@ -53,12 +53,12 @@
 \newcount\FinalDelimDrawing
 \cs_new:Npn\fdDVIDriver{auto}
 \tl_new:N \l__fd_fold_width_tl
-\tl_set:Nn \l__fd_fold_width_tl {0.01em}
+\tl_set:Nn \l__fd_fold_width_tl {0.1em}
 \dim_new:N \l__fd_fold_width_dim
 \dim_new:N \l__fd_lambda_dim
 \dim_set:Nn \l__fd_lambda_dim {20pt}
-\fp_new:N \l__fd_q_fp \fp_set:Nn \l__fd_q_fp {8}
-\fp_new:N \l__fd_scale_fp \fp_set:Nn \l__fd_scale_fp {0.9}
+\fp_new:N \l__fd_q_fp \fp_set:Nn \l__fd_q_fp {3}
+\fp_new:N \l__fd_scale_fp \fp_set:Nn \l__fd_scale_fp {1}
 \int_new:N \l__fd_sizing_int \int_set:Nn \l__fd_sizing_int {1}
 \tl_new:N \l__fd_span_tl \tl_set:Nn \l__fd_span_tl {folded}
 \keys_define:nn {finaldelim/settings}

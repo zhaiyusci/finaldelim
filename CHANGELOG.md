@@ -4,6 +4,13 @@ Copyright (C) 2026 Yu Zhai. LPPL 1.3c or later.
 
 ## Unreleased
 
+- Set the default folded representative width to `0.1em`.
+
+- Set the default height-emphasis power to `q=3`, retaining `scale=1`.
+
+- Set the default target-radius scale to 1; `scale=0.9` remains available
+  for a more compact frame. Update the manual and default-scale regression.
+
 - Add dvips and dvisvgm drawing specials, automatic graphics-driver detection,
   and the load-time `dvi-driver` override. Preserve separate fill/stroke colors
   and restore DVI color after each PostScript drawing. Test actual PS/PDF and

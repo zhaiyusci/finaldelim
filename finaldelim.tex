@@ -56,7 +56,7 @@
 {\LARGE\bfseries finaldelim}\par
 {\large Better-sized delimiters, readable nesting, simpler line breaks}\par
 Yu Zhai \quad\href{mailto:me@zhaiyusci.net}{me@zhaiyusci.net}\par
-Version 0.1.0-dev \quad 5 November 2026
+Version 0.1.0-dev \quad 9 November 2026
 
 A formula may start as a short expression, acquire a tall fraction and nested
 brackets, and eventually need several lines. finaldelim lets you keep writing
@@ -97,17 +97,17 @@ line breaks, go to Section~\ref{sec:breaks}.
 
 \newpage
 \subsection{Make the frame more or less compact}
-The defaults are \texttt{lambda=20pt}, \texttt{q=8}, and \texttt{scale=0.9}.
+The defaults are \texttt{lambda=20pt}, \texttt{q=3}, and \texttt{scale=1}.
 Usually no adjustment is needed. To ask for a fuller frame, increase
 \texttt{scale}; to give distant content less influence, decrease \texttt{lambda}.
 \begin{lstlisting}
-\FinalDelimSetup{scale=1}       % fuller frame in subsequent formulas
+\FinalDelimSetup{scale=1.1}     % fuller frame in subsequent formulas
 \begin{equation}[scale=0.9]    % this display only
   \left[a+\frac{b}{c}+d\right]
 \end{equation}
 \end{lstlisting}
-The default scale reduces the estimated radius by ten percent about the math
-axis. It changes the target size, not the shape of a glyph. With native font
+The default scale uses the full estimated radius. Setting \texttt{scale=0.9}
+reduces it by ten percent about the math axis. It changes the target size, not the shape of a glyph. With native font
 rendering, several nearby targets can select the same prebuilt glyph.
 \texttt{sizing=native} restores the native size policy; colors and line
 breaking remain available.
@@ -160,7 +160,7 @@ continuous drawing:
 Continue using the same delimiter commands. The renderer derives its shapes
 from the current math font. It needs no additional package or directory.
 The visible delimiter height is exactly $2R$, with the target radius $R$
-defined above; \texttt{scale=0.9} is applied only once. Font sizes serve as
+defined above; \texttt{scale} is applied only once. Font sizes serve as
 shape samples, not size steps. Between samples the renderer interpolates;
 beyond them it extends the font's construction to the requested length.
 The delimiter boxes and attached scripts use that same final extent.
@@ -366,7 +366,7 @@ Use this source, changing only the \texttt{spanning} option:
 \end{center}
 The endpoint result follows the low terms beside the brackets. The folded
 result also accounts for the tall middle content, represented for measurement
-by a box of width \texttt{fold-width} (default 0.01em), retaining its maximum height and depth. The full
+by a box of width \texttt{fold-width} (default 0.1em), retaining its maximum height and depth. The full
 result uses the actual widths of all the contents. Choose the framing that
 suits the formula. Folding can also bring tall content closer to a delimiter,
 so its result is not necessarily smaller than \texttt{full}.
@@ -379,8 +379,8 @@ It applies the same distance weighting and never uses a target smaller than
 \texttt{endpoints}. The actual contents and line breaks are unchanged.
 Set the representative width with \texttt{fold-width}, for example:
 \begin{lstlisting}
-\FinalDelimSetup{fold-width=0.01em}
-\begin{equation}[fold-width=0.1em]
+\FinalDelimSetup{fold-width=0.1em}
+\begin{equation}[fold-width=0.5em]
   ...
 \end{equation}
 \end{lstlisting}
@@ -522,10 +522,10 @@ to a passage, enclose that passage and its setup command in a group.
 Option&Default&Effect\\\midrule
 \texttt{sizing}&\texttt{weighted}&\texttt{native} restores the native size policy.\\
 \texttt{lambda}&\texttt{20pt}&Physical decay length; smaller values emphasize nearby content.\\
-\texttt{q}&\texttt{8}&Height emphasis; larger values favor tall content.\\
-\texttt{scale}&\texttt{0.9}&Multiplier for the estimated radius.\\
+\texttt{q}&\texttt{3}&Height emphasis; larger values favor tall content.\\
+\texttt{scale}&\texttt{1}&Multiplier for the estimated radius.\\
 \texttt{spanning}&\texttt{folded}&\texttt{folded} compresses middle rows for measurement; \texttt{full} retains their actual widths.\\
-\texttt{fold-width}&\texttt{0.01em}&Width of a folded representative box; a positive TeX length.\\
+\texttt{fold-width}&\texttt{0.1em}&Width of a folded representative box; a positive TeX length.\\
 \texttt{render}&\texttt{native}&\texttt{draw} enables continuous outlines.\\
 \texttt{niji}&\texttt{false}&Nesting colors; \texttt{rainbow} is an alias.\\
 \texttt{colors}&Built-in palette&A nonempty list of xcolor colors.\\

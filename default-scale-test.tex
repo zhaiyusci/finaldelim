@@ -4,14 +4,15 @@
 \newsavebox\implicit\newsavebox\explicit
 \begin{document}
 \ExplSyntaxOn
-\fp_compare:nNnF{\l__fd_scale_fp}={0.9}{\errmessage{Wrong scale default}}
+\fp_compare:nNnF{\l__fd_scale_fp}={1}{\errmessage{Wrong scale default}}
+\fp_compare:nNnF{\l__fd_q_fp}={3}{\errmessage{Wrong q default}}
 \ExplSyntaxOff
 \sbox\implicit{$\displaystyle\left[a+\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|b\right]^2$}
-\FinalDelimSetup{scale=0.9}
+\FinalDelimSetup{scale=1,q=3}
 \sbox\explicit{$\displaystyle\left[a+\frac{\sum_{i=1}^n x_i}{1+x^2}\middle|b\right]^2$}
 \ifdim\wd\implicit=\wd\explicit\else\errmessage{Width mismatch}\fi
 \ifdim\ht\implicit=\ht\explicit\else\errmessage{Height mismatch}\fi
 \ifdim\dp\implicit=\dp\explicit\else\errmessage{Depth mismatch}\fi
-\directlua{assert(finaldelim_sizing.config.scale==0.9)}
+\directlua{assert(finaldelim_sizing.config.scale==1 and finaldelim_sizing.config.q==3)}
 \typeout{DEFAULT SCALE ASSERTIONS PASSED}
 \end{document}

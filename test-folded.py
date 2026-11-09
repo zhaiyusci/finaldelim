@@ -24,10 +24,10 @@ for p in profiles:
  assert abs(p['radius']-expected)<2, (p['case'],p['radius'],expected)
  assert p['radius']>=p['floor']
  for a,b,r,fold in terms:
-  if fold: assert abs((b-a)/65536-({'large':0.2,'custom':5,'absolute':2}.get(p['case'],0.1)))<.001
+  if fold: assert abs((b-a)/65536-({'large':2,'custom':0.1,'absolute':2}.get(p['case'],1)))<.001
 for case in ['wide','manyrows','restored']:
  assert [p['radius'] for p in groups[case]]==[p['radius'] for p in groups['base']]
 assert all(p['folds']==0 for p in groups['tworows'])
 assert any(p['folds']==2 and len(p['positions'])==3 for p in groups['middle'])
 assert all(p['folds']==1 for p in groups['base'])
-print('PASS: independent quadrature, 0.01em width, endpoint floor, middle positions, two-row case, q=0, and width/row-count invariance.')
+print('PASS: independent quadrature, 0.1em default, local override and font-relative width, endpoint floor, middle positions, two-row case, q=0, and width/row-count invariance.')

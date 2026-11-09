@@ -68,7 +68,7 @@ Tagged-PDF support for physical partitioning has not been implemented.
 Weighted sizing is enabled by default. No Lua code is needed:
 
 ```latex
-\usepackage[niji,lambda=20pt,q=8,scale=0.9,spanning=folded]{finaldelim}
+\usepackage[niji,lambda=20pt,q=3,scale=1,spanning=folded]{finaldelim}
 % Or change subsequent formulas:
 \FinalDelimSetup{spanning=full}
 ```
@@ -82,13 +82,13 @@ Nested matrices, cases and embedded alignments keep their own markers.
 Inline `$\left[a+\left(b+c\right)\right]^2$` receives niji colors too.
 Ordinary delimiters are not scanned; inline math is not split into rows.
 
-The default `scale=0.9` reduces the target radius by ten percent without distorting glyphs.
-Use `scale=1` for the full estimated radius.
+The default `scale=1` uses the full estimated radius.
+Use `scale=0.9` to reduce it by ten percent without distorting glyphs.
 The option works at package, setup, and environment level; native sizing is unaffected.
 
-Selected defaults are a fixed physical decay length of 20pt, q=8, maximum over delimiter positions, and scale=0.9.
+Selected defaults are a fixed physical decay length of 20pt, q=3, maximum over delimiter positions, and scale=1.
 Cross-row pairs use `spanning=folded` by default: intervening rows are
-represented by 0.01em-wide measurement boxes with their maximum height and
+represented by 0.1em-wide measurement boxes with their maximum height and
 depth. `spanning=endpoints` uses only delimiter-bearing row dimensions;
 `spanning=full` uses the full-content weighted model. With one or more `\middle` delimiters,
 every delimiter position contributes to the shared weighted radius. The
@@ -182,12 +182,12 @@ Compile `debug-render-test.tex` and run `python test-debug-render.py` to verify
 diagnostic overlays and unchanged glyph geometry.
 
 `spanning=folded` retains delimiter-bearing rows and replaces each intervening
-run of rows by a 0.01em-wide measurement box with the maximum height and depth.
+run of rows by a 0.1em-wide measurement box with the maximum height and depth.
 It uses the weighted model, with the endpoint estimate as a lower bound. Actual
 contents are unchanged; `folded` is the default. Compile `folded-test.tex`
 and run `python test-folded.py` for independent quadrature and folding invariants.
 
-The representative width is configurable with `fold-width=0.01em` at package,
+The representative width is configurable with `fold-width=0.1em` at package,
 setup, and environment scope. Positive TeX dimensions are accepted; relative
 units are evaluated when typesetting each formula.
 

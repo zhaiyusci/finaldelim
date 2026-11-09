@@ -1,9 +1,10 @@
 \documentclass{article}
 \usepackage{unicode-math}\setmathfont{Latin Modern Math}
-\usepackage[render=draw,niji,fold-width=0.01em]{finaldelim}
+\usepackage[render=draw,niji]{finaldelim}
 \directlua{assert(finaldelim_sizing.spanning_scope=='folded');dofile('folded-test.lua')}
 \ExplSyntaxOn
 \tl_if_eq:NnF\l__fd_span_tl{folded}{\errmessage{Wrong spanning default}}
+\tl_if_eq:NnF\l__fd_fold_width_tl{0.1em}{\errmessage{Wrong fold-width default}}
 \ExplSyntaxOff
 \newcommand\Case[1]{\directlua{finaldelim_sizing.test_case='#1'}}
 \newcommand\Tall{\frac{\displaystyle\sum_{i=1}^n x_i}{\displaystyle\sum_{j=1}^m y_j}}
@@ -25,7 +26,7 @@
 \Case{maximum}
 \begin{fdequation}[q=0] F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
 \Case{custom}
-\begin{fdequation}[fold-width=0.5em] F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
+\begin{fdequation}[fold-width=0.01em] F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
 \Case{restored}
 \begin{fdequation} F&=\left[a+b+\\&\Tall+\\&c+d\right]^2\end{fdequation}
 \FinalDelimSetup{fold-width=2pt}
